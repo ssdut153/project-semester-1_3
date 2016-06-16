@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
-
+#include <QMessageBox>
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow)
@@ -30,7 +30,12 @@ void LoginWindow::on_regButton_clicked()
 
 void LoginWindow::on_exitButton_clicked()
 {
-    std::exit(0);
+    QMessageBox msgBox(QMessageBox::Warning, tr("Warning"),"您真的要退出吗", 0, this);
+    //msgBox.setStyleSheet("");
+    msgBox.addButton(tr("Yes"), QMessageBox::AcceptRole);
+    msgBox.addButton(tr("No"), QMessageBox::RejectRole);
+    if (msgBox.exec() == QMessageBox::AcceptRole)
+        std::exit(0);
 }
 
 void LoginWindow::mousePressEvent(QMouseEvent *event)
