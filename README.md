@@ -1,4 +1,4 @@
-# KillCaoMai Project Client
+# Kill<span style="color:#FF0000 !important;">CaoMai</span> Project Client
 The homework of semester 1_3. 
 
 We decide to develop an online chatting software named KillCaoMai and this is the client codes.
