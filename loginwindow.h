@@ -11,6 +11,7 @@ class LoginWindow : public QMainWindow
 public:
     explicit LoginWindow(QWidget *parent = 0);
     ~LoginWindow();
+    bool isLogin();
 
 private slots:
     void on_loginButton_clicked();
@@ -22,6 +23,7 @@ private slots:
     void on_cancelButton_clicked();
 
 private:
+    bool login;
     QPoint move_point;
     bool mouse_press;
     void mousePressEvent(QMouseEvent *event);

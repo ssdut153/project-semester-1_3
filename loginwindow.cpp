@@ -4,7 +4,8 @@
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::LoginWindow)
+    ui(new Ui::LoginWindow),
+    login(false)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -27,8 +28,13 @@ void LoginWindow::on_loginButton_clicked()
     ui->exitButton->hide();
     ui->loginLabel->show();
     ui->cancelButton->show();
-//    MainWindow *w = new MainWindow;
-//    w->show();
+
+    QEventLoop eventloop;
+    QTimer::singleShot(5000, &eventloop, SLOT(quit()));
+    eventloop.exec();
+
+    login = true;
+
 }
 
 void LoginWindow::on_regButton_clicked()
@@ -82,4 +88,9 @@ void LoginWindow::on_cancelButton_clicked()
     ui->passwordEdit->show();
     ui->loginLabel->hide();
     ui->cancelButton->hide();
+}
+
+bool LoginWindow::isLogin()
+{
+    return login;
 }
