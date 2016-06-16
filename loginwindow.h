@@ -2,10 +2,7 @@
 #define LOGINWINDOW_H
 
 #include "stdafx.h"
-
-namespace Ui {
-class LoginWindow;
-}
+#include "ui.h"
 
 class LoginWindow : public QMainWindow
 {

@@ -12,13 +12,16 @@ TARGET = chat
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES += main.cpp \
         loginwindow.cpp \
-    CmWidgets/CGroupBox.cpp \
-    stdafx.cpp
+    stdafx.cpp \
+    mainwindow.cpp \
+    ui.cpp
 
 HEADERS  += loginwindow.h \
-    CmWidgets/CGroupBox.h \
-    stdafx.h
+    stdafx.h \
+    mainwindow.h \
+    ui.h
 
-FORMS    += loginwindow.ui
+FORMS    += loginwindow.ui \
+    mainwindow.ui
