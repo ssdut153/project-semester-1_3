@@ -1,33 +1,33 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "Loginwindow.h"
+#include "ui_loginwindow.h"
 #include <QMessageBox>
 #include <cstdlib>
 #include <string>
-MainWindow::MainWindow(QWidget *parent) :
+LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::LoginWindow)
 {
     ui->setupUi(this);
 }
 
-MainWindow::~MainWindow()
+LoginWindow::~LoginWindow()
 {
     delete ui;
 }
 
-void MainWindow::on_loginButton_clicked()
+void LoginWindow::on_loginButton_clicked()
 {
     QMessageBox msgBox(QMessageBox::Warning, tr("Warning"),"功能尚未制作", 0, this);
     msgBox.exec();
 }
 
-void MainWindow::on_regButton_clicked()
+void LoginWindow::on_regButton_clicked()
 {
     QMessageBox msgBox(QMessageBox::Warning, tr("Warning"),"功能尚未制作", 0, this);
     msgBox.exec();
 }
 
-void MainWindow::on_exitButton_clicked()
+void LoginWindow::on_exitButton_clicked()
 {
     QMessageBox msgBox(QMessageBox::Warning, tr("Warning"),"您真的要退出吗", 0, this);
     msgBox.addButton(tr("Yes"), QMessageBox::AcceptRole);

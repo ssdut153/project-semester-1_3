@@ -13,11 +13,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    regwindow.cpp
+    regwindow.cpp \
+    loginwindow.cpp
 
-HEADERS  += mainwindow.h \
-    regwindow.h
+HEADERS  += \
+    regwindow.h \
+    loginwindow.h
 
-FORMS    += mainwindow.ui \
-    regwindow.ui
+FORMS    += \
+    regwindow.ui \
+    loginwindow.ui
