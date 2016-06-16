@@ -1,6 +1,7 @@
 #ifndef LOGINWINDOW_H
 #define LOGINWINDOW_H
 
+#include <QMouseEvent>
 #include <QMainWindow>
 
 namespace Ui {
@@ -22,7 +23,14 @@ private slots:
 
     void on_exitButton_clicked();
 
+    void on_pushButton_clicked();
+
 private:
+    QPoint move_point;
+    bool mouse_press;
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
     Ui::LoginWindow *ui;
 };
 
