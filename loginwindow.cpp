@@ -1,7 +1,6 @@
-#include <cstdlib>
+#include "stdafx.h"
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
-#include <QMessageBox>
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow)
@@ -9,7 +8,8 @@ LoginWindow::LoginWindow(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setMouseTracking(true);
-    ui->loginGroupBox->hide();
+    ui->cancelButton->hide();
+    ui->loginLabel->hide();
 }
 
 LoginWindow::~LoginWindow()
@@ -19,8 +19,13 @@ LoginWindow::~LoginWindow()
 
 void LoginWindow::on_loginButton_clicked()
 {
-    ui->inputGroupBox->hide();
-    ui->loginGroupBox->show();
+    ui->loginButton->hide();
+    ui->usernameEdit->hide();
+    ui->passwordEdit->hide();
+    ui->regButton->hide();
+    ui->exitButton->hide();
+    ui->loginLabel->show();
+    ui->cancelButton->show();
 }
 
 void LoginWindow::on_regButton_clicked()
@@ -65,8 +70,13 @@ void LoginWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void LoginWindow::on_pushButton_clicked()
+void LoginWindow::on_cancelButton_clicked()
 {
-    ui->loginGroupBox->hide();
-    ui->inputGroupBox->show();
+    ui->loginButton->show();
+    ui->regButton->show();
+    ui->exitButton->show();
+    ui->usernameEdit->show();
+    ui->passwordEdit->show();
+    ui->loginLabel->hide();
+    ui->cancelButton->hide();
 }

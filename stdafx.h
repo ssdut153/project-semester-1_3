@@ -1,4 +1,5 @@
-#ifndef STDAFX_H
-#define STDAFX_H
-
-#endif // STDAFX_H
+#include <cstdlib>
+#include <QApplication>
+#include <QMainWindow>
+#include <QMessageBox>
+#include <QMouseEvent>

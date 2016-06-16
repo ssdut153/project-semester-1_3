@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>270</width>
-    <height>120</height>
+    <height>150</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>270</width>
-    <height>120</height>
+    <height>150</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>270</width>
-    <height>120</height>
+    <height>150</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -35,239 +35,186 @@
    <property name="minimumSize">
     <size>
      <width>270</width>
-     <height>120</height>
+     <height>150</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>270</width>
-     <height>120</height>
+     <height>150</height>
     </size>
    </property>
-   <widget class="QGroupBox" name="inputGroupBox">
+   <property name="styleSheet">
+    <string notr="true">border-radius: 0;</string>
+   </property>
+   <widget class="QLineEdit" name="usernameEdit">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>270</width>
-      <height>120</height>
+      <x>40</x>
+      <y>40</y>
+      <width>190</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>270</width>
-      <height>120</height>
+      <width>190</width>
+      <height>20</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>270</width>
-      <height>120</height>
+      <width>190</width>
+      <height>20</height>
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">background-color: white</string>
     </property>
-    <property name="title">
-     <string/>
+    <property name="placeholderText">
+     <string>请输入用户名</string>
     </property>
-    <widget class="QLineEdit" name="usernameEdit">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>20</y>
-       <width>190</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>190</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>190</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: white</string>
-     </property>
-     <property name="placeholderText">
-      <string>请输入用户名</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="passwordEdit">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>50</y>
-       <width>190</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>190</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>190</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: white;</string>
-     </property>
-     <property name="echoMode">
-      <enum>QLineEdit::Password</enum>
-     </property>
-     <property name="placeholderText">
-      <string>请输入密码</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="loginButton">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>80</y>
-       <width>50</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #e1e1e1;</string>
-     </property>
-     <property name="text">
-      <string>登录</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="regButton">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>80</y>
-       <width>50</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #e1e1e1;</string>
-     </property>
-     <property name="text">
-      <string>注册</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="exitButton">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>80</y>
-       <width>50</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #e1e1e1;</string>
-     </property>
-     <property name="text">
-      <string>退出</string>
-     </property>
-    </widget>
    </widget>
-   <widget class="QGroupBox" name="loginGroupBox">
+   <widget class="QLineEdit" name="passwordEdit">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>270</width>
-      <height>120</height>
+      <x>40</x>
+      <y>70</y>
+      <width>190</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>270</width>
-      <height>120</height>
+      <width>190</width>
+      <height>20</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>270</width>
-      <height>120</height>
+      <width>190</width>
+      <height>20</height>
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">background-color: white;</string>
     </property>
-    <property name="title">
-     <string/>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
     </property>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>30</y>
-       <width>54</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>正在登录</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>70</y>
-       <width>51</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>取消</string>
-     </property>
-    </widget>
+    <property name="placeholderText">
+     <string>请输入密码</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="loginButton">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>110</y>
+      <width>50</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>50</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>50</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #e1e1e1;</string>
+    </property>
+    <property name="text">
+     <string>登录</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="regButton">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>110</y>
+      <width>50</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>50</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>50</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #e1e1e1;</string>
+    </property>
+    <property name="text">
+     <string>注册</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="exitButton">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>110</y>
+      <width>50</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>50</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>50</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #e1e1e1;</string>
+    </property>
+    <property name="text">
+     <string>退出</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="loginLabel">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>50</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>正在登录</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cancelButton">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>100</y>
+      <width>51</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>取消</string>
+    </property>
    </widget>
   </widget>
  </widget>

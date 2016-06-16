@@ -13,8 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        loginwindow.cpp
+        loginwindow.cpp \
+    CmWidgets/CGroupBox.cpp \
+    stdafx.cpp
 
-HEADERS  += loginwindow.h
+HEADERS  += loginwindow.h \
+    CmWidgets/CGroupBox.h \
+    stdafx.h
 
 FORMS    += loginwindow.ui
