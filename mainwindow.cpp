@@ -30,7 +30,7 @@ void MainWindow::on_regButton_clicked()
 void MainWindow::on_exitButton_clicked()
 {
     QMessageBox msgBox(QMessageBox::Warning, tr("Warning"),"您真的要退出吗", 0, this);
-    msgBox.addButton(trUtf8("是"), QMessageBox::AcceptRole);
+    msgBox.addButton(tr("Yes"), QMessageBox::AcceptRole);
     msgBox.addButton(tr("No"), QMessageBox::RejectRole);
     if (msgBox.exec() == QMessageBox::AcceptRole)
         std::exit(0);
