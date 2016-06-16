@@ -12,9 +12,3 @@ We decide to develop an online chatting software named KillCaoMai and this is th
 ### UI
 ### Codes
 ## Other Inf
-## Markdown Test
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-```
