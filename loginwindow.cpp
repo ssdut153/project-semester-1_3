@@ -29,6 +29,7 @@ void LoginWindow::on_loginButton_clicked()
     ui->exitButton->hide();
     ui->loginLabel->show();
     ui->cancelButton->show();
+    ui->cancelButton->setFocus();
 
     QEventLoop eventloop;
     QTimer::singleShot(5000, &eventloop, SLOT(quit()));
@@ -84,6 +85,7 @@ void LoginWindow::on_cancelButton_clicked()
     ui->passwordEdit->show();
     ui->loginLabel->hide();
     ui->cancelButton->hide();
+    ui->loginButton->setFocus();
 }
 
 bool LoginWindow::isLogin()
