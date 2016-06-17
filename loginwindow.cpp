@@ -45,11 +45,7 @@ void LoginWindow::on_regButton_clicked()
 
 void LoginWindow::on_exitButton_clicked()
 {
-    QMessageBox msgBox(QMessageBox::Warning, "Warning", "您真的要退出吗", 0, this);
-    msgBox.addButton("Yes", QMessageBox::AcceptRole);
-    msgBox.addButton("No", QMessageBox::RejectRole);
-    if (msgBox.exec() == QMessageBox::AcceptRole)
-        std::exit(0);
+    exit();
 }
 
 void LoginWindow::mousePressEvent(QMouseEvent *event)
@@ -93,6 +89,15 @@ void LoginWindow::on_cancelButton_clicked()
 bool LoginWindow::isLogin()
 {
     return login;
+}
+
+void LoginWindow::exit()
+{
+    QMessageBox msgBox(QMessageBox::Warning, "Warning", "您真的要退出吗", 0, this);
+    msgBox.addButton("Yes", QMessageBox::AcceptRole);
+    msgBox.addButton("No", QMessageBox::RejectRole);
+    if (msgBox.exec() == QMessageBox::AcceptRole)
+        std::exit(0);
 }
 
 void LoginWindow::paintEvent(QPaintEvent *event)

@@ -26,6 +26,7 @@ private slots:
     void on_cancelButton_clicked();
 
 private:
+    void exit();
     bool login;
     QPoint move_point;
     bool mouse_press;
