@@ -9,7 +9,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     mouse_press(false)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
     setMouseTracking(true);
     ui->cancelButton->hide();
     ui->loginLabel->hide();
