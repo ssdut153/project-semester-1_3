@@ -45,7 +45,7 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-radius: 0;</string>
+    <string notr="true"/>
    </property>
    <widget class="QLineEdit" name="usernameEdit">
     <property name="geometry">
@@ -128,7 +128,7 @@
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: #e1e1e1;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>登录</string>
@@ -156,7 +156,7 @@
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: #e1e1e1;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>注册</string>
@@ -184,7 +184,7 @@
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: #e1e1e1;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>退出</string>
@@ -211,6 +211,9 @@
       <width>51</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>取消</string>

@@ -13,6 +13,9 @@ public:
     ~LoginWindow();
     bool isLogin();
 
+protected:
+    void paintEvent(QPaintEvent *event);
+
 private slots:
     void on_loginButton_clicked();
 

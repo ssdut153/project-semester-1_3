@@ -5,7 +5,8 @@
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow),
-    login(false)
+    login(false),
+    mouse_press(false)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -44,10 +45,9 @@ void LoginWindow::on_regButton_clicked()
 
 void LoginWindow::on_exitButton_clicked()
 {
-    QString str;
-    QMessageBox msgBox(QMessageBox::Warning, tr("Warning"),"您真的要退出吗", 0, this);
-    msgBox.addButton(tr("Yes"), QMessageBox::AcceptRole);
-    msgBox.addButton(tr("No"), QMessageBox::RejectRole);
+    QMessageBox msgBox(QMessageBox::Warning, "Warning", "您真的要退出吗", 0, this);
+    msgBox.addButton("Yes", QMessageBox::AcceptRole);
+    msgBox.addButton("No", QMessageBox::RejectRole);
     if (msgBox.exec() == QMessageBox::AcceptRole)
         std::exit(0);
 }
@@ -93,4 +93,27 @@ void LoginWindow::on_cancelButton_clicked()
 bool LoginWindow::isLogin()
 {
     return login;
+}
+
+void LoginWindow::paintEvent(QPaintEvent *event)
+{
+    QBitmap bmp(this->size());
+    bmp.fill();
+    QPainter p(&bmp);
+    p.setRenderHint(QPainter::Antialiasing);
+    int arcR = 10;
+    QRect rect = this->rect();
+    QPainterPath path;
+    path.moveTo(arcR, 0);
+    path.arcTo(0, 0, arcR * 2, arcR * 2, 90.0f, 90.0f);
+    path.lineTo(0, rect.height() - arcR * 2);
+    path.arcTo(0, rect.height() - arcR * 2, arcR * 2, arcR * 2, 180.0f, 90.0f);
+    path.lineTo(rect.width() - arcR, rect.height());
+    path.arcTo(rect.width() - arcR * 2, rect.height() - arcR * 2, arcR * 2, arcR * 2, -90.0f, 90.0f);
+    path.lineTo(rect.width(), arcR);
+    path.arcTo(rect.width() - arcR * 2, 0, arcR * 2, arcR * 2, 0.0f, 90.0f);
+    path.lineTo(arcR, 0);
+    p.drawPath(path);
+    p.fillPath(path, QBrush(Qt::red));
+    setMask(bmp);
 }

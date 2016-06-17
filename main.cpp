@@ -5,6 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     LoginWindow *w1 = new LoginWindow;
     w1->show();
     MainWindow *w2 = 0;

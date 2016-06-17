@@ -1,8 +1,14 @@
 #include <cstdlib>
 #include <QApplication>
+#include <QBitmap>
 #include <QEventLoop>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QPainter>
+#include <QPainterPath>
+#include <QPaintEvent>
+#include <QRect>
+#include <QTextCodec>
 #include <QTimer>
 #include <QThread>
