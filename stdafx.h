@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QBitmap>
 #include <QEventLoop>
+#include <QKeyEvent>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QMouseEvent>

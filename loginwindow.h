@@ -14,15 +14,20 @@ public:
     bool isLogin();
 
 protected:
+    //绘制窗体
     void paintEvent(QPaintEvent *event);
+    //鼠标监听
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    //键盘监听
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 private slots:
     void on_loginButton_clicked();
-
     void on_regButton_clicked();
-
     void on_exitButton_clicked();
-
     void on_cancelButton_clicked();
 
 private:
@@ -30,9 +35,6 @@ private:
     bool login;
     QPoint move_point;
     bool mouse_press;
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
     Ui::LoginWindow *ui;
 };
 

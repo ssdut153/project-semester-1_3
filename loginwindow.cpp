@@ -49,6 +49,18 @@ void LoginWindow::on_exitButton_clicked()
     exit();
 }
 
+void LoginWindow::on_cancelButton_clicked()
+{
+    ui->loginButton->show();
+    ui->regButton->show();
+    ui->exitButton->show();
+    ui->usernameEdit->show();
+    ui->passwordEdit->show();
+    ui->loginLabel->hide();
+    ui->cancelButton->hide();
+    ui->loginButton->setFocus();
+}
+
 void LoginWindow::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
@@ -76,16 +88,21 @@ void LoginWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void LoginWindow::on_cancelButton_clicked()
+void LoginWindow::keyPressEvent(QKeyEvent *event)
 {
-    ui->loginButton->show();
-    ui->regButton->show();
-    ui->exitButton->show();
-    ui->usernameEdit->show();
-    ui->passwordEdit->show();
-    ui->loginLabel->hide();
-    ui->cancelButton->hide();
-    ui->loginButton->setFocus();
+    switch (event->key()) {
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+        this->on_loginButton_clicked();
+        break;
+    default:
+        break;
+    }
+}
+
+void LoginWindow::keyReleaseEvent(QKeyEvent *event)
+{
+
 }
 
 bool LoginWindow::isLogin()
