@@ -1,4 +1,4 @@
-#include "../stdafx.h"
+#include "stdafx.h"
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
 

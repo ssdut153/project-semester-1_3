@@ -1,8 +1,8 @@
 #ifndef TRAYACTION_H
 #define TRAYACTION_H
 
-#include "../ui.h"
-#include "../stdafx.h"
+#include "ui.h"
+#include "stdafx.h"
 
 class TrayAction:public QAction
 {

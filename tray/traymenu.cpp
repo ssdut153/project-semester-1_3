@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "traymenu.h"
 
 TrayMenu::TrayMenu(QWidget *parent):

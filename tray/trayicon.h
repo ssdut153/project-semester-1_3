@@ -1,8 +1,8 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
-#include "../ui.h"
-#include "../stdafx.h"
+#include "ui.h"
+#include "stdafx.h"
 #include "traymenu.h"
 
 class TrayIcon : public QSystemTrayIcon

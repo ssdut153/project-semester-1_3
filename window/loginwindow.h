@@ -1,8 +1,8 @@
 #ifndef LOGINWINDOW_H
 #define LOGINWINDOW_H
 
-#include "../stdafx.h"
-#include "../ui.h"
+#include "stdafx.h"
+#include "ui.h"
 
 class LoginWindow : public QMainWindow
 {
