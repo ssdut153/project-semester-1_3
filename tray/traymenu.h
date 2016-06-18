@@ -17,7 +17,7 @@ public:
 private slots:
 
 protected:
-    void paintEvent(QPaintEvent *event);
+//    void paintEvent(QPaintEvent *event);
 };
 
 #endif // TRAYMENU_H
