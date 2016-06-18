@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "window/mainwindow.h"
 #include "window/loginwindow.h"
-#include "tray/traymenu.h"
+#include "tray/trayicon.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,15 +11,8 @@ int main(int argc, char *argv[])
     w1->show();
     MainWindow *w2 = 0;
 
-    QSystemTrayIcon *qsti = new QSystemTrayIcon;
-    qsti->setToolTip("聊天工具");
-    qsti->setIcon(QIcon(":/images/icon"));
-
-    TrayMenu *trmn = new TrayMenu;
-
-    qsti->setContextMenu(trmn);
-
-    qsti->show();
+    TrayIcon *tric = new TrayIcon;
+    tric->show();
 
     while(true)
     {

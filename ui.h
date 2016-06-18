@@ -8,6 +8,7 @@ class MainWindow;
 class LoginWindow;
 class TrayMenu;
 class TrayAction;
+class TrayIcon;
 }
 
 #endif // UI_H

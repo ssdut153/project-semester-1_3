@@ -1,17 +1,17 @@
 #include "traymenu.h"
 
 TrayMenu::TrayMenu(QWidget *parent):
-    QMenu(parent)
+    QMenu(parent),
+    exitAction(new QAction(this))
 {
 //    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
-    exitAction = new QAction(this);
     exitAction->setText("exit");
     this->addAction(exitAction);
 }
 
 TrayMenu::~TrayMenu()
 {
-
+    delete exitAction;
 }
 
 //void TrayMenu::paintEvent(QPaintEvent *event)

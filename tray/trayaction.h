@@ -7,6 +7,7 @@
 class TrayAction:public QAction
 {
     Q_OBJECT
+
 public:
     explicit TrayAction(QWidget *parent = 0);
     ~TrayAction();
