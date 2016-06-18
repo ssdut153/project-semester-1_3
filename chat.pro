@@ -13,22 +13,22 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-        loginwindow.cpp \
+        window/loginwindow.cpp \
     stdafx.cpp \
-    mainwindow.cpp \
+    window/mainwindow.cpp \
     ui.cpp \
     tray/traymenu.cpp \
     tray/trayaction.cpp
 
-HEADERS  += loginwindow.h \
+HEADERS  += window/loginwindow.h \
     stdafx.h \
-    mainwindow.h \
+    window/mainwindow.h \
     ui.h \
     tray/traymenu.h \
     tray/trayaction.h
 
-FORMS    += loginwindow.ui \
-    mainwindow.ui
+FORMS    += window/loginwindow.ui \
+    window/mainwindow.ui
 
 RESOURCES += \
     images.qrc

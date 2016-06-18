@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include "mainwindow.h"
-#include "loginwindow.h"
+#include "window/mainwindow.h"
+#include "window/loginwindow.h"
 #include "tray/traymenu.h"
 
 int main(int argc, char *argv[])
