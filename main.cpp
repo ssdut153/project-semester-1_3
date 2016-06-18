@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "mainwindow.h"
 #include "loginwindow.h"
-#include "traymenu.h"
+#include "tray/traymenu.h"
 
 int main(int argc, char *argv[])
 {

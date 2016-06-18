@@ -7,6 +7,7 @@ namespace Ui {
 class MainWindow;
 class LoginWindow;
 class TrayMenu;
+class TrayAction;
 }
 
 #endif // UI_H
