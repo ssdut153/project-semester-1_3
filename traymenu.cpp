@@ -5,11 +5,8 @@ TrayMenu::TrayMenu(QWidget *parent):
 {
 //    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
     exitAction = new QAction(this);
-    QAction *action = new QAction(this);
     exitAction->setText("exit");
-    this->addAction(action);
     this->addAction(exitAction);
-    this->addAction(action);
 }
 
 TrayMenu::~TrayMenu()
