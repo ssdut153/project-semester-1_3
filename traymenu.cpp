@@ -19,7 +19,7 @@ void TrayMenu::paintEvent(QPaintEvent *event)
     QBitmap bmp(this->size());
     bmp.fill();
     QPainter p(&bmp);
-//    p.setRenderHint(QPainter::Antialiasing);
+    p.setRenderHint(QPainter::Antialiasing);
     int arcR = 5;
     QRect rect = this->rect();
     QPainterPath path;
