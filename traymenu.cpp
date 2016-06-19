@@ -1,26 +1,29 @@
-#include "stdafx.h"
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "traymenu.h"
 
-MainWindow::MainWindow(QWidget *parent):
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+TrayMenu::TrayMenu(QWidget *parent):
+    QMenu(parent)
 {
-    ui->setupUi(this);
+//    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
+    exitAction = new QAction(this);
+    QAction *action = new QAction(this);
+    exitAction->setText("exit");
+    this->addAction(action);
+    this->addAction(exitAction);
+    this->addAction(action);
 }
 
-MainWindow::~MainWindow()
+TrayMenu::~TrayMenu()
 {
-    delete ui;
+
 }
 
-void MainWindow::paintEvent(QPaintEvent *event)
+void TrayMenu::paintEvent(QPaintEvent *event)
 {
     QBitmap bmp(this->size());
     bmp.fill();
     QPainter p(&bmp);
-    p.setRenderHint(QPainter::Antialiasing);
-    int arcR = 10;
+//    p.setRenderHint(QPainter::Antialiasing);
+    int arcR = 5;
     QRect rect = this->rect();
     QPainterPath path;
     path.moveTo(arcR, 0);

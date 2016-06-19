@@ -46,7 +46,7 @@ void LoginWindow::on_regButton_clicked()
 
 void LoginWindow::on_exitButton_clicked()
 {
-    exit();
+    std::exit(0);
 }
 
 void LoginWindow::on_cancelButton_clicked()
@@ -130,7 +130,7 @@ void LoginWindow::paintEvent(QPaintEvent *event)
     QPainterPath path;
     path.moveTo(arcR, 0);
     path.arcTo(0, 0, arcR * 2, arcR * 2, 90.0f, 90.0f);
-    path.lineTo(0, rect.height() - arcR * 2);
+    path.lineTo(0, rect.height() - arcR);
     path.arcTo(0, rect.height() - arcR * 2, arcR * 2, arcR * 2, 180.0f, 90.0f);
     path.lineTo(rect.width() - arcR, rect.height());
     path.arcTo(rect.width() - arcR * 2, rect.height() - arcR * 2, arcR * 2, arcR * 2, -90.0f, 90.0f);

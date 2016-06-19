@@ -32,10 +32,10 @@ private slots:
 
 private:
     void exit();
+    Ui::LoginWindow *ui;
     bool login;
     QPoint move_point;
     bool mouse_press;
-    Ui::LoginWindow *ui;
 };
 
 #endif // LOGINWINDOW_H

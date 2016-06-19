@@ -14,6 +14,7 @@
 #include <QPainterPath>
 #include <QPaintEvent>
 #include <QRect>
+#include <QString>
 #include <QSystemTrayIcon>
 #include <QTextCodec>
 #include <QTimer>

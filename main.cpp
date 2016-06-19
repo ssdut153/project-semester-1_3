@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "mainwindow.h"
 #include "loginwindow.h"
+#include "traymenu.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,16 +13,11 @@ int main(int argc, char *argv[])
 
     QSystemTrayIcon *qsti = new QSystemTrayIcon;
     qsti->setToolTip("聊天工具");
-    QIcon icon(":/images/icon.png");
-    qsti->setIcon(icon);
+    qsti->setIcon(QIcon(":/images/icon"));
 
-    QMenu *qmnu = new QMenu;
+    TrayMenu *trmn = new TrayMenu;
 
-    QAction *exitAction = new QAction(qmnu);
-    exitAction->setText("exit");
-    qmnu->addAction(exitAction);
-
-    qsti->setContextMenu(qmnu);
+    qsti->setContextMenu(trmn);
 
     qsti->show();
 

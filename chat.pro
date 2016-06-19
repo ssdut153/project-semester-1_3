@@ -16,12 +16,16 @@ SOURCES += main.cpp \
         loginwindow.cpp \
     stdafx.cpp \
     mainwindow.cpp \
-    ui.cpp
+    ui.cpp \
+    traymenu.cpp \
+    trayaction.cpp
 
 HEADERS  += loginwindow.h \
     stdafx.h \
     mainwindow.h \
-    ui.h
+    ui.h \
+    traymenu.h \
+    trayaction.h
 
 FORMS    += loginwindow.ui \
     mainwindow.ui
