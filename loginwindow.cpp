@@ -46,7 +46,7 @@ void LoginWindow::on_regButton_clicked()
 
 void LoginWindow::on_exitButton_clicked()
 {
-    std::exit(0);
+    this->exit();
 }
 
 void LoginWindow::on_cancelButton_clicked()
