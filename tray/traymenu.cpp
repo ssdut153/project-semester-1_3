@@ -8,7 +8,7 @@ TrayMenu::TrayMenu(QWidget *parent):
     exitAction(new QAction(this))
 {
     //    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
-    exitAction->setText("exit");
+    exitAction->setText("退出");
     this->addAction(exitAction);
      connect(exitAction,SIGNAL(triggered()),this,SLOT(on_exitAction_triggered()));
 }
@@ -22,8 +22,8 @@ void TrayMenu::on_exitAction_triggered()
 {
     QMessageBox msgBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
     msgBox.setWindowFlags(Qt::WindowStaysOnTopHint| (msgBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
-    msgBox.addButton("Yes", QMessageBox::AcceptRole);
-    msgBox.addButton("No", QMessageBox::RejectRole);
+    msgBox.addButton("是", QMessageBox::AcceptRole);
+    msgBox.addButton("否", QMessageBox::RejectRole);
     if (msgBox.exec() == QMessageBox::AcceptRole)
     {
         tric->hide();

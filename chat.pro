@@ -11,7 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = chat
 TEMPLATE = app
 
-
 SOURCES += main.cpp \
         window/loginwindow.cpp \
     stdafx.cpp \
@@ -34,3 +33,9 @@ FORMS    += window/loginwindow.ui \
 
 RESOURCES += \
     images.qrc
+
+DISTFILES += \
+    ico.rc
+
+RC_FILE = \
+     ico.rc

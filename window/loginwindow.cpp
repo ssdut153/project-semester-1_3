@@ -116,8 +116,8 @@ void LoginWindow::exit()
     QMessageBox msgBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
     msgBox.setWindowFlags(Qt::WindowStaysOnTopHint| (msgBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
 
-    msgBox.addButton("Yes", QMessageBox::AcceptRole);
-    msgBox.addButton("No", QMessageBox::RejectRole);
+    msgBox.addButton("是", QMessageBox::AcceptRole);
+    msgBox.addButton("否", QMessageBox::RejectRole);
     if (msgBox.exec() == QMessageBox::AcceptRole)
     {
 
