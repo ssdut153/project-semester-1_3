@@ -2,7 +2,7 @@
 #include "window/mainwindow.h"
 #include "window/loginwindow.h"
 #include "tray/trayicon.h"
-
+TrayIcon *tric;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     w1->show();
     MainWindow *w2 = 0;
 
-    TrayIcon *tric = new TrayIcon;
+    tric = new TrayIcon;
     tric->show();
 
     while(true)

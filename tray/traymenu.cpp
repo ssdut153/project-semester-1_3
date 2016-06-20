@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "traymenu.h"
 #include "window/loginwindow.h"
-
+#include "tray/trayicon.h"
+extern TrayIcon *tric;
 TrayMenu::TrayMenu(QWidget *parent):
     QMenu(parent),
     exitAction(new QAction(this))
@@ -24,7 +25,10 @@ void TrayMenu::on_exitAction_triggered()
     msgBox.addButton("Yes", QMessageBox::AcceptRole);
     msgBox.addButton("No", QMessageBox::RejectRole);
     if (msgBox.exec() == QMessageBox::AcceptRole)
+    {
+        tric->hide();
         std::exit(0);
+    }
 }
 
 //void TrayMenu::paintEvent(QPaintEvent *event)

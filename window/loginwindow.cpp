@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
-
+#include "tray/trayicon.h"
+extern TrayIcon *tric;
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow),
@@ -114,10 +115,15 @@ void LoginWindow::exit()
 {
     QMessageBox msgBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
     msgBox.setWindowFlags(Qt::WindowStaysOnTopHint| (msgBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+
     msgBox.addButton("Yes", QMessageBox::AcceptRole);
     msgBox.addButton("No", QMessageBox::RejectRole);
     if (msgBox.exec() == QMessageBox::AcceptRole)
+    {
+
+        tric->hide();
         std::exit(0);
+    }
 }
 
 void LoginWindow::paintEvent(QPaintEvent *event)
