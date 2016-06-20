@@ -15,7 +15,7 @@ public:
     explicit TrayMenu(QWidget *parent = 0);
     ~TrayMenu();
 private slots:
-
+    void on_exitAction_triggered();
 protected:
 //    void paintEvent(QPaintEvent *event);
 };

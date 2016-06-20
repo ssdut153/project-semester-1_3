@@ -1,18 +1,30 @@
 #include "stdafx.h"
 #include "traymenu.h"
+#include "window/loginwindow.h"
 
 TrayMenu::TrayMenu(QWidget *parent):
     QMenu(parent),
     exitAction(new QAction(this))
 {
-//    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
+    //    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
     exitAction->setText("exit");
     this->addAction(exitAction);
+     connect(exitAction,SIGNAL(triggered()),this,SLOT(on_exitAction_triggered()));
 }
 
 TrayMenu::~TrayMenu()
 {
     delete exitAction;
+}
+
+void TrayMenu::on_exitAction_triggered()
+{
+    QMessageBox msgBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
+    msgBox.setWindowFlags(Qt::WindowStaysOnTopHint| (msgBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+    msgBox.addButton("Yes", QMessageBox::AcceptRole);
+    msgBox.addButton("No", QMessageBox::RejectRole);
+    if (msgBox.exec() == QMessageBox::AcceptRole)
+        std::exit(0);
 }
 
 //void TrayMenu::paintEvent(QPaintEvent *event)
