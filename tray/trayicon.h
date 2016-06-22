@@ -1,7 +1,6 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
-#include "ui.h"
 #include "stdafx.h"
 #include "traymenu.h"
 

@@ -1,7 +1,6 @@
 #ifndef TRAYMENU_H
 #define TRAYMENU_H
 
-#include "ui.h"
 #include "stdafx.h"
 
 class TrayMenu : public QMenu

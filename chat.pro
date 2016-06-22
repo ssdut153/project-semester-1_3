@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     ui.cpp \
     tray/traymenu.cpp \
     tray/trayaction.cpp \
-    tray/trayicon.cpp
+    tray/trayicon.cpp \
+    commonelements.cpp
 
 HEADERS  += window/loginwindow.h \
     stdafx.h \
@@ -26,7 +27,8 @@ HEADERS  += window/loginwindow.h \
     ui.h \
     tray/traymenu.h \
     tray/trayaction.h \
-    tray/trayicon.h
+    tray/trayicon.h \
+    commonelements.h
 
 FORMS    += window/loginwindow.ui \
     window/mainwindow.ui

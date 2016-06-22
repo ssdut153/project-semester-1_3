@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "window/mainwindow.h"
 #include "window/loginwindow.h"
-#include "tray/trayicon.h"
-TrayIcon *tric;
+#include "commonelements.h"
+s
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
     w1->show();
     MainWindow *w2 = 0;
 
-    tric = new TrayIcon;
-    tric->show();
+    CommonElements *ce = CommonElements::getInstance();
+    ce->trayIcon->show();
 
     while(true)
     {
