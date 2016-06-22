@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "ui.h"
+#include "commonelements.h"
 
 class LoginWindow : public QMainWindow
 {
@@ -29,10 +30,12 @@ private slots:
     void on_regButton_clicked();
     void on_exitButton_clicked();
     void on_cancelButton_clicked();
+    void readClient2();
 
 private:
     void exit();
     Ui::LoginWindow *ui;
+    QTcpSocket *&client;
     bool login;
     QPoint move_point;
     bool mouse_press;

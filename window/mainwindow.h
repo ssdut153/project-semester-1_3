@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "../stdafx.h"
-#include "../ui.h"
+#include "stdafx.h"
+#include "ui.h"
 
 class MainWindow : public QMainWindow
 {

@@ -2,10 +2,12 @@
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
 #include "tray/trayicon.h"
+#include "message/loginmessage.h"
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow),
+    client(CommonElements::getInstance()->client),
     login(false),
     mouse_press(false)
 {
@@ -14,6 +16,13 @@ LoginWindow::LoginWindow(QWidget *parent) :
     setMouseTracking(true);
     ui->cancelButton->hide();
     ui->loginLabel->hide();
+    connect(client, SIGNAL(readyRead()), this, SLOT(readClient2()));
+}
+
+void LoginWindow::readClient2()
+{
+    QString str = client->readAll();
+    std::cout<<str.toStdString();
 }
 
 LoginWindow::~LoginWindow()
@@ -32,11 +41,16 @@ void LoginWindow::on_loginButton_clicked()
     ui->cancelButton->show();
     ui->cancelButton->setFocus();
 
-    QEventLoop eventloop;
-    QTimer::singleShot(5000, &eventloop, SLOT(quit()));
-    eventloop.exec();
+//    QEventLoop eventloop;
+//    QTimer::singleShot(5000, &eventloop, SLOT(quit()));
+//    eventloop.exec();
 
-    login = true;
+    std::string username = ui->usernameEdit->text().toStdString();
+    std::string password = ui->passwordEdit->text().toStdString();
+
+    loginMessage lm(username, password);
+    client->write(lm.getJsonString().c_str());
+//    login = true;
 
 }
 

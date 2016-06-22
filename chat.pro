@@ -20,7 +20,10 @@ SOURCES += main.cpp \
     tray/traymenu.cpp \
     tray/trayaction.cpp \
     tray/trayicon.cpp \
-    commonelements.cpp
+    commonelements.cpp \
+    message/message.cpp \
+    message/loginmessage.cpp \
+    cJSON.c
 
 HEADERS  += window/loginwindow.h \
     stdafx.h \
@@ -29,7 +32,10 @@ HEADERS  += window/loginwindow.h \
     tray/traymenu.h \
     tray/trayaction.h \
     tray/trayicon.h \
-    commonelements.h
+    commonelements.h \
+    message/message.h \
+    message/loginmessage.h \
+    cJSON.h
 
 FORMS    += window/loginwindow.ui \
     window/mainwindow.ui

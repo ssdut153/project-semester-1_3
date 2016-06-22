@@ -10,7 +10,7 @@ class CommonElements:public QObject
 
 private:
     static CommonElements *instance;
-    CommonElements(QObject *parent = 0);
+    explicit CommonElements(QObject *parent = 0);
 
 public:
     ~CommonElements();
