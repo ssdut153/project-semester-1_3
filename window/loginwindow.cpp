@@ -3,6 +3,7 @@
 #include "ui_loginwindow.h"
 #include "tray/trayicon.h"
 #include "message/loginmessage.h"
+#include "cJSON.h"
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,7 +23,19 @@ LoginWindow::LoginWindow(QWidget *parent) :
 void LoginWindow::readClient2()
 {
     QString str = client->readAll();
-    std::cout<<str.toStdString();
+    cJSON *json = cJSON_Parse(str.toStdString().c_str());
+    cJSON *json_status = cJSON_GetObjectItem(json, "status");
+    std::string status = json_status->valuestring;
+    cJSON_Delete(json);
+    if (status == "true")
+    {
+
+    }
+    else
+    {
+        this->on_cancelButton_clicked();
+        ui->passwordEdit->setText("");
+    }
 }
 
 LoginWindow::~LoginWindow()
@@ -41,16 +54,16 @@ void LoginWindow::on_loginButton_clicked()
     ui->cancelButton->show();
     ui->cancelButton->setFocus();
 
-//    QEventLoop eventloop;
-//    QTimer::singleShot(5000, &eventloop, SLOT(quit()));
-//    eventloop.exec();
+    //    QEventLoop eventloop;
+    //    QTimer::singleShot(5000, &eventloop, SLOT(quit()));
+    //    eventloop.exec();
 
     std::string username = ui->usernameEdit->text().toStdString();
     std::string password = ui->passwordEdit->text().toStdString();
 
     loginMessage lm(username, password);
     client->write(lm.getJsonString().c_str());
-//    login = true;
+    //    login = true;
 
 }
 
