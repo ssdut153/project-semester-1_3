@@ -1,18 +1,21 @@
 #ifndef COMMONELEMENTS_H
 #define COMMONELEMENTS_H
 
+#include "stdafx.h"
+#include <QtNetwork>
 #include "tray/trayicon.h"
 
-class CommonElements
+class CommonElements:public QObject
 {
 
 private:
     static CommonElements *instance;
-    CommonElements();
+    CommonElements(QObject *parent = 0);
 
 public:
     ~CommonElements();
     TrayIcon *trayIcon;
+    QTcpSocket *client;
     static CommonElements *getInstance();
 
 };

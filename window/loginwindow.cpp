@@ -2,7 +2,7 @@
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
 #include "tray/trayicon.h"
-extern TrayIcon *tric;
+
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow),
@@ -120,8 +120,6 @@ void LoginWindow::exit()
     msgBox.addButton("否", QMessageBox::RejectRole);
     if (msgBox.exec() == QMessageBox::AcceptRole)
     {
-
-        tric->hide();
         std::exit(0);
     }
 }

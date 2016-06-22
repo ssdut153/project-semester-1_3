@@ -26,7 +26,6 @@ void TrayMenu::on_exitAction_triggered()
     msgBox.addButton("否", QMessageBox::RejectRole);
     if (msgBox.exec() == QMessageBox::AcceptRole)
     {
-        tric->hide();
         std::exit(0);
     }
 }

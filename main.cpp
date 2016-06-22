@@ -2,7 +2,7 @@
 #include "window/mainwindow.h"
 #include "window/loginwindow.h"
 #include "commonelements.h"
-s
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
