@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "ui.h"
 #include "commonelements.h"
+#include "regwindow.h"
 
 class LoginWindow : public QMainWindow
 {
@@ -36,6 +37,7 @@ private:
     bool exit();
     Ui::LoginWindow *ui;
     QTcpSocket *&client;
+    RegWindow *regWindow;
 //    QPoint move_point;
 //    bool mouse_press;
 };
