@@ -23,17 +23,19 @@ void MainWindow::closeEvent(QCloseEvent *event)
     messageBox.setWindowFlags(Qt::WindowStaysOnTopHint| (this->windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
     messageBox.addButton("是", QMessageBox::AcceptRole);
     messageBox.addButton("否", QMessageBox::RejectRole);
+    event->ignore();
     if(messageBox.exec() == QMessageBox::RejectRole)
     {
-        event->ignore();
+//        event->ignore();
     }
     else
     {
         logoutMessage lm(this->username);
         CommonElements *ce = CommonElements::getInstance();
-        ce->client->write(lm.getJsonString().c_str());
         ce->trayIcon->hide();
-        std::exit(0);
+        ce->client->write(lm.getJsonString().c_str());
+        ce->client->waitForBytesWritten();
+        ce->a->quit();
     }
 }
 

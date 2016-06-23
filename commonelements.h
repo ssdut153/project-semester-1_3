@@ -19,6 +19,7 @@ public:
     static CommonElements *getInstance();
     std::string username;
     bool login;
+    QApplication *a;
 };
 
 #endif // COMMONELEMENTS_H

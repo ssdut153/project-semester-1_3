@@ -4,12 +4,15 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    QApplication *a = new QApplication(argc, argv);
+
+    CommonElements *ce = CommonElements::getInstance();
+
+    ce->a = a;
+
     LoginWindow *w1 = new LoginWindow;
     w1->show();
 
-    CommonElements *ce = CommonElements::getInstance();
     ce->trayIcon->show();
 
 //    while(true)
@@ -26,6 +29,6 @@ int main(int argc, char *argv[])
 //        }
 //    }
 
-    return a.exec();
+    return a->exec();
 
 }
