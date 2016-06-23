@@ -4,6 +4,7 @@
 #include "ui_loginwindow.h"
 #include "tray/trayicon.h"
 #include "message/loginmessage.h"
+#include "messagebox/exitmessagebox.h"
 #include "cJSON.h"
 
 LoginWindow::LoginWindow(QWidget *parent) :
@@ -28,9 +29,11 @@ void LoginWindow::readClient2()
     cJSON_Delete(json);
     if (status == "true")
     {
+        this->hide();
         MainWindow *w2 = 0;
         w2 = new MainWindow;
         w2->show();
+        delete this;
     }
     else
     {
@@ -127,13 +130,10 @@ void LoginWindow::keyReleaseEvent(QKeyEvent *event)
 
 void LoginWindow::exit()
 {
-    QMessageBox msgBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
-    msgBox.setWindowFlags(Qt::WindowStaysOnTopHint| (msgBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
-
-    msgBox.addButton("是", QMessageBox::AcceptRole);
-    msgBox.addButton("否", QMessageBox::RejectRole);
-    if (msgBox.exec() == QMessageBox::AcceptRole)
+    ExitMessageBox emb;
+    if (emb.exec() == QMessageBox::AcceptRole)
     {
+        CommonElements::getInstance()->trayIcon->hide();
         std::exit(0);
     }
 }

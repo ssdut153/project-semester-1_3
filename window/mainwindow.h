@@ -13,7 +13,7 @@ public:
     ~MainWindow();
 
 protected:
-    void paintEvent(QPaintEvent *event);
+//    void paintEvent(QPaintEvent *event);
 
 private:
     Ui::MainWindow *ui;
