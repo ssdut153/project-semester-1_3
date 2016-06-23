@@ -22,6 +22,7 @@ SOURCES += main.cpp \
     message/message.cpp \
     message/loginmessage.cpp \
     message/logoutmessage.cpp \
+    message/regusermessage.cpp \
     cJSON.c \
     messagebox/exitmessagebox.cpp \
     window/regwindow.cpp \
@@ -38,6 +39,7 @@ HEADERS  += window/loginwindow.h \
     message/message.h \
     message/loginmessage.h \
     message/logoutmessage.h \
+    message/regusermessage.h \
     cJSON.h \
     messagebox/exitmessagebox.h \
     window/regwindow.h \
