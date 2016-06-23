@@ -12,15 +12,14 @@ class LoginWindow : public QMainWindow
 public:
     explicit LoginWindow(QWidget *parent = 0);
     ~LoginWindow();
-    bool isLogin();
 
 protected:
     //绘制窗体
-    void paintEvent(QPaintEvent *event);
+//    void paintEvent(QPaintEvent *event);
     //鼠标监听
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
+//    void mousePressEvent(QMouseEvent *event);
+//    void mouseReleaseEvent(QMouseEvent *event);
+//    void mouseMoveEvent(QMouseEvent *event);
     //键盘监听
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
@@ -36,9 +35,8 @@ private:
     void exit();
     Ui::LoginWindow *ui;
     QTcpSocket *&client;
-    bool login;
-    QPoint move_point;
-    bool mouse_press;
+//    QPoint move_point;
+//    bool mouse_press;
 };
 
 #endif // LOGINWINDOW_H
