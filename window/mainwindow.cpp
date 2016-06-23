@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "commonelements.h"
+#include "message/logoutmessage.h"
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
@@ -12,6 +14,24 @@ MainWindow::MainWindow(QWidget *parent):
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QMessageBox messageBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
+    messageBox.setWindowFlags(Qt::WindowStaysOnTopHint| (this->windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+    messageBox.addButton("是", QMessageBox::AcceptRole);
+    messageBox.addButton("否", QMessageBox::RejectRole);
+    if(messageBox.exec() == QMessageBox::RejectRole)
+    {
+        event->ignore();
+    }
+    else
+    {
+
+        CommonElements::getInstance()->trayIcon->hide();
+        std::exit(0);
+    }
 }
 
 //void MainWindow::paintEvent(QPaintEvent *event)

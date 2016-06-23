@@ -17,7 +17,7 @@ public:
     TrayIcon *trayIcon;
     QTcpSocket *client;
     static CommonElements *getInstance();
-
+    std::string *username;
 };
 
 #endif // COMMONELEMENTS_H

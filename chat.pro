@@ -21,9 +21,11 @@ SOURCES += main.cpp \
     commonelements.cpp \
     message/message.cpp \
     message/loginmessage.cpp \
+    message/logoutmessage.cpp \
     cJSON.c \
     messagebox/exitmessagebox.cpp \
-    window/regwindow.cpp
+    window/regwindow.cpp \
+    helper.cpp
 
 HEADERS  += window/loginwindow.h \
     stdafx.h \
@@ -35,9 +37,11 @@ HEADERS  += window/loginwindow.h \
     commonelements.h \
     message/message.h \
     message/loginmessage.h \
+    message/logoutmessage.h \
     cJSON.h \
     messagebox/exitmessagebox.h \
-    window/regwindow.h
+    window/regwindow.h \
+    helper.h
 
 FORMS    += window/loginwindow.ui \
     window/mainwindow.ui \

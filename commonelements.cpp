@@ -3,7 +3,8 @@
 CommonElements::CommonElements(QObject *parent):
     QObject(parent),
     trayIcon(new TrayIcon),
-    client(new QTcpSocket(this))
+    client(new QTcpSocket(this)),
+    username(0)
 {
     client->connectToHost(QHostAddress("103.13.222.121"), 6665);
 }

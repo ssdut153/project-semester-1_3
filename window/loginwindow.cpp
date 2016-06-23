@@ -5,7 +5,7 @@
 #include "tray/trayicon.h"
 #include "message/loginmessage.h"
 #include "messagebox/exitmessagebox.h"
-#include "cJSON.h"
+#include "helper.h"
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,10 +24,8 @@ LoginWindow::LoginWindow(QWidget *parent) :
 void LoginWindow::readClient2()
 {
     QString str = client->readAll();
-    cJSON *json = cJSON_Parse(str.toStdString().c_str());
-    cJSON *json_status = cJSON_GetObjectItem(json, "status");
-    std::string status = json_status->valuestring;
-    cJSON_Delete(json);
+    Helper *helper = Helper::getInstance();
+    std::string status = helper->getfromJson(str.toStdString(), "status");
     if (status == "true")
     {
         this->hide();
