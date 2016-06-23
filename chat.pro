@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     message/message.cpp \
     message/loginmessage.cpp \
     cJSON.c \
-    messagebox/exitmessagebox.cpp
+    messagebox/exitmessagebox.cpp \
+    window/regwindow.cpp
 
 HEADERS  += window/loginwindow.h \
     stdafx.h \
@@ -35,10 +36,12 @@ HEADERS  += window/loginwindow.h \
     message/message.h \
     message/loginmessage.h \
     cJSON.h \
-    messagebox/exitmessagebox.h
+    messagebox/exitmessagebox.h \
+    window/regwindow.h
 
 FORMS    += window/loginwindow.ui \
-    window/mainwindow.ui
+    window/mainwindow.ui \
+    window/regwindow.ui
 
 RESOURCES += \
     images.qrc

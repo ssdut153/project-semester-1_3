@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QBitmap>
 #include <QCloseEvent>
+#include <QDialog>
 #include <QEventLoop>
 #include <QKeyEvent>
 #include <QMainWindow>

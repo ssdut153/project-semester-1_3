@@ -10,7 +10,8 @@
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow),
-    client(CommonElements::getInstance()->client)/*,
+    client(CommonElements::getInstance()->client),
+    regWindow(new RegWindow(this))/*,
         mouse_press(false)*/
 {
     ui->setupUi(this);
@@ -45,6 +46,7 @@ void LoginWindow::readClient2()
 
 LoginWindow::~LoginWindow()
 {
+    delete regWindow;
     delete ui;
 }
 
@@ -63,7 +65,7 @@ void LoginWindow::on_loginButton_clicked()
 
 void LoginWindow::on_regButton_clicked()
 {
-
+    regWindow->show();
 }
 
 void LoginWindow::on_exitButton_clicked()
