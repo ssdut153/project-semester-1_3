@@ -22,7 +22,8 @@ protected:
 //    void mouseMoveEvent(QMouseEvent *event);
     //键盘监听
     void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent */*event*/);
+    void closeEvent(QCloseEvent *event);
 
 private slots:
     void on_loginButton_clicked();
@@ -32,7 +33,7 @@ private slots:
     void readClient2();
 
 private:
-    void exit();
+    bool exit();
     Ui::LoginWindow *ui;
     QTcpSocket *&client;
 //    QPoint move_point;

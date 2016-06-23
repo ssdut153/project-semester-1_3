@@ -11,11 +11,11 @@ LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow),
     client(CommonElements::getInstance()->client)/*,
-    mouse_press(false)*/
+        mouse_press(false)*/
 {
     ui->setupUi(this);
     setWindowFlags(/*Qt::FramelessWindowHint |*/ Qt::WindowStaysOnTopHint | Qt::Tool /*| Qt::X11BypassWindowManagerHint*/);
-//    setMouseTracking(true);
+    //    setMouseTracking(true);
     ui->waitingGroupBox->hide();
     connect(client, SIGNAL(readyRead()), this, SLOT(readClient2()));
 }
@@ -67,7 +67,11 @@ void LoginWindow::on_regButton_clicked()
 
 void LoginWindow::on_exitButton_clicked()
 {
-    this->exit();
+    if(this->exit())
+    {
+        CommonElements::getInstance()->trayIcon->hide();
+        std::exit(0);
+    }
 }
 
 void LoginWindow::on_cancelButton_clicked()
@@ -123,19 +127,29 @@ void LoginWindow::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void LoginWindow::keyReleaseEvent(QKeyEvent *event)
+void LoginWindow::keyReleaseEvent(QKeyEvent */*event*/)
 {
 
 }
 
-void LoginWindow::exit()
+void LoginWindow::closeEvent(QCloseEvent *event)
+{
+//    ExitMessageBox emb;
+    QMessageBox messageBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
+    messageBox.setWindowFlags(Qt::WindowStaysOnTopHint| (this->windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+    messageBox.addButton("是", QMessageBox::AcceptRole);
+    messageBox.addButton("否", QMessageBox::RejectRole);
+    if(messageBox.exec() == QMessageBox::RejectRole)
+    {
+        event->ignore();
+    }
+}
+
+bool LoginWindow::exit()
 {
     ExitMessageBox emb;
-    if (emb.exec() == QMessageBox::AcceptRole)
-    {
-        CommonElements::getInstance()->trayIcon->hide();
-        std::exit(0);
-    }
+    bool result = (emb.exec() == QMessageBox::AcceptRole);
+    return result;
 }
 
 //void LoginWindow::paintEvent(QPaintEvent *event)

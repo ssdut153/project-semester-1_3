@@ -14,9 +14,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
         window/loginwindow.cpp \
-    stdafx.cpp \
     window/mainwindow.cpp \
-    ui.cpp \
     tray/traymenu.cpp \
     tray/trayaction.cpp \
     tray/trayicon.cpp \

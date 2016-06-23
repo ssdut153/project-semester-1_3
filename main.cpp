@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "window/mainwindow.h"
 #include "window/loginwindow.h"
 #include "commonelements.h"
 

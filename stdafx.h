@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <QApplication>
 #include <QBitmap>
+#include <QCloseEvent>
 #include <QEventLoop>
 #include <QKeyEvent>
 #include <QMainWindow>

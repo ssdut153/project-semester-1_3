@@ -2,7 +2,9 @@
 #include "traymenu.h"
 #include "window/loginwindow.h"
 #include "tray/trayicon.h"
-extern TrayIcon *tric;
+#include "messagebox/exitmessagebox.h"
+#include "commonelements.h"
+
 TrayMenu::TrayMenu(QWidget *parent):
     QMenu(parent),
     exitAction(new QAction(this))
@@ -20,12 +22,10 @@ TrayMenu::~TrayMenu()
 
 void TrayMenu::on_exitAction_triggered()
 {
-    QMessageBox msgBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
-    msgBox.setWindowFlags(Qt::WindowStaysOnTopHint| (msgBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
-    msgBox.addButton("是", QMessageBox::AcceptRole);
-    msgBox.addButton("否", QMessageBox::RejectRole);
-    if (msgBox.exec() == QMessageBox::AcceptRole)
+    ExitMessageBox emb;
+    if (emb.exec() == QMessageBox::AcceptRole)
     {
+        CommonElements::getInstance()->trayIcon->hide();
         std::exit(0);
     }
 }
