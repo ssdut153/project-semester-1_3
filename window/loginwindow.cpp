@@ -39,6 +39,7 @@ void LoginWindow::readClient2()
     {
         this->on_cancelButton_clicked();
         ui->passwordEdit->clear();
+        ui->messageLabel->setText("用户名或密码错误");
     }
 }
 
@@ -142,6 +143,11 @@ void LoginWindow::closeEvent(QCloseEvent *event)
     if(messageBox.exec() == QMessageBox::RejectRole)
     {
         event->ignore();
+    }
+    else
+    {
+        CommonElements::getInstance()->trayIcon->hide();
+        std::exit(0);
     }
 }
 
