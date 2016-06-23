@@ -25,9 +25,12 @@ void LoginWindow::readClient2()
 {
     QString str = client->readAll();
     Helper *helper = Helper::getInstance();
+    CommonElements *ce = CommonElements::getInstance();
     std::string status = helper->getfromJson(str.toStdString(), "status");
     if (status == "true")
     {
+        ce->username = helper->getfromJson(str.toStdString(), "username");
+        ce->login = true;
         this->hide();
         MainWindow *w2 = 0;
         w2 = new MainWindow;

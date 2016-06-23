@@ -3,6 +3,7 @@
 #include "window/loginwindow.h"
 #include "tray/trayicon.h"
 #include "messagebox/exitmessagebox.h"
+#include "message/logoutmessage.h"
 #include "commonelements.h"
 
 TrayMenu::TrayMenu(QWidget *parent):
@@ -25,7 +26,13 @@ void TrayMenu::on_exitAction_triggered()
     ExitMessageBox emb;
     if (emb.exec() == QMessageBox::AcceptRole)
     {
-        CommonElements::getInstance()->trayIcon->hide();
+        CommonElements *ce = CommonElements::getInstance();
+        if(ce->login)
+        {
+            logoutMessage lm(ce->username);
+            ce->client->write(lm.getJsonString().c_str());
+        }
+        ce->trayIcon->hide();
         std::exit(0);
     }
 }

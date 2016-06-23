@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "ui.h"
+#include <string>
 
 class MainWindow : public QMainWindow
 {
@@ -18,6 +19,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    std::string username;
 };
 
 #endif // MAINWINDOW_H

@@ -6,7 +6,8 @@
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    username(CommonElements::getInstance()->username)
 {
     ui->setupUi(this);
 }
@@ -28,8 +29,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     else
     {
-
-        CommonElements::getInstance()->trayIcon->hide();
+        logoutMessage lm(this->username);
+        CommonElements *ce = CommonElements::getInstance();
+        ce->client->write(lm.getJsonString().c_str());
+        ce->trayIcon->hide();
         std::exit(0);
     }
 }
