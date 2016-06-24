@@ -45,4 +45,7 @@ void RegWindow::on_regButton_clicked()
     }
     regUserMessage regusermessage(ui->usernameEdit->text().toStdString(),ui->passwordEdit_1->text().toStdString());
     CommonElements::getInstance()->client->write(regusermessage.getJsonString().c_str());
+    ui->usernameEdit->clear();
+    ui->passwordEdit_1->clear();
+    ui->passwordEdit_2->clear();
 }
