@@ -40,10 +40,10 @@ void Helper::readClient()
 {
     CommonElements *ce = CommonElements::getInstance();
     QString str = ce->client->readAll();
-    std::string head = this->getfromJson(str.toStdString(), "head");
+    QString head = this->getfromJson(str.toStdString(), "head").c_str();
     if(head == "loginFeedBack")
     {
-        std::string status = this->getfromJson(str.toStdString(), "status");
+        QString status = this->getfromJson(str.toStdString(), "status").c_str();
         if (status == "true")
         {
             ce->username = this->getfromJson(str.toStdString(), "username");
@@ -64,14 +64,21 @@ void Helper::readClient()
     }
     else if(head == "regFeedBack")
     {
-
+        QString status = this->getfromJson(str.toStdString(), "status").c_str();
+        if(status == "true")
+        {
+            ce->loginWindow->regWindow->setMessageLabel("注册成功");
+        }
+        else
+        {
+            ce->loginWindow->regWindow->setMessageLabel("用户名已存在");
+        }
     }
 }
 
 void Helper::writeClient(Message &message)
 {
     CommonElements::getInstance()->client->write(message.getJsonString().c_str());
-    qDebug()<<"test2";
 }
 
 Helper *Helper::helper = 0;

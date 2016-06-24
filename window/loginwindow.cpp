@@ -9,7 +9,7 @@
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow),
-    regWindow(new RegWindow(this))
+    regWindow(0)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -24,19 +24,33 @@ LoginWindow::~LoginWindow()
 
 void LoginWindow::on_loginButton_clicked()
 {
-    ui->loginGroupBox->hide();
-    ui->waitingGroupBox->show();
-    ui->cancelButton->setFocus();
-
-    std::string username = ui->usernameEdit->text().toStdString();
-    std::string password = ui->passwordEdit->text().toStdString();
-
-    loginMessage lm(username, password);
-    Helper::getInstance()->writeClient(lm);
+    QString username = ui->usernameEdit->text();
+    QString password = ui->passwordEdit->text();
+    if(username == "")
+    {
+        ui->messageLabel->setText("请输入用户名");
+    }
+    else if(password == "")
+    {
+        ui->messageLabel->setText("请输入密码");
+    }
+    else
+    {
+        ui->loginGroupBox->hide();
+        ui->waitingGroupBox->show();
+        ui->messageLabel->clear();
+        ui->cancelButton->setFocus();
+        loginMessage lm(username.toStdString(), password.toStdString());
+        Helper::getInstance()->writeClient(lm);
+    }
 }
 
 void LoginWindow::on_regButton_clicked()
 {
+    if(regWindow == 0)
+    {
+        regWindow = new RegWindow(this);
+    }
     regWindow->show();
 }
 

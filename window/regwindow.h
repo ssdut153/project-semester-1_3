@@ -11,12 +11,13 @@ class RegWindow : public QMainWindow
 public:
     explicit RegWindow(QWidget *parent = 0);
     ~RegWindow();
+    void setMessageLabel(const char *message);
 
 protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void on_pushButton_clicked();
+    void on_regButton_clicked();
 
 private:
     Ui::RegWindow *ui;
