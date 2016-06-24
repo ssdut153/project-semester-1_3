@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "window/loginwindow.h"
 #include "commonelements.h"
+#include "helper.h"
 
 int main(int argc, char *argv[])
 {
@@ -8,10 +9,13 @@ int main(int argc, char *argv[])
 
     CommonElements *ce = CommonElements::getInstance();
 
+    Helper::getInstance();
+
     ce->a = a;
 
-    LoginWindow *w1 = new LoginWindow;
-    w1->show();
+    LoginWindow *lw = new LoginWindow;
+    ce->loginWindow = lw;
+    lw->show();
 
     ce->trayIcon->show();
 

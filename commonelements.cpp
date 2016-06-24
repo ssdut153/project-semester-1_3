@@ -5,6 +5,8 @@ CommonElements::CommonElements(QObject *parent):
     trayIcon(new TrayIcon),
     client(new QTcpSocket(this)),
     username(""),
+    loginWindow(0),
+    mainWindow(0),
     login(false),
     a(0)
 {

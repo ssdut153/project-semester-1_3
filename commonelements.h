@@ -2,11 +2,15 @@
 #define COMMONELEMENTS_H
 
 #include "stdafx.h"
-#include <QtNetwork>
 #include "tray/trayicon.h"
+#include "window/loginwindow.h"
+#include "window/mainwindow.h"
+
+class LoginWindow;
 
 class CommonElements:public QObject
 {
+    Q_OBJECT
 
 private:
     static CommonElements *instance;
@@ -18,8 +22,11 @@ public:
     QTcpSocket *client;
     static CommonElements *getInstance();
     std::string username;
+    LoginWindow *loginWindow;
+    MainWindow *mainWindow;
     bool login;
     QApplication *a;
+
 };
 
 #endif // COMMONELEMENTS_H

@@ -21,5 +21,6 @@
 #include <QTextCodec>
 #include <QTimer>
 #include <QThread>
+#include <QtNetwork>
 
 #endif //STDAFX_H

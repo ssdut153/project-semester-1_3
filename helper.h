@@ -1,19 +1,28 @@
 #ifndef HELPER_H
 #define HELPER_H
 
+#include "stdafx.h"
 #include <string>
-#include <QString>
 #include "cJSON.h"
+#include "message/message.h"
 
-class Helper
+class Helper:public QObject
 {
+    Q_OBJECT
+
 private:
-    Helper();
+    explicit Helper();
     static Helper *helper;
+
+private slots:
+    void readClient();
 
 public:
     static Helper *getInstance();
     std::string getfromJson(std::string textJson, const char *name);
+    void writeClient(Message &message);
+    QTcpSocket *client;
+
 };
 
 #endif // HELPER_H
