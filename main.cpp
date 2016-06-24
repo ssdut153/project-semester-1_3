@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
     CommonElements *ce = CommonElements::getInstance();
 
-    Helper::getInstance();
+//    Helper::getInstance();
 
     ce->a = a;
 
@@ -18,20 +18,6 @@ int main(int argc, char *argv[])
     lw->show();
 
     ce->trayIcon->show();
-
-//    while(true)
-//    {
-//        QEventLoop eventloop;
-//        QTimer::singleShot(50, &eventloop, SLOT(quit()));
-//        eventloop.exec();
-//        if(w1->isLogin())
-//        {
-//            w1->hide();
-//            delete w1;
-
-//            break;
-//        }
-//    }
 
     return a->exec();
 

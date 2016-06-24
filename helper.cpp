@@ -2,9 +2,21 @@
 #include "commonelements.h"
 
 Helper::Helper():
-    client(CommonElements::getInstance()->client)
+    client(0)
 {
+
+}
+
+void Helper::connectServer()
+{
+    client = CommonElements::getInstance()->client;
     connect(client, SIGNAL(readyRead()), this, SLOT(readClient()));
+}
+
+void Helper::disconnectServer()
+{
+    disconnect(client, SIGNAL(readyRead()), this, SLOT(readClient()));
+    client = 0;
 }
 
 std::string Helper::getfromJson(std::string textJson, const char *name)
@@ -57,6 +69,8 @@ void Helper::readClient()
         }
         else
         {
+            this->disconnectServer();
+            ce->client->disconnect();
             ce->loginWindow->on_cancelButton_clicked();
             ce->loginWindow->clearPasswordEdit();
             ce->loginWindow->setMessageLabel("用户名或密码错误");
@@ -65,6 +79,8 @@ void Helper::readClient()
     else if(head == "regFeedBack")
     {
         QString status = this->getfromJson(str.toStdString(), "status").c_str();
+        this->disconnectServer();
+        ce->client->disconnect();
         if(status == "true")
         {
             ce->loginWindow->regWindow->setMessageLabel("注册成功");

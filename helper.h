@@ -22,6 +22,8 @@ public:
     std::string getfromJson(std::string textJson, const char *name);
     void writeClient(Message &message);
     QTcpSocket *client;
+    void connectServer();
+    void disconnectServer();
 
 };
 

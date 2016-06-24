@@ -23,29 +23,35 @@ void RegWindow::setMessageLabel(const char *message)
 void RegWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
-    this->hide();
+    delete this;
 }
 
 void RegWindow::on_regButton_clicked()
 {
-    if(ui->usernameEdit->text()=="")
+    QString username = ui->usernameEdit->text();
+    QString password_1 = ui->passwordEdit_1->text();
+    QString password_2 = ui->passwordEdit_2->text();
+    if(username == "")
     {
         ui->messageLabel->setText("请输入用户名");
-        return;
     }
-    else if(ui->passwordEdit_1->text()=="")
+    else if(password_1 == "")
     {
         ui->messageLabel->setText("请输入密码");
-        return;
     }
-    else if(!(ui->passwordEdit_1->text()==ui->passwordEdit_2->text()))
+    else if(!(password_2 == password_1))
     {
         ui->messageLabel->setText("两次输入密码不一致");
-        return;
     }
-    regUserMessage regusermessage(ui->usernameEdit->text().toStdString(),ui->passwordEdit_1->text().toStdString());
-    CommonElements::getInstance()->client->write(regusermessage.getJsonString().c_str());
-    ui->usernameEdit->clear();
-    ui->passwordEdit_1->clear();
-    ui->passwordEdit_2->clear();
+    else
+    {
+        regUserMessage regusermessage(username.toStdString(),password_1.toStdString());
+
+        CommonElements *ce = CommonElements::getInstance();
+        ce->connectServer();
+        ce->client->write(regusermessage.getJsonString().c_str());
+        ui->usernameEdit->clear();
+        ui->passwordEdit_1->clear();
+        ui->passwordEdit_2->clear();
+    }
 }

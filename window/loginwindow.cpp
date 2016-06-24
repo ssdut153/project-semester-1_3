@@ -6,8 +6,9 @@
 #include "messagebox/exitmessagebox.h"
 #include "helper.h"
 
-LoginWindow::LoginWindow(QWidget *parent) :
+LoginWindow::LoginWindow(QWidget *parent):
     QMainWindow(parent),
+    connected(false),
     ui(new Ui::LoginWindow),
     regWindow(0)
 {
@@ -40,17 +41,16 @@ void LoginWindow::on_loginButton_clicked()
         ui->waitingGroupBox->show();
         ui->messageLabel->clear();
         ui->cancelButton->setFocus();
+        CommonElements *ce = CommonElements::getInstance();
         loginMessage lm(username.toStdString(), password.toStdString());
+        ce->connectServer();
         Helper::getInstance()->writeClient(lm);
     }
 }
 
 void LoginWindow::on_regButton_clicked()
 {
-    if(regWindow == 0)
-    {
-        regWindow = new RegWindow(this);
-    }
+    regWindow = new RegWindow(this);
     regWindow->show();
 }
 

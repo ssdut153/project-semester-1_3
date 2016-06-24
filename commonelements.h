@@ -26,6 +26,8 @@ public:
     MainWindow *mainWindow;
     bool login;
     QApplication *a;
+    void connectServer();
+    void disconnectServer();
 
 };
 

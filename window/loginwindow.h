@@ -30,6 +30,7 @@ private slots:
     void on_cancelButton_clicked();
 
 private:
+    bool connected;
     bool exit();
     Ui::LoginWindow *ui;
     RegWindow *regWindow;
