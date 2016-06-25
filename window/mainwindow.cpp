@@ -2,11 +2,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "commonelements.h"
-#include "message/logoutmessage.h"
-#include "message/getfriendlistmessage.h"
+#include "common/message/loginout/logoutmessage.h"
+#include "common/message/friendlist/getfriendlistmessage.h"
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
+    friendListStatus("empty"),
     ui(new Ui::MainWindow),
     username(CommonElements::getInstance()->username)
 {

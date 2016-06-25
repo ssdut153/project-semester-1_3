@@ -2,10 +2,10 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: regusermessage.h
+ *  文件名称: friendlistmessage.h
  *  简要描述:
  *
- *  创建日期: 2016-6-23
+ *  创建日期: 2016-6-24
  *  作者: Yang Zhizhuang
  *  说明:
  *
@@ -13,19 +13,21 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#ifndef REGUSERMESSAGE_H
-#define REGUSERMESSAGE_H
-#include "./base/message.h"
+#ifndef FRIENDLISTMESSAGE_H
+#define FRIENDLISTMESSAGE_H
 
-class regUserMessage : public Message
+#include <vector>
+#include "common/message/base/usernamemessage.h"
+
+class friendListMessage : public Message
 {
 public:
-    regUserMessage();
-    regUserMessage(std::string username,std::string password);
+    friendListMessage();
+    void adduser(std::string username);
     std::string getJsonString();
     bool loadfromJson(std::string textJson);
-    std::string user;
-    std::string pass;
+    std::vector<std::string> user;
+    int size;
 };
 
-#endif // REGUSERMESSAGE_H
+#endif // FRIENDLISTMESSAGE_H

@@ -2,10 +2,10 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: getfriendlistmessage.h
+ *  文件名称: regusermessage.h
  *  简要描述:
  *
- *  创建日期: 2016-6-24
+ *  创建日期: 2016-6-23
  *  作者: Yang Zhizhuang
  *  说明:
  *
@@ -13,15 +13,15 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#ifndef GETFRIENDLISTMESSAGE_H
-#define GETFRIENDLISTMESSAGE_H
-#include "./base/usernamemessage.h"
+#ifndef REGUSERMESSAGE_H
+#define REGUSERMESSAGE_H
+#include "common/message/base/upmessage.h"
 
-class getFriendListMessage : public usernameMessage
+class regUserMessage : public upMessage
 {
 public:
-    getFriendListMessage();
-    getFriendListMessage(std::string username);
+    regUserMessage();
+    regUserMessage(std::string username,std::string password);
 };
 
-#endif // GETFRIENDLISTMESSAGE_H
+#endif // REGUSERMESSAGE_H

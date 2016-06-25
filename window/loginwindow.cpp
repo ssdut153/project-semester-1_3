@@ -2,7 +2,7 @@
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
 #include "tray/trayicon.h"
-#include "message/loginmessage.h"
+#include "common/message/loginout/loginmessage.h"
 #include "messagebox/exitmessagebox.h"
 #include "helper.h"
 

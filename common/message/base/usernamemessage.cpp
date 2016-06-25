@@ -2,10 +2,10 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: regusermessage.cpp
+ *  文件名称: usernamemessage.cpp
  *  简要描述:
  *
- *  创建日期: 2016-6-23
+ *  创建日期: 2016-6-24
  *  作者: Yang Zhizhuang
  *  说明:
  *
@@ -13,38 +13,35 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#include "regusermessage.h"
-#include "../cJSON.h"
+#include "usernamemessage.h"
+#include "common/cJSON.h"
 /**
- * @brief regUserMessage::regUserMessage
+ * @brief usernameMessage::usernameMessage
  * @param username 用户名
- * @param password 密码
  */
-regUserMessage::regUserMessage(std::string username,std::string password)
+usernameMessage::usernameMessage(std::string username)
 {
     user=username;
-    pass=password;
-    head="regUser";
+    head="defaultUsername";
 }
 /**
- * @brief regUserMessage::regUserMessage
+ * @brief usernameMessage::usernameMessage
  */
-regUserMessage::regUserMessage()
+usernameMessage::usernameMessage()
 {
-    head="regUser";
+    head="defaultUsername";
 }
 /**
- * @brief regUserMessage::getJsonString
+ * @brief usernameMessage::getJsonString
  * @return  对应的单行Json字符串
  */
-std::string regUserMessage::getJsonString()
+std::string usernameMessage::getJsonString()
 {
     // 创建JSON Object
     cJSON *root = cJSON_CreateObject();
     // 加入节点（键值对）
     cJSON_AddStringToObject(root,"head",head.c_str());
     cJSON_AddStringToObject(root,"username",user.c_str());
-    cJSON_AddStringToObject(root,"password",pass.c_str());
     // 打印JSON数据包
     char *out = cJSON_PrintUnformatted(root);
     // 释放内存
@@ -54,13 +51,13 @@ std::string regUserMessage::getJsonString()
     return temp;
 }
 /**
- * @brief regUserMessage::loadfromJson
+ * @brief usernameMessage::loadfromJson
  * @param textJson Json字符串
  * @return  bool 是否载入成功
  */
-bool regUserMessage::loadfromJson(std::string textJson)
+bool usernameMessage::loadfromJson(std::string textJson)
 {
-    cJSON *json , *json_username , *json_password;
+    cJSON *json , *json_username;
     // 解析数据包
     const char* text = textJson.c_str();
     json = cJSON_Parse(text);
@@ -71,12 +68,9 @@ bool regUserMessage::loadfromJson(std::string textJson)
         // 解析username
         json_username = cJSON_GetObjectItem( json , "username");
         user=json_username->valuestring;
-        // 解析password
-        json_password = cJSON_GetObjectItem( json , "password");
-        pass=json_password->valuestring;
         // 释放内存空间
         cJSON_Delete(json);
         return true;
     }
-
 }
+

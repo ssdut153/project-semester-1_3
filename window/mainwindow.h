@@ -12,6 +12,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QString friendListStatus;
 
 protected:
     void closeEvent(QCloseEvent *event);

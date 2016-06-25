@@ -3,7 +3,7 @@
 #include "window/loginwindow.h"
 #include "tray/trayicon.h"
 #include "messagebox/exitmessagebox.h"
-#include "message/logoutmessage.h"
+#include "common/message/loginout/logoutmessage.h"
 #include "commonelements.h"
 
 TrayMenu::TrayMenu(QWidget *parent):

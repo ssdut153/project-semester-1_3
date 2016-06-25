@@ -2,10 +2,10 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: getgetFriendListMessage.cpp
+ *  文件名称: loginmessage.cpp
  *  简要描述:
  *
- *  创建日期: 2016-6-24
+ *  创建日期: 2016-6-22
  *  作者: Yang Zhizhuang
  *  说明:
  *
@@ -13,21 +13,23 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#include "getfriendlistmessage.h"
-#include "../cJSON.h"
+#include "loginmessage.h"
+#include "common/cJSON.h"
 /**
- * @brief getFriendListMessage::getFriendListMessage
+ * @brief loginMessage::loginMessage
  * @param username 用户名
+ * @param password 密码
  */
-getFriendListMessage::getFriendListMessage(std::string username)
+loginMessage::loginMessage(std::string username,std::string password)
 {
     user=username;
-    head="getFriendList";
+    pass=password;
+    head="login";
 }
 /**
- * @brief getFriendListMessage::getFriendListMessage
+ * @brief loginMessage::loginMessage
  */
-getFriendListMessage::getFriendListMessage()
+loginMessage::loginMessage()
 {
-    head="getFriendList";
+    head="login";
 }

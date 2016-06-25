@@ -1,7 +1,7 @@
 #include "regwindow.h"
 #include "ui_regwindow.h"
 #include "commonelements.h"
-#include "message/regusermessage.h"
+#include "common/message/reg/regusermessage.h"
 
 RegWindow::RegWindow(QWidget *parent) :
     QMainWindow(parent),

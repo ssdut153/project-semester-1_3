@@ -13,42 +13,44 @@ TARGET = chat
 TEMPLATE = app
 
 SOURCES += main.cpp \
-        window/loginwindow.cpp \
+    window/loginwindow.cpp \
     window/mainwindow.cpp \
+    window/regwindow.cpp \
     tray/traymenu.cpp \
     tray/trayaction.cpp \
     tray/trayicon.cpp \
     commonelements.cpp \
-    message/base/message.cpp \
-    message/base/usernamemessage.cpp \
-    message/base/requestmessage.cpp \
-    message/loginmessage.cpp \
-    message/logoutmessage.cpp \
-    message/regusermessage.cpp \
-    message/getfriendlistmessage.cpp \
-    cJSON.c \
+    common/message/base/message.cpp \
+    common/message/base/upmessage.cpp \
+    common/message/base/usernamemessage.cpp \
+    common/message/loginout/loginmessage.cpp \
+    common/message/loginout/logoutmessage.cpp \
+    common/message/reg/regusermessage.cpp \
+    common/message/friendlist/getfriendlistmessage.cpp \
+    common/message/friendlist/friendlistmessage.cpp \
+    common/cJSON.c \
     messagebox/exitmessagebox.cpp \
-    window/regwindow.cpp \
     helper.cpp
 
-HEADERS  += window/loginwindow.h \
-    stdafx.h \
+HEADERS  += stdafx.h \
+    window/loginwindow.h \
     window/mainwindow.h \
+    window/regwindow.h \
     ui.h \
     tray/traymenu.h \
     tray/trayaction.h \
     tray/trayicon.h \
     commonelements.h \
-    message/base/message.h \
-    message/base/usernamemessage.h \
-    message/base/requestmessage.h \
-    message/loginmessage.h \
-    message/logoutmessage.h \
-    message/regusermessage.h \
-    message/getfriendlistmessage.h \
-    cJSON.h \
+    common/message/base/message.h \
+    common/message/base/upmessage.h \
+    common/message/base/usernamemessage.h \
+    common/message/loginout/loginmessage.h \
+    common/message/loginout/logoutmessage.h \
+    common/message/reg/regusermessage.h \
+    common/message/friendlist/getfriendlistmessage.h \
+    common/message/friendlist/friendlistmessage.h \
+    common/cJSON.h \
     messagebox/exitmessagebox.h \
-    window/regwindow.h \
     helper.h
 
 FORMS    += window/loginwindow.ui \

@@ -2,10 +2,10 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: message.h
+ *  文件名称: upmessage.h
  *  简要描述:
  *
- *  创建日期: 2016-6-22
+ *  创建日期: 2016-6-25
  *  作者: Yang Zhizhuang
  *  说明:
  *
@@ -13,22 +13,20 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#ifndef MESSAGE_H
-#define MESSAGE_H
-#include <string>
+#ifndef UPMESSAGE_H
+#define UPMESSAGE_H
 
-class Message
+#include "message.h"
+
+class upMessage : public Message
 {
 public:
-    Message();
-    Message(std::string h);
-    virtual ~Message(){}
-    virtual std::string getJsonString()=0;
-    virtual bool loadfromJson(std::string textJson)=0;
-    void addHead(std::string h);
-    std::string getHead();
-    std::string head;
+    upMessage();
+    upMessage(std::string username,std::string password);
+    std::string getJsonString();
+    bool loadfromJson(std::string textJson);
+    std::string user;
+    std::string pass;
 };
 
-
-#endif // MESSAGE_H
+#endif // UPMESSAGE_H

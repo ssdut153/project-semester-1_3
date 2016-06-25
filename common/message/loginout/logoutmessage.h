@@ -15,7 +15,8 @@
  ****************************************************************************************/
 #ifndef LOGOUTMESSAGE_H
 #define LOGOUTMESSAGE_H
-#include "./base/usernamemessage.h"
+
+#include "common/message/base/usernamemessage.h"
 
 class logoutMessage : public usernameMessage
 {

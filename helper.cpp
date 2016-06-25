@@ -1,6 +1,7 @@
 #include "helper.h"
 #include "commonelements.h"
-#include "message/loginmessage.h"
+#include "common/message/loginout/loginmessage.h"
+#include <QDebug>
 
 Helper::Helper():
     client(0)
@@ -93,6 +94,16 @@ void Helper::readClient()
             ce->loginWindow->regWindow->setRegButtonEnabled(true);
         }
     }
+    else if(head == "startSendList")
+    {
+        ce->mainWindow->friendListStatus = "loading";
+//        qDebug()<<str<<"\n";
+    }
+    else
+    {
+//        qDebug()<<str<<"\n";
+    }
+    qDebug()<<str<<"\n";
 }
 
 void Helper::writeClient(Message &message)

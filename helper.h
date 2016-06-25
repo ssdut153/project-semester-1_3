@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include <string>
-#include "cJSON.h"
-#include "message/message.h"
+#include "common/cJSON.h"
+#include "common/message/base/message.h"
 
 class Helper:public QObject
 {
