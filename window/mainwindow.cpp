@@ -7,7 +7,6 @@
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
-    friendListStatus("empty"),
     ui(new Ui::MainWindow),
     username(CommonElements::getInstance()->username)
 {
@@ -21,6 +20,15 @@ MainWindow::MainWindow(QWidget *parent):
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::loadFriendList(std::vector<std::string> &users)
+{
+    int size = users.size();
+    for(int i = 0 ;i < size;i++)
+    {
+        friendlist.push_back(users[i]);
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

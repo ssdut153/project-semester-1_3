@@ -1,9 +1,10 @@
 #include "helper.h"
 #include "commonelements.h"
 #include "common/message/loginout/loginmessage.h"
-#include <QDebug>
+#include "common/message/friendlist/friendlistmessage.h"
 
 Helper::Helper():
+    status("none"),
     client(0)
 {
 
@@ -54,56 +55,70 @@ void Helper::readClient()
 {
     CommonElements *ce = CommonElements::getInstance();
     QString str = ce->client->readAll();
-    QString head = this->getfromJson(str.toStdString(), "head").c_str();
-    if(head == "loginFeedBack")
+    if(status == "none")
     {
-        QString status = this->getfromJson(str.toStdString(), "status").c_str();
-        if (status == "true")
+        QString head = this->getfromJson(str.toStdString(), "head").c_str();
+        if(head == "loginFeedBack")
         {
-            ce->username = this->getfromJson(str.toStdString(), "username");
-            ce->login = true;
-            ce->loginWindow->hide();
-            delete ce->loginWindow;
-            ce->loginWindow = 0;
-            MainWindow *mw = new MainWindow;
-            ce->mainWindow = mw;
-            mw->show();
+            QString status = this->getfromJson(str.toStdString(), "status").c_str();
+            if (status == "true")
+            {
+                ce->username = this->getfromJson(str.toStdString(), "username");
+                ce->login = true;
+                ce->loginWindow->hide();
+                delete ce->loginWindow;
+                ce->loginWindow = 0;
+                MainWindow *mw = new MainWindow;
+                ce->mainWindow = mw;
+                mw->show();
+            }
+            else
+            {
+                this->disconnectServer();
+                ce->client->disconnect();
+                ce->loginWindow->on_cancelButton_clicked();
+                ce->loginWindow->clearPasswordEdit();
+                ce->loginWindow->setMessageLabel("用户名或密码错误");
+            }
+        }
+        else if(head == "regFeedBack")
+        {
+            QString status = this->getfromJson(str.toStdString(), "status").c_str();
+            if(status == "true")
+            {
+                loginMessage lm(ce->loginWindow->regWindow->username,ce->loginWindow->regWindow->password);
+                this->writeClient(lm);
+            }
+            else
+            {
+                this->disconnectServer();
+                ce->client->disconnect();
+                ce->loginWindow->regWindow->setMessageLabel("注册失败");
+                ce->loginWindow->regWindow->setRegButtonEnabled(true);
+            }
+        }
+        else if(head == "startSendList")
+        {
+            this->status = "getfriendlist";
         }
         else
         {
-            this->disconnectServer();
-            ce->client->disconnect();
-            ce->loginWindow->on_cancelButton_clicked();
-            ce->loginWindow->clearPasswordEdit();
-            ce->loginWindow->setMessageLabel("用户名或密码错误");
+
         }
+
     }
-    else if(head == "regFeedBack")
+    else if(status == "getfriendlist")
     {
-        QString status = this->getfromJson(str.toStdString(), "status").c_str();
-        if(status == "true")
-        {
-            loginMessage lm(ce->loginWindow->regWindow->username,ce->loginWindow->regWindow->password);
-            this->writeClient(lm);
+        status = "none";
+        friendListMessage flm;
+        if(flm.loadfromJson(str.toStdString())){
+            ce->mainWindow->loadFriendList(flm.user);
         }
-        else
-        {
-            this->disconnectServer();
-            ce->client->disconnect();
-            ce->loginWindow->regWindow->setMessageLabel("注册失败");
-            ce->loginWindow->regWindow->setRegButtonEnabled(true);
-        }
-    }
-    else if(head == "startSendList")
-    {
-        ce->mainWindow->friendListStatus = "loading";
-//        qDebug()<<str<<"\n";
     }
     else
     {
-//        qDebug()<<str<<"\n";
+
     }
-    qDebug()<<str<<"\n";
 }
 
 void Helper::writeClient(Message &message)

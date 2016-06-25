@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "ui.h"
 #include <string>
+#include <vector>
 
 class MainWindow : public QMainWindow
 {
@@ -12,7 +13,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QString friendListStatus;
+    void loadFriendList(std::vector<std::string> &users);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -20,6 +21,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     std::string username;
+    std::vector<std::string> friendlist;
 };
 
 #endif // MAINWINDOW_H
