@@ -1,5 +1,6 @@
 #include "helper.h"
 #include "commonelements.h"
+#include "message/loginmessage.h"
 
 Helper::Helper():
     client(0)
@@ -79,15 +80,17 @@ void Helper::readClient()
     else if(head == "regFeedBack")
     {
         QString status = this->getfromJson(str.toStdString(), "status").c_str();
-        this->disconnectServer();
-        ce->client->disconnect();
         if(status == "true")
         {
-            ce->loginWindow->regWindow->setMessageLabel("注册成功");
+            loginMessage lm(ce->loginWindow->regWindow->username,ce->loginWindow->regWindow->password);
+            this->writeClient(lm);
         }
         else
         {
-            ce->loginWindow->regWindow->setMessageLabel("用户名已存在");
+            this->disconnectServer();
+            ce->client->disconnect();
+            ce->loginWindow->regWindow->setMessageLabel("注册失败");
+            ce->loginWindow->regWindow->setRegButtonEnabled(true);
         }
     }
 }

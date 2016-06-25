@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "commonelements.h"
 #include "message/logoutmessage.h"
+#include "message/getfriendlistmessage.h"
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
@@ -10,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent):
     username(CommonElements::getInstance()->username)
 {
     ui->setupUi(this);
+    CommonElements *ce = CommonElements::getInstance();
+    getFriendListMessage gflm(ce->username);
+    Helper *helper = Helper::getInstance();
+    helper->writeClient(gflm);
 }
 
 MainWindow::~MainWindow()
@@ -38,26 +43,3 @@ void MainWindow::closeEvent(QCloseEvent *event)
         ce->a->quit();
     }
 }
-
-//void MainWindow::paintEvent(QPaintEvent *event)
-//{
-//    QBitmap bmp(this->size());
-//    bmp.fill();
-//    QPainter p(&bmp);
-//    p.setRenderHint(QPainter::Antialiasing);
-//    int arcR = 10;
-//    QRect rect = this->rect();
-//    QPainterPath path;
-//    path.moveTo(arcR, 0);
-//    path.arcTo(0, 0, arcR * 2, arcR * 2, 90.0f, 90.0f);
-//    path.lineTo(0, rect.height() - arcR * 2);
-//    path.arcTo(0, rect.height() - arcR * 2, arcR * 2, arcR * 2, 180.0f, 90.0f);
-//    path.lineTo(rect.width() - arcR, rect.height());
-//    path.arcTo(rect.width() - arcR * 2, rect.height() - arcR * 2, arcR * 2, arcR * 2, -90.0f, 90.0f);
-//    path.lineTo(rect.width(), arcR);
-//    path.arcTo(rect.width() - arcR * 2, 0, arcR * 2, arcR * 2, 0.0f, 90.0f);
-//    path.lineTo(arcR, 0);
-//    p.drawPath(path);
-//    p.fillPath(path, QBrush(Qt::red));
-//    setMask(bmp);
-//}

@@ -19,10 +19,13 @@ SOURCES += main.cpp \
     tray/trayaction.cpp \
     tray/trayicon.cpp \
     commonelements.cpp \
-    message/message.cpp \
+    message/base/message.cpp \
+    message/base/usernamemessage.cpp \
+    message/base/requestmessage.cpp \
     message/loginmessage.cpp \
     message/logoutmessage.cpp \
     message/regusermessage.cpp \
+    message/getfriendlistmessage.cpp \
     cJSON.c \
     messagebox/exitmessagebox.cpp \
     window/regwindow.cpp \
@@ -36,10 +39,13 @@ HEADERS  += window/loginwindow.h \
     tray/trayaction.h \
     tray/trayicon.h \
     commonelements.h \
-    message/message.h \
+    message/base/message.h \
+    message/base/usernamemessage.h \
+    message/base/requestmessage.h \
     message/loginmessage.h \
     message/logoutmessage.h \
     message/regusermessage.h \
+    message/getfriendlistmessage.h \
     cJSON.h \
     messagebox/exitmessagebox.h \
     window/regwindow.h \

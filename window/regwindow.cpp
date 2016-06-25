@@ -5,9 +5,12 @@
 
 RegWindow::RegWindow(QWidget *parent) :
     QMainWindow(parent),
+    username(""),
+    password(""),
     ui(new Ui::RegWindow)
 {
     ui->setupUi(this);
+    this->setWindowModality(Qt::ApplicationModal);
 }
 
 RegWindow::~RegWindow()
@@ -24,6 +27,11 @@ void RegWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     delete this;
+}
+
+void RegWindow::setRegButtonEnabled(bool enabled)
+{
+    ui->regButton->setEnabled(enabled);
 }
 
 void RegWindow::on_regButton_clicked()
@@ -53,13 +61,12 @@ void RegWindow::on_regButton_clicked()
     }
     else
     {
-        regUserMessage regusermessage(username.toStdString(),password_1.toStdString());
-
+        ui->regButton->setEnabled(false);
+        regUserMessage rum(username.toStdString(),password_1.toStdString());
         CommonElements *ce = CommonElements::getInstance();
+        this->username = username.toStdString();
+        this->password = password_1.toStdString();
         ce->connectServer();
-        ce->client->write(regusermessage.getJsonString().c_str());
-        ui->usernameEdit->clear();
-        ui->passwordEdit_1->clear();
-        ui->passwordEdit_2->clear();
+        Helper::getInstance()->writeClient(rum);
     }
 }

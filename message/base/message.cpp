@@ -2,7 +2,7 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: loginmessage.h
+ *  文件名称: message.cpp
  *  简要描述:
  *
  *  创建日期: 2016-6-22
@@ -13,19 +13,36 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#ifndef LOGINMESSAGE_H
-#define LOGINMESSAGE_H
-#include "./base/message.h"
-
-class loginMessage:public Message
+#include "message.h"
+/**
+ * @brief Message::Message
+ */
+Message::Message()
 {
-public:
-    loginMessage();
-    loginMessage(std::string username,std::string password);
-    std::string getJsonString();
-    bool loadfromJson(std::string textJson);
-    std::string user;
-    std::string pass;
-};
+    head="";
+}
+/**
+ * @brief Message::Message
+ * @param h 头
+ */
+Message::Message(std::string h)
+{
+    head=h;
+}
+/**
+ * @brief Message::addHead
+ * @param h 头
+ */
+void Message::addHead(std::string h)
+{
+    head=h;
+}
+/**
+ * @brief Message::getHead
+ * @return 头
+ */
+std::string Message::getHead()
+{
+    return head;
+}
 
-#endif // LOGINMESSAGE_H
