@@ -39,13 +39,13 @@
      <string/>
     </property>
    </widget>
-   <widget class="QTreeView" name="palTreeView">
+   <widget class="QListWidget" name="friendListWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>70</y>
       <width>256</width>
-      <height>511</height>
+      <height>491</height>
      </rect>
     </property>
    </widget>

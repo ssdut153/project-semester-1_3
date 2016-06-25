@@ -8,7 +8,8 @@
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    username(CommonElements::getInstance()->username)
+    username(CommonElements::getInstance()->username),
+    qlwi(0)
 {
     ui->setupUi(this);
     CommonElements *ce = CommonElements::getInstance();
@@ -24,10 +25,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::loadFriendList(std::vector<std::string> &users)
 {
+    friendlist.clear();
     int size = users.size();
     for(int i = 0 ;i < size;i++)
     {
         friendlist.push_back(users[i]);
+    }
+    qlwi = new QListWidgetItem[size];
+    for(int i = 0;i < size;i++)
+    {
+        (qlwi + i)->setText(friendlist[i].c_str());
+        ui->friendListWidget->addItem(qlwi + i);
     }
 }
 

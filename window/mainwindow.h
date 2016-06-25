@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QListWidgetItem>
 #include "stdafx.h"
 #include "ui.h"
 #include <string>
@@ -22,6 +23,8 @@ private:
     Ui::MainWindow *ui;
     std::string username;
     std::vector<std::string> friendlist;
+    QListWidgetItem *qlwi;
+
 };
 
 #endif // MAINWINDOW_H
