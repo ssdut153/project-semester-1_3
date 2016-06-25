@@ -48,7 +48,7 @@
      </rect>
     </property>
     <property name="placeholderText">
-     <string>请输入用户名</string>
+     <string>请输入用户名(3-20位)</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="passwordEdit_1">
@@ -64,7 +64,7 @@
      <enum>QLineEdit::Password</enum>
     </property>
     <property name="placeholderText">
-     <string>请输入密码</string>
+     <string>请输入密码(6-16位)</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="passwordEdit_2">

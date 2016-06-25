@@ -116,8 +116,9 @@ void LoginWindow::closeEvent(QCloseEvent *event)
     }
     else
     {
-        CommonElements::getInstance()->trayIcon->hide();
-        std::exit(0);
+        CommonElements *ce = CommonElements::getInstance();
+        ce->trayIcon->hide();
+        ce->a->quit();
     }
 }
 

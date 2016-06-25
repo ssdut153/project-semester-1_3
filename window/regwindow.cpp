@@ -35,9 +35,17 @@ void RegWindow::on_regButton_clicked()
     {
         ui->messageLabel->setText("请输入用户名");
     }
+    else if(username.length() < 3 || username.length() > 20)
+    {
+        ui->messageLabel->setText("用户名应在3-20位");
+    }
     else if(password_1 == "")
     {
         ui->messageLabel->setText("请输入密码");
+    }
+    else if(password_1.length() < 6 || password_1.length() > 16)
+    {
+        ui->messageLabel->setText("密码应在6-16位");
     }
     else if(!(password_2 == password_1))
     {
