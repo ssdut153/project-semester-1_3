@@ -65,6 +65,14 @@ void MainWindow::loadFriendList(std::vector<std::string> &users)
         (qlwi + i)->setText(friendlist[i].c_str());
         this->friendListWidget->addItem(qlwi + i);
     }
+//    connect(qlwi, SIGNAL(itemDoubleClicked()), this, SLOT(on_qlwi_doubleClicked()));
+}
+/**
+ * @brief MainWindow::on_qlwi_doubleClicked
+ */
+void MainWindow::on_qlwi_doubleClicked()
+{
+
 }
 
 /**

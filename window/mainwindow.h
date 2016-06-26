@@ -36,6 +36,9 @@ private:
     std::vector<std::string> friendlist;
     QListWidgetItem *qlwi;
 
+private slots:
+    void on_qlwi_doubleClicked();
+
 signals:
 
 public slots:
