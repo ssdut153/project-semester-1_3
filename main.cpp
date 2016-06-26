@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
 {
     QApplication *a = new QApplication(argc, argv);
 
+    a->setWindowIcon(QIcon(":/images/icon"));
+
     TrayIcon *ti = new TrayIcon;
     LoginWindow *lw = new LoginWindow;
     CommonElements *ce = CommonElements::getInstance();

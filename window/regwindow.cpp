@@ -28,6 +28,8 @@ RegWindow::RegWindow(QWidget *parent):
     passwordEdit_2(new QLineEdit(this)),
     regButton(new QPushButton(this))
 {
+    this->setWindowModality(Qt::ApplicationModal);
+
     this->setWindowTitle("注册");
 
     this->setMaximumSize(270, 200);
