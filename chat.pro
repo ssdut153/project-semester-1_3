@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     helper.cpp \
     window/loginwindow.cpp \
     window/mainwindow.cpp \
-    window/regwindow.cpp
+    window/regwindow.cpp \
+    friendlistitem.cpp
 
 HEADERS  += \
     common/message/base/message.h \
@@ -48,7 +49,8 @@ HEADERS  += \
     helper.h \
     window/loginwindow.h \
     window/mainwindow.h \
-    window/regwindow.h
+    window/regwindow.h \
+    friendlistitem.h
 
 FORMS    +=
 

@@ -17,6 +17,7 @@
 #define MAINWINDOW_H
 
 #include "stdafx.h"
+#include "friendlistitem.h"
 
 class MainWindow : public QMainWindow
 {
@@ -34,10 +35,10 @@ private:
     QLabel *usernameLabel;
     QListWidget *friendListWidget;
     std::vector<std::string> friendlist;
-    QListWidgetItem *qlwi;
+    FriendListItem *qlwi;
 
 private slots:
-    void on_qlwi_doubleClicked();
+    void on_friendListWidget_doubleClicked(QListWidgetItem *item);
 
 signals:
 

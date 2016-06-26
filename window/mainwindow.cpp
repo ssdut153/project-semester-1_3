@@ -18,6 +18,7 @@
 #include "common/message/friendlist/getfriendlistmessage.h"
 #include "commonelements.h"
 #include "helper.h"
+#include <QDebug>
 /**
  * @brief MainWindow::MainWindow
  * @param parent
@@ -41,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent):
     Helper *helper = Helper::getInstance();
     getFriendListMessage gflm(ce->username);
     helper->writeClient(gflm);
+    connect(friendListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_friendListWidget_doubleClicked(QListWidgetItem*)));
 }
 /**
  * @brief MainWindow::loadFriendList
@@ -58,23 +60,18 @@ void MainWindow::loadFriendList(std::vector<std::string> &users)
     {
         delete qlwi;
     }
-    qlwi = new QListWidgetItem[size + 1];
+    qlwi = new FriendListItem[size + 1];
     qlwi->setText("我的好友");
     for(int i = 1;i < size + 1;i++)
     {
         (qlwi + i)->setText(friendlist[i].c_str());
         this->friendListWidget->addItem(qlwi + i);
     }
-//    connect(qlwi, SIGNAL(itemDoubleClicked()), this, SLOT(on_qlwi_doubleClicked()));
 }
-/**
- * @brief MainWindow::on_qlwi_doubleClicked
- */
-void MainWindow::on_qlwi_doubleClicked()
+void MainWindow::on_friendListWidget_doubleClicked(QListWidgetItem *item)
 {
-
+    qDebug()<<item->text();
 }
-
 /**
  * @brief MainWindow::closeEvent
  * @param event
