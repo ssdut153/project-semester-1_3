@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-06-16T08:23:28
+# Project created by QtCreator 2016-06-26T09:53:17
 #
 #-------------------------------------------------
 
@@ -12,14 +12,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = chat
 TEMPLATE = app
 
+
 SOURCES += main.cpp \
-    window/loginwindow.cpp \
-    window/mainwindow.cpp \
-    window/regwindow.cpp \
-    tray/traymenu.cpp \
-    tray/trayaction.cpp \
-    tray/trayicon.cpp \
-    commonelements.cpp \
     common/message/base/message.cpp \
     common/message/base/upmessage.cpp \
     common/message/base/usernamemessage.cpp \
@@ -29,18 +23,15 @@ SOURCES += main.cpp \
     common/message/friendlist/getfriendlistmessage.cpp \
     common/message/friendlist/friendlistmessage.cpp \
     common/cJSON.c \
-    messagebox/exitmessagebox.cpp \
-    helper.cpp
+    tray/trayicon.cpp \
+    tray/traymenu.cpp \
+    commonelements.cpp \
+    helper.cpp \
+    window/loginwindow.cpp \
+    window/mainwindow.cpp \
+    window/regwindow.cpp
 
-HEADERS  += stdafx.h \
-    window/loginwindow.h \
-    window/mainwindow.h \
-    window/regwindow.h \
-    ui.h \
-    tray/traymenu.h \
-    tray/trayaction.h \
-    tray/trayicon.h \
-    commonelements.h \
+HEADERS  += \
     common/message/base/message.h \
     common/message/base/upmessage.h \
     common/message/base/usernamemessage.h \
@@ -49,19 +40,17 @@ HEADERS  += stdafx.h \
     common/message/reg/regusermessage.h \
     common/message/friendlist/getfriendlistmessage.h \
     common/message/friendlist/friendlistmessage.h \
+    tray/trayicon.h \
+    tray/traymenu.h \
     common/cJSON.h \
-    messagebox/exitmessagebox.h \
-    helper.h
+    stdafx.h \
+    commonelements.h \
+    helper.h \
+    window/loginwindow.h \
+    window/mainwindow.h \
+    window/regwindow.h
 
-FORMS    += window/loginwindow.ui \
-    window/mainwindow.ui \
-    window/regwindow.ui
+FORMS    +=
 
 RESOURCES += \
     images.qrc
-
-DISTFILES += \
-    ico.rc
-
-RC_FILE = \
-     ico.rc

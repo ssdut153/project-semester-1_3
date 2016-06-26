@@ -1,46 +1,83 @@
-#include "stdafx.h"
 #include "loginwindow.h"
-#include "ui_loginwindow.h"
-#include "tray/trayicon.h"
+#include "commonelements.h"
 #include "common/message/loginout/loginmessage.h"
-#include "messagebox/exitmessagebox.h"
 #include "helper.h"
 
 LoginWindow::LoginWindow(QWidget *parent):
     QMainWindow(parent),
-    connected(false),
-    ui(new Ui::LoginWindow),
-    regWindow(0)
+    loginGroupBox(new QGroupBox(this)),
+    messageLabel(new QLabel(loginGroupBox)),
+    usernameEdit(new QLineEdit(loginGroupBox)),
+    passwordEdit(new QLineEdit(loginGroupBox)),
+    loginButton(new QPushButton(loginGroupBox)),
+    regButton(new QPushButton(loginGroupBox)),
+    exitButton(new QPushButton(loginGroupBox)),
+    waitingGroupBox(new QGroupBox(this)),
+    waitingLabel(new QLabel(waitingGroupBox)),
+    cancelButton(new QPushButton(waitingGroupBox)),
+    regWindow(new RegWindow(this))
 {
-    ui->setupUi(this);
-    setWindowFlags(Qt::WindowStaysOnTopHint);
-    ui->waitingGroupBox->hide();
+    this->setWindowTitle("登录");
+
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+
+    this->setMaximumSize(270, 150);
+    this->setMinimumSize(270, 150);
+
+    this->loginGroupBox->setGeometry(0, 0, 270, 150);
+    this->messageLabel->setGeometry(40, 5, 190, 30);
+    this->usernameEdit->setGeometry(40, 30, 190, 30);
+    this->passwordEdit->setGeometry(40,70,190, 30);
+    this->loginButton->setGeometry(40, 110, 50, 30);
+    this->regButton->setGeometry(110, 110, 50, 30);
+    this->exitButton->setGeometry(180, 110, 50, 30);
+    this->waitingGroupBox->setGeometry(0, 0, 270, 150);
+    this->waitingLabel->setGeometry(110, 50, 100, 30);
+    this->cancelButton->setGeometry(110, 110, 50, 30);
+
+    this->usernameEdit->setPlaceholderText("请输入用户名");
+    this->passwordEdit->setPlaceholderText("请输入密码");
+
+    this->passwordEdit->setEchoMode(QLineEdit::Password);
+
+    this->loginButton->setText("登录");
+    this->regButton->setText("注册");
+    this->exitButton->setText("退出");
+    this->waitingLabel->setText("正在登录");
+    this->cancelButton->setText("取消");
+
+    this->waitingGroupBox->hide();
+    this->regWindow->hide();
+
+    connect(loginButton, SIGNAL(clicked(bool)), this, SLOT(on_loginButton_clicked()));
+    connect(regButton, SIGNAL(clicked(bool)), this, SLOT(on_regButton_clicked()));
+    connect(exitButton, SIGNAL(clicked(bool)), this, SLOT(on_exitButton_clicked()));
+    connect(cancelButton, SIGNAL(clicked(bool)), this,SLOT(on_cancelButton_clicked()));
 }
 
 LoginWindow::~LoginWindow()
 {
-    delete regWindow;
-    delete ui;
+
 }
 
 void LoginWindow::on_loginButton_clicked()
 {
-    QString username = ui->usernameEdit->text();
-    QString password = ui->passwordEdit->text();
+    QString username = this->usernameEdit->text();
+    QString password = this->passwordEdit->text();
     if(username == "")
     {
-        ui->messageLabel->setText("请输入用户名");
+        this->messageLabel->setText("请输入用户名");
     }
     else if(password == "")
     {
-        ui->messageLabel->setText("请输入密码");
+        this->messageLabel->setText("请输入密码");
     }
     else
     {
-        ui->loginGroupBox->hide();
-        ui->waitingGroupBox->show();
-        ui->messageLabel->clear();
-        ui->cancelButton->setFocus();
+        this->loginGroupBox->hide();
+        this->waitingGroupBox->show();
+        this->messageLabel->clear();
+        this->cancelButton->setFocus();
         CommonElements *ce = CommonElements::getInstance();
         loginMessage lm(username.toStdString(), password.toStdString());
         ce->connectServer();
@@ -56,26 +93,31 @@ void LoginWindow::on_regButton_clicked()
 
 void LoginWindow::on_exitButton_clicked()
 {
-    if(this->exit())
-    {
-        CommonElements::getInstance()->trayIcon->hide();
-        std::exit(0);
-    }
+    Helper *helper = Helper::getInstance();
+    helper->quit();
 }
 
 void LoginWindow::on_cancelButton_clicked()
 {
-    ui->waitingGroupBox->hide();
-    ui->loginGroupBox->show();
-    ui->usernameEdit->setFocus();
+    this->waitingGroupBox->hide();
+    this->loginGroupBox->show();
+    this->usernameEdit->setFocus();
 }
+
+void LoginWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    Helper *helper = Helper::getInstance();
+    helper->quit();
+}
+
 
 void LoginWindow::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
     case Qt::Key_Enter:
     case Qt::Key_Return:
-        if(ui->waitingGroupBox->isHidden())
+        if(this->waitingGroupBox->isHidden())
         {
             this->on_loginButton_clicked();
         }
@@ -87,44 +129,4 @@ void LoginWindow::keyPressEvent(QKeyEvent *event)
     default:
         break;
     }
-}
-
-void LoginWindow::clearPasswordEdit()
-{
-    this->ui->passwordEdit->clear();
-}
-
-void LoginWindow::setMessageLabel(const char *message)
-{
-    this->ui->messageLabel->setText(message);
-}
-
-void LoginWindow::keyReleaseEvent(QKeyEvent */*event*/)
-{
-
-}
-
-void LoginWindow::closeEvent(QCloseEvent *event)
-{
-    QMessageBox messageBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
-    messageBox.setWindowFlags(Qt::WindowStaysOnTopHint| (this->windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
-    messageBox.addButton("是", QMessageBox::AcceptRole);
-    messageBox.addButton("否", QMessageBox::RejectRole);
-    if(messageBox.exec() == QMessageBox::RejectRole)
-    {
-        event->ignore();
-    }
-    else
-    {
-        CommonElements *ce = CommonElements::getInstance();
-        ce->trayIcon->hide();
-        ce->a->quit();
-    }
-}
-
-bool LoginWindow::exit()
-{
-    ExitMessageBox emb;
-    bool result = (emb.exec() == QMessageBox::AcceptRole);
-    return result;
 }

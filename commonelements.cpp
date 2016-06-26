@@ -9,7 +9,7 @@ CommonElements::CommonElements(QObject *parent):
     loginWindow(0),
     mainWindow(0),
     login(false),
-    a(0)
+    application(0)
 {
 
 }

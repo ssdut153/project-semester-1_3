@@ -2,10 +2,8 @@
 #define LOGINWINDOW_H
 
 #include "stdafx.h"
-#include "ui.h"
-#include "commonelements.h"
-#include "regwindow.h"
 #include "helper.h"
+#include "regwindow.h"
 
 class LoginWindow : public QMainWindow
 {
@@ -14,14 +12,12 @@ class LoginWindow : public QMainWindow
 public:
     explicit LoginWindow(QWidget *parent = 0);
     ~LoginWindow();
+    bool exit();
     friend class Helper;
-    void clearPasswordEdit();
-    void setMessageLabel(const char *message);
 
 protected:
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent */*event*/);
     void closeEvent(QCloseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_loginButton_clicked();
@@ -30,10 +26,22 @@ private slots:
     void on_cancelButton_clicked();
 
 private:
-    bool connected;
-    bool exit();
-    Ui::LoginWindow *ui;
+    QGroupBox *loginGroupBox;
+    QLabel *messageLabel;
+    QLineEdit *usernameEdit;
+    QLineEdit *passwordEdit;
+    QPushButton *loginButton;
+    QPushButton *regButton;
+    QPushButton *exitButton;
+    QGroupBox *waitingGroupBox;
+    QLabel *waitingLabel;
+    QPushButton *cancelButton;
     RegWindow *regWindow;
+
+signals:
+
+public slots:
+
 };
 
 #endif // LOGINWINDOW_H

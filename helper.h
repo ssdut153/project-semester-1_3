@@ -25,6 +25,7 @@ public:
     QTcpSocket *client;
     void connectServer();
     void disconnectServer();
+    void quit();
 
 };
 

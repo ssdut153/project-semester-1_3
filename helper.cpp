@@ -2,6 +2,8 @@
 #include "commonelements.h"
 #include "common/message/loginout/loginmessage.h"
 #include "common/message/friendlist/friendlistmessage.h"
+#include "window/mainwindow.h"
+#include "window/regwindow.h"
 
 Helper::Helper():
     status("none"),
@@ -77,8 +79,8 @@ void Helper::readClient()
                 this->disconnectServer();
                 ce->client->disconnect();
                 ce->loginWindow->on_cancelButton_clicked();
-                ce->loginWindow->clearPasswordEdit();
-                ce->loginWindow->setMessageLabel("用户名或密码错误");
+                ce->loginWindow->passwordEdit->clear();
+                ce->loginWindow->messageLabel->setText("用户名或密码错误");
             }
         }
         else if(head == "regFeedBack")
@@ -93,8 +95,8 @@ void Helper::readClient()
             {
                 this->disconnectServer();
                 ce->client->disconnect();
-                ce->loginWindow->regWindow->setMessageLabel("注册失败");
-                ce->loginWindow->regWindow->setRegButtonEnabled(true);
+                ce->loginWindow->regWindow->messageLabel->setText("注册失败");
+                ce->loginWindow->regWindow->regButton->setEnabled(true);
             }
         }
         else if(head == "startSendList")
@@ -112,7 +114,7 @@ void Helper::readClient()
         status = "none";
         friendListMessage flm;
         if(flm.loadfromJson(str.toStdString())){
-            ce->mainWindow->loadFriendList(flm.user);
+            //            ce->mainWindow->loadFriendList(flm.user);
         }
     }
     else
@@ -124,6 +126,20 @@ void Helper::readClient()
 void Helper::writeClient(Message &message)
 {
     CommonElements::getInstance()->client->write(message.getJsonString().c_str());
+}
+
+void Helper::quit()
+{
+    QMessageBox messageBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
+    messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+    messageBox.addButton("是", QMessageBox::AcceptRole);
+    messageBox.addButton("否", QMessageBox::RejectRole);
+    if(!(messageBox.exec() == QMessageBox::RejectRole))
+    {
+        CommonElements *ce = CommonElements::getInstance();
+        ce->trayIcon->hide();
+        ce->application->quit();
+    }
 }
 
 Helper *Helper::helper = 0;

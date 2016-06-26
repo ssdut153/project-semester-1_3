@@ -1,67 +1,68 @@
 #include "regwindow.h"
-#include "ui_regwindow.h"
-#include "commonelements.h"
 #include "common/message/reg/regusermessage.h"
+#include "commonelements.h"
 
-RegWindow::RegWindow(QWidget *parent) :
+RegWindow::RegWindow(QWidget *parent):
     QMainWindow(parent),
-    username(""),
-    password(""),
-    ui(new Ui::RegWindow)
+    messageLabel(new QLabel(this)),
+    usernameEdit(new QLineEdit(this)),
+    passwordEdit_1(new QLineEdit(this)),
+    passwordEdit_2(new QLineEdit(this)),
+    regButton(new QPushButton(this))
 {
-    ui->setupUi(this);
-    this->setWindowModality(Qt::ApplicationModal);
-}
+    this->setWindowTitle("注册");
 
-RegWindow::~RegWindow()
-{
-    delete ui;
-}
+    this->setMaximumSize(270, 200);
+    this->setMinimumSize(270, 200);
 
-void RegWindow::setMessageLabel(const char *message)
-{
-    this->ui->messageLabel->setText(message);
-}
+    this->messageLabel->setGeometry(40, 0, 200, 20);
+    this->usernameEdit->setGeometry(40, 30, 200, 30);
+    this->passwordEdit_1->setGeometry(40, 70 , 200, 30);
+    this->passwordEdit_2->setGeometry(40, 110, 200, 30);
+    this->regButton->setGeometry(40, 150, 200, 30);
 
-void RegWindow::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-    delete this;
-}
+    this->messageLabel->setText("");
+    this->usernameEdit->setPlaceholderText("请输入用户名");
+    this->passwordEdit_1->setPlaceholderText("请输入密码");
+    this->passwordEdit_2->setPlaceholderText("请确认密码");
 
-void RegWindow::setRegButtonEnabled(bool enabled)
-{
-    ui->regButton->setEnabled(enabled);
+    this->passwordEdit_1->setEchoMode(QLineEdit::Password);
+    this->passwordEdit_2->setEchoMode(QLineEdit::Password);
+
+    this->regButton->setText("注册");
+
+    connect(regButton, SIGNAL(clicked(bool)), this, SLOT(on_regButton_clicked()));
+
 }
 
 void RegWindow::on_regButton_clicked()
 {
-    QString username = ui->usernameEdit->text();
-    QString password_1 = ui->passwordEdit_1->text();
-    QString password_2 = ui->passwordEdit_2->text();
+    QString username = this->usernameEdit->text();
+    QString password_1 = this->passwordEdit_1->text();
+    QString password_2 = this->passwordEdit_2->text();
     if(username == "")
     {
-        ui->messageLabel->setText("请输入用户名");
+        this->messageLabel->setText("请输入用户名");
     }
     else if(username.length() < 3 || username.length() > 20)
     {
-        ui->messageLabel->setText("用户名应在3-20位");
+        this->messageLabel->setText("用户名应在3-20位");
     }
     else if(password_1 == "")
     {
-        ui->messageLabel->setText("请输入密码");
+        this->messageLabel->setText("请输入密码");
     }
     else if(password_1.length() < 6 || password_1.length() > 16)
     {
-        ui->messageLabel->setText("密码应在6-16位");
+        this->messageLabel->setText("密码应在6-16位");
     }
     else if(!(password_2 == password_1))
     {
-        ui->messageLabel->setText("两次输入密码不一致");
+        this->messageLabel->setText("两次输入密码不一致");
     }
     else
     {
-        ui->regButton->setEnabled(false);
+        this->regButton->setEnabled(false);
         regUserMessage rum(username.toStdString(),password_1.toStdString());
         CommonElements *ce = CommonElements::getInstance();
         this->username = username.toStdString();

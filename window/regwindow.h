@@ -1,8 +1,8 @@
 #ifndef REGWINDOW_H
 #define REGWINDOW_H
 
-#include "ui.h"
 #include "stdafx.h"
+#include "helper.h"
 
 class RegWindow : public QMainWindow
 {
@@ -10,20 +10,23 @@ class RegWindow : public QMainWindow
 
 public:
     explicit RegWindow(QWidget *parent = 0);
-    ~RegWindow();
-    void setMessageLabel(const char *message);
+    friend class Helper;
+
+signals:
+
+private:
+    QLabel *messageLabel;
+    QLineEdit *usernameEdit;
+    QLineEdit *passwordEdit_1;
+    QLineEdit *passwordEdit_2;
+    QPushButton *regButton;
     std::string username;
     std::string password;
-    void setRegButtonEnabled(bool enabled);
-
-protected:
-    void closeEvent(QCloseEvent *event);
 
 private slots:
     void on_regButton_clicked();
 
-private:
-    Ui::RegWindow *ui;
+public slots:
 };
 
 #endif // REGWINDOW_H
