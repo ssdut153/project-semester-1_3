@@ -1,29 +1,55 @@
+/*****************************************************************************************
+ *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
+ *  All rights reserved.
+ *
+ *  文件名称: trayicon
+ *  简要描述:
+ *
+ *  创建日期: 2016-6-23
+ *  作者: Hu Wenqiang
+ *  说明:
+ *
+ *  修改日期: 2016-6-26
+ *  作者: Hu Wenqiang
+ *  说明:
+ ****************************************************************************************/
 #include "helper.h"
 #include "commonelements.h"
 #include "common/message/loginout/loginmessage.h"
 #include "common/message/friendlist/friendlistmessage.h"
 #include "window/mainwindow.h"
 #include "window/regwindow.h"
-
+/**
+ * @brief Helper::Helper
+ */
 Helper::Helper():
     status("none"),
     client(0)
 {
 
 }
-
+/**
+ * @brief Helper::connectServer
+ */
 void Helper::connectServer()
 {
     client = CommonElements::getInstance()->client;
     connect(client, SIGNAL(readyRead()), this, SLOT(readClient()));
 }
-
+/**
+ * @brief Helper::disconnectServer
+ */
 void Helper::disconnectServer()
 {
     disconnect(client, SIGNAL(readyRead()), this, SLOT(readClient()));
     client = 0;
 }
-
+/**
+ * @brief Helper::getfromJson
+ * @param textJson json类型字符串
+ * @param name char * 需要从textjson中获取的属性
+ * @return std::string
+ */
 std::string Helper::getfromJson(std::string textJson, const char *name)
 {
     QString str = name;
@@ -52,11 +78,13 @@ std::string Helper::getfromJson(std::string textJson, const char *name)
         return "false";
     }
 }
-
+/**
+ * @brief Helper::readClient
+ */
 void Helper::readClient()
 {
     CommonElements *ce = CommonElements::getInstance();
-    QString str = ce->client->readAll();
+    QString str = client->readAll();
     if(status == "none")
     {
         QString head = this->getfromJson(str.toStdString(), "head").c_str();
@@ -77,7 +105,7 @@ void Helper::readClient()
             else
             {
                 this->disconnectServer();
-                ce->client->disconnect();
+                client->disconnect();
                 ce->loginWindow->on_cancelButton_clicked();
                 ce->loginWindow->passwordEdit->clear();
                 ce->loginWindow->messageLabel->setText("用户名或密码错误");
@@ -94,7 +122,7 @@ void Helper::readClient()
             else
             {
                 this->disconnectServer();
-                ce->client->disconnect();
+                client->disconnect();
                 ce->loginWindow->regWindow->messageLabel->setText("注册失败");
                 ce->loginWindow->regWindow->regButton->setEnabled(true);
             }
@@ -122,12 +150,17 @@ void Helper::readClient()
 
     }
 }
-
+/**
+ * @brief Helper::writeClient
+ * @param message 需要发送的message类型消息
+ */
 void Helper::writeClient(Message &message)
 {
-    CommonElements::getInstance()->client->write(message.getJsonString().c_str());
+    client->write(message.getJsonString().c_str());
 }
-
+/**
+ * @brief Helper::quit
+ */
 void Helper::quit()
 {
     QMessageBox messageBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
@@ -141,9 +174,14 @@ void Helper::quit()
         ce->application->quit();
     }
 }
-
+/**
+ * @brief Helper::helper
+ */
 Helper *Helper::helper = 0;
-
+/**
+ * @brief Helper::getInstance
+ * @return Helper *
+ */
 Helper *Helper::getInstance()
 {
     if(helper == 0)

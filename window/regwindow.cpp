@@ -1,7 +1,25 @@
+/*****************************************************************************************
+ *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
+ *  All rights reserved.
+ *
+ *  文件名称: trayicon
+ *  简要描述:
+ *
+ *  创建日期: 2016-6-26
+ *  作者: Hu Wenqiang
+ *  说明:
+ *
+ *  修改日期: 2016-6-26
+ *  作者: Hu Wenqiang
+ *  说明:
+ ****************************************************************************************/
 #include "regwindow.h"
 #include "common/message/reg/regusermessage.h"
 #include "commonelements.h"
-
+/**
+ * @brief RegWindow::RegWindow
+ * @param parent
+ */
 RegWindow::RegWindow(QWidget *parent):
     QMainWindow(parent),
     messageLabel(new QLabel(this)),
@@ -34,7 +52,9 @@ RegWindow::RegWindow(QWidget *parent):
     connect(regButton, SIGNAL(clicked(bool)), this, SLOT(on_regButton_clicked()));
 
 }
-
+/**
+ * @brief RegWindow::on_regButton_clicked
+ */
 void RegWindow::on_regButton_clicked()
 {
     QString username = this->usernameEdit->text();
@@ -70,4 +90,18 @@ void RegWindow::on_regButton_clicked()
         ce->connectServer();
         Helper::getInstance()->writeClient(rum);
     }
+}
+/**
+ * @brief RegWindow::closeEvent
+ */
+void RegWindow::closeEvent(QCloseEvent *)
+{
+    delete this;
+}
+/**
+ * @brief RegWindow::~RegWindow
+ */
+RegWindow::~RegWindow()
+{
+
 }

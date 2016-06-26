@@ -1,3 +1,18 @@
+/*****************************************************************************************
+ *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
+ *  All rights reserved.
+ *
+ *  文件名称: trayicon
+ *  简要描述:
+ *
+ *  创建日期: 2016-6-26
+ *  作者: Hu Wenqiang
+ *  说明:
+ *
+ *  修改日期: 2016-6-26
+ *  作者: Hu Wenqiang
+ *  说明:
+ ****************************************************************************************/
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -9,9 +24,13 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
 protected:
     void closeEvent(QCloseEvent *event);
+
+private:
+    QLabel *usernameLabel;
 
 signals:
 

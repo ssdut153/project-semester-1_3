@@ -1,8 +1,26 @@
+/*****************************************************************************************
+ *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
+ *  All rights reserved.
+ *
+ *  文件名称: trayicon
+ *  简要描述:
+ *
+ *  创建日期: 2016-6-26
+ *  作者: Hu Wenqiang
+ *  说明:
+ *
+ *  修改日期: 2016-6-26
+ *  作者: Hu Wenqiang
+ *  说明:
+ ****************************************************************************************/
 #include "loginwindow.h"
 #include "commonelements.h"
 #include "common/message/loginout/loginmessage.h"
 #include "helper.h"
-
+/**
+ * @brief LoginWindow::LoginWindow
+ * @param parent 父级元素
+ */
 LoginWindow::LoginWindow(QWidget *parent):
     QMainWindow(parent),
     loginGroupBox(new QGroupBox(this)),
@@ -54,12 +72,16 @@ LoginWindow::LoginWindow(QWidget *parent):
     connect(exitButton, SIGNAL(clicked(bool)), this, SLOT(on_exitButton_clicked()));
     connect(cancelButton, SIGNAL(clicked(bool)), this,SLOT(on_cancelButton_clicked()));
 }
-
+/**
+ * @brief LoginWindow::~LoginWindow
+ */
 LoginWindow::~LoginWindow()
 {
 
 }
-
+/**
+ * @brief LoginWindow::on_loginButton_clicked
+ */
 void LoginWindow::on_loginButton_clicked()
 {
     QString username = this->usernameEdit->text();
@@ -84,34 +106,47 @@ void LoginWindow::on_loginButton_clicked()
         Helper::getInstance()->writeClient(lm);
     }
 }
-
+/**
+ * @brief LoginWindow::on_regButton_clicked
+ */
 void LoginWindow::on_regButton_clicked()
 {
     regWindow = new RegWindow(this);
     regWindow->show();
 }
-
+/**
+ * @brief LoginWindow::on_exitButton_clicked
+ */
 void LoginWindow::on_exitButton_clicked()
 {
     Helper *helper = Helper::getInstance();
     helper->quit();
 }
-
+/**
+ * @brief LoginWindow::on_cancelButton_clicked
+ */
 void LoginWindow::on_cancelButton_clicked()
 {
+    CommonElements *ce = CommonElements::getInstance();
+    ce->disconnectServer();
     this->waitingGroupBox->hide();
     this->loginGroupBox->show();
     this->usernameEdit->setFocus();
 }
-
+/**
+ * @brief LoginWindow::closeEvent
+ * @param event
+ */
 void LoginWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     Helper *helper = Helper::getInstance();
     helper->quit();
 }
-
-
+/**
+ * @brief LoginWindow::keyPressEvent
+ * @param event
+ */
 void LoginWindow::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
