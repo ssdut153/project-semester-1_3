@@ -25,12 +25,16 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void loadFriendList(std::vector<std::string> &users);
 
 protected:
     void closeEvent(QCloseEvent *event);
 
 private:
     QLabel *usernameLabel;
+    QListWidget *friendListWidget;
+    std::vector<std::string> friendlist;
+    QListWidgetItem *qlwi;
 
 signals:
 

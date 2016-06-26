@@ -23,8 +23,9 @@
 #include <QEventLoop>
 #include <QGroupBox>
 #include <QKeyEvent>
-#include <QLineEdit>
 #include <QLabel>
+#include <QLineEdit>
+#include <QListWidget>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QMetaObject>
@@ -42,5 +43,7 @@
 #include <QTimer>
 #include <QThread>
 #include <QtNetwork>
+#include <string>
+#include <vector>
 
 #endif // STDAFX_H

@@ -142,7 +142,7 @@ void Helper::readClient()
         status = "none";
         friendListMessage flm;
         if(flm.loadfromJson(str.toStdString())){
-            //            ce->mainWindow->loadFriendList(flm.user);
+            ce->mainWindow->loadFriendList(flm.user);
         }
     }
     else

@@ -15,6 +15,7 @@
  ****************************************************************************************/
 #include "mainwindow.h"
 #include "common/message/loginout/logoutmessage.h"
+#include "common/message/friendlist/getfriendlistmessage.h"
 #include "commonelements.h"
 #include "helper.h"
 /**
@@ -23,18 +24,49 @@
  */
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
-    usernameLabel(new QLabel(this))
+    usernameLabel(new QLabel(this)),
+    friendListWidget(new QListWidget(this)),
+    qlwi(0)
 {
-    this->setMinimumSize(300, 800);
-    this->setMaximumSize(300, 800);
-
     CommonElements *ce = CommonElements::getInstance();
 
-    usernameLabel->setGeometry(40, 20, 190, 30);
+    this->setMinimumSize(300, 600);
+    this->setMaximumSize(300, 600);
 
-    usernameLabel->setText(ce->username.c_str());
+    this->usernameLabel->setGeometry(40, 20, 190, 30);
+    this->friendListWidget->setGeometry(30, 60, 240, 500);
 
+    this->usernameLabel->setText(ce->username.c_str());
+
+    Helper *helper = Helper::getInstance();
+    getFriendListMessage gflm(ce->username);
+    helper->writeClient(gflm);
 }
+/**
+ * @brief MainWindow::loadFriendList
+ * @param users
+ */
+void MainWindow::loadFriendList(std::vector<std::string> &users)
+{
+    friendlist.clear();
+    int size = users.size();
+    for(int i = 0 ;i < size;i++)
+    {
+        friendlist.push_back(users[i]);
+    }
+    if(qlwi != 0)
+    {
+        delete qlwi;
+    }
+    qlwi = new QListWidgetItem[size + 1];
+    qlwi->setText("我的好友");
+    for(int i = 1;i < size + 1;i++)
+    {
+        (qlwi + i)->setText(friendlist[i].c_str());
+        this->friendListWidget->addItem(qlwi + i);
+    }
+}
+
 /**
  * @brief MainWindow::closeEvent
  * @param event
