@@ -16,10 +16,12 @@ MainWindow::MainWindow(QWidget *parent):
     getFriendListMessage gflm(ce->username);
     Helper *helper = Helper::getInstance();
     helper->writeClient(gflm);
+    ui->usernameLabel->setText(ce->username.c_str());
 }
 
 MainWindow::~MainWindow()
 {
+    delete qlwi;
     delete ui;
 }
 
@@ -31,12 +33,22 @@ void MainWindow::loadFriendList(std::vector<std::string> &users)
     {
         friendlist.push_back(users[i]);
     }
-    qlwi = new QListWidgetItem[size];
-    for(int i = 0;i < size;i++)
+    if(qlwi != 0)
+    {
+        delete qlwi;
+    }
+    qlwi = new QListWidgetItem[size + 1];
+    qlwi->setText("我的好友");
+    for(int i = 1;i < size + 1;i++)
     {
         (qlwi + i)->setText(friendlist[i].c_str());
         ui->friendListWidget->addItem(qlwi + i);
     }
+}
+
+void MainWindow::switchClicked(QModelIndex)
+{
+
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

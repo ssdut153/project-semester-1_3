@@ -19,6 +19,9 @@ public:
 protected:
     void closeEvent(QCloseEvent *event);
 
+private slots:
+    void switchClicked(QModelIndex);
+
 private:
     Ui::MainWindow *ui;
     std::string username;
