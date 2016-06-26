@@ -18,7 +18,7 @@
 #include "common/message/friendlist/getfriendlistmessage.h"
 #include "commonelements.h"
 #include "helper.h"
-#include <QDebug>
+#include "chatwindow.h"
 /**
  * @brief MainWindow::MainWindow
  * @param parent
@@ -60,7 +60,7 @@ void MainWindow::loadFriendList(std::vector<std::string> &users)
     {
         delete qlwi;
     }
-    qlwi = new FriendListItem[size + 1];
+    qlwi = new QListWidgetItem[size + 1];
     qlwi->setText("我的好友");
     for(int i = 1;i < size + 1;i++)
     {
@@ -68,9 +68,15 @@ void MainWindow::loadFriendList(std::vector<std::string> &users)
         this->friendListWidget->addItem(qlwi + i);
     }
 }
+/**
+ * @brief MainWindow::on_friendListWidget_doubleClicked
+ * @param item
+ */
 void MainWindow::on_friendListWidget_doubleClicked(QListWidgetItem *item)
 {
-    qDebug()<<item->text();
+    ChatWindow *cw = new ChatWindow(this->usernameLabel->text().toStdString(), item->text().toStdString(), this);
+    this->chatWindows.push_back(cw);
+    cw->show();
 }
 /**
  * @brief MainWindow::closeEvent

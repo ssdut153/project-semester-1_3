@@ -30,7 +30,7 @@ SOURCES += main.cpp \
     window/loginwindow.cpp \
     window/mainwindow.cpp \
     window/regwindow.cpp \
-    friendlistitem.cpp
+    window/chatwindow.cpp
 
 HEADERS  += \
     common/message/base/message.h \
@@ -50,7 +50,7 @@ HEADERS  += \
     window/loginwindow.h \
     window/mainwindow.h \
     window/regwindow.h \
-    friendlistitem.h
+    window/chatwindow.h
 
 FORMS    +=
 
