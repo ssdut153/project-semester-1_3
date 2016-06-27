@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void loadFriendList(std::vector<std::string> &users);
+    void loadFriendList(std::vector<std::string> &users, std::vector<int> &onlineStatus);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -26,9 +26,9 @@ private slots:
 private:
     Ui::MainWindow *ui;
     std::string username;
-    std::vector<std::string> friendlist;
+    QMap<QString, int> friendlist;
     QListWidgetItem *qlwi;
-    std::vector<ChatWindow*> chatWindows;
+    QMap<QString, ChatWindow*> chatWindows;
 
 };
 

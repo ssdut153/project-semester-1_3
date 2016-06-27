@@ -14,7 +14,7 @@
  *  说明:
  ****************************************************************************************/
 #include "getfriendlistmessage.h"
-#include "common/cJSON.h"
+#include "../../cJSON.h"
 /**
  * @brief getFriendListMessage::getFriendListMessage
  * @param username 用户名

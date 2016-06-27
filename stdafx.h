@@ -8,6 +8,7 @@
 #include <QDialog>
 #include <QEventLoop>
 #include <QKeyEvent>
+#include <QMap>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QMouseEvent>

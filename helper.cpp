@@ -2,6 +2,7 @@
 #include "commonelements.h"
 #include "common/message/loginout/loginmessage.h"
 #include "common/message/friendlist/friendlistmessage.h"
+#include <QDebug>
 
 Helper::Helper():
     status("none"),
@@ -101,9 +102,17 @@ void Helper::readClient()
         {
             this->status = "getfriendlist";
         }
-        else
+        else if(head == "defaultFeedBack")
         {
 
+        }
+        else if(head == "p2p")
+        {
+
+        }
+        else
+        {
+            qDebug()<<str;
         }
 
     }
@@ -112,7 +121,7 @@ void Helper::readClient()
         status = "none";
         friendListMessage flm;
         if(flm.loadfromJson(str.toStdString())){
-            ce->mainWindow->loadFriendList(flm.user);
+            ce->mainWindow->loadFriendList(flm.user, flm.stat);
         }
     }
     else

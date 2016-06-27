@@ -28,6 +28,7 @@ SOURCES += main.cpp \
     common/message/reg/regusermessage.cpp \
     common/message/friendlist/getfriendlistmessage.cpp \
     common/message/friendlist/friendlistmessage.cpp \
+    common/message/function/p2pmessage.cpp \
     common/cJSON.c \
     messagebox/exitmessagebox.cpp \
     helper.cpp \
@@ -50,6 +51,7 @@ HEADERS  += stdafx.h \
     common/message/reg/regusermessage.h \
     common/message/friendlist/getfriendlistmessage.h \
     common/message/friendlist/friendlistmessage.h \
+    common/message/function/p2pmessage.h \
     common/cJSON.h \
     messagebox/exitmessagebox.h \
     helper.h \

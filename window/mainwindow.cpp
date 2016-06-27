@@ -25,13 +25,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::loadFriendList(std::vector<std::string> &users)
+void MainWindow::loadFriendList(std::vector<std::string> &users, std::vector<int> &onlineStatus)
 {
     friendlist.clear();
     int size = users.size();
     for(int i = 0 ;i < size;i++)
     {
-        friendlist.push_back(users[i]);
+        friendlist.insert(users[i].c_str(), onlineStatus[i]);
     }
     if(qlwi != 0)
     {
@@ -39,9 +39,17 @@ void MainWindow::loadFriendList(std::vector<std::string> &users)
     }
     qlwi = new QListWidgetItem[size];
     qlwi->setText("我的好友");
-    for(int i = 0;i < size;i++)
+    int i = 0;
+    for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++, i++)
     {
-        (qlwi + i)->setText(friendlist[i].c_str());
+        if(it.value() == 0)
+        {
+            (qlwi + i)->setText(it.key() + "(离线)");
+        }
+        else if(it.value() == 1)
+        {
+            (qlwi + i)->setText(it.key() + "(在线)");
+        }
         ui->friendListWidget->addItem(qlwi + i);
     }
 }
@@ -68,9 +76,19 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
-void MainWindow::on_friendListWidget_doubleClicked(const QModelIndex &index)
+void MainWindow::on_friendListWidget_doubleClicked(const QModelIndex &)
 {
-    ChatWindow *cw = new ChatWindow(this->username, ui->friendListWidget->currentItem()->text().toStdString(), this);
-    this->chatWindows.push_back(cw);
-    cw->show();
+    QString friendName = ui->friendListWidget->currentItem()->text();
+    ChatWindow *cw = 0;
+    if(chatWindows.contains(friendName))
+    {
+        cw = chatWindows.find(friendName).value();
+        cw->show();
+    }
+    else
+    {
+        cw = new ChatWindow(this->username, friendName.toStdString(), this);
+        this->chatWindows.insert(QString(this->username.c_str()), cw);
+        cw->setFocus();
+    }
 }

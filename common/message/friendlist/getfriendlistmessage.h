@@ -15,8 +15,7 @@
  ****************************************************************************************/
 #ifndef GETFRIENDLISTMESSAGE_H
 #define GETFRIENDLISTMESSAGE_H
-
-#include "common/message/base/usernamemessage.h"
+#include "../base/usernamemessage.h"
 
 class getFriendListMessage : public usernameMessage
 {

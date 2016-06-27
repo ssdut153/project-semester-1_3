@@ -15,6 +15,9 @@ public:
     explicit ChatWindow(std::string username, std::string friendName, QWidget *parent = 0);
     ~ChatWindow();
 
+private slots:
+    void on_sendButton_clicked();
+
 private:
     Ui::ChatWindow *ui;
     std::string username;
