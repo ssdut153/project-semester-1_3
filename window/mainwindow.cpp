@@ -37,18 +37,13 @@ void MainWindow::loadFriendList(std::vector<std::string> &users)
     {
         delete qlwi;
     }
-    qlwi = new QListWidgetItem[size + 1];
+    qlwi = new QListWidgetItem[size];
     qlwi->setText("我的好友");
-    for(int i = 1;i < size + 1;i++)
+    for(int i = 0;i < size;i++)
     {
         (qlwi + i)->setText(friendlist[i].c_str());
         ui->friendListWidget->addItem(qlwi + i);
     }
-}
-
-void MainWindow::switchClicked(QModelIndex)
-{
-
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -71,4 +66,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
         ce->client->waitForBytesWritten();
         ce->a->quit();
     }
+}
+
+void MainWindow::on_friendListWidget_doubleClicked(const QModelIndex &index)
+{
+    ChatWindow *cw = new ChatWindow(this->username, ui->friendListWidget->currentItem()->text().toStdString(), this);
+    this->chatWindows.push_back(cw);
+    cw->show();
 }

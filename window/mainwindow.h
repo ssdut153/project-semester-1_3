@@ -6,6 +6,7 @@
 #include "ui.h"
 #include <string>
 #include <vector>
+#include "chatwindow.h"
 
 class MainWindow : public QMainWindow
 {
@@ -20,13 +21,14 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void switchClicked(QModelIndex);
+    void on_friendListWidget_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
     std::string username;
     std::vector<std::string> friendlist;
     QListWidgetItem *qlwi;
+    std::vector<ChatWindow*> chatWindows;
 
 };
 

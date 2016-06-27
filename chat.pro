@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     common/message/friendlist/friendlistmessage.cpp \
     common/cJSON.c \
     messagebox/exitmessagebox.cpp \
-    helper.cpp
+    helper.cpp \
+    window/chatwindow.cpp
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -51,11 +52,13 @@ HEADERS  += stdafx.h \
     common/message/friendlist/friendlistmessage.h \
     common/cJSON.h \
     messagebox/exitmessagebox.h \
-    helper.h
+    helper.h \
+    window/chatwindow.h
 
 FORMS    += window/loginwindow.ui \
     window/mainwindow.ui \
-    window/regwindow.ui
+    window/regwindow.ui \
+    window/chatwindow.ui
 
 RESOURCES += \
     images.qrc
