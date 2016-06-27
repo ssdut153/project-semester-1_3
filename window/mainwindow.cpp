@@ -78,17 +78,18 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::on_friendListWidget_doubleClicked(const QModelIndex &)
 {
-    QString friendName = ui->friendListWidget->currentItem()->text();
+    QListWidgetItem *item = ui->friendListWidget->currentItem();
+    QString friendName = item->text();
     ChatWindow *cw = 0;
-    if(chatWindows.contains(friendName))
+    if(chatWindows.contains(item))
     {
-        cw = chatWindows.find(friendName).value();
-        cw->show();
+        cw = chatWindows.find(item).value();
+        cw->setFocus();
     }
     else
     {
         cw = new ChatWindow(this->username, friendName.toStdString(), this);
-        this->chatWindows.insert(QString(this->username.c_str()), cw);
-        cw->setFocus();
+        this->chatWindows.insert(item, cw);
+        cw->show();
     }
 }

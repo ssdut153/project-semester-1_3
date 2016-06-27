@@ -28,7 +28,7 @@ private:
     std::string username;
     QMap<QString, int> friendlist;
     QListWidgetItem *qlwi;
-    QMap<QString, ChatWindow*> chatWindows;
+    QMap<QListWidgetItem*, ChatWindow*> chatWindows;
 
 };
 
