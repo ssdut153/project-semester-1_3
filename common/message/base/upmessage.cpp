@@ -14,7 +14,7 @@
  *  说明:
  ****************************************************************************************/
 #include "upmessage.h"
-#include "../../cJSON.h"
+#include "stdafx.h"
 /**
  * @brief upMessage::upMessage
  * @param username 用户名
@@ -39,19 +39,14 @@ upMessage::upMessage()
  */
 std::string upMessage::getJsonString()
 {
-    // 创建JSON Object
-    cJSON *root = cJSON_CreateObject();
-    // 加入节点（键值对）
-    cJSON_AddStringToObject(root,"head",head.c_str());
-    cJSON_AddStringToObject(root,"username",user.c_str());
-    cJSON_AddStringToObject(root,"password",pass.c_str());
-    // 打印JSON数据包
-    char *out = cJSON_PrintUnformatted(root);
-    // 释放内存
-    cJSON_Delete(root);
-    std::string temp(out);
-    free(out);
-    return temp;
+    QJsonObject jsonObject;
+    jsonObject.insert("head", QString(head.c_str()));
+    jsonObject.insert("username", QString(user.c_str()));
+    jsonObject.insert("password", QString(pass.c_str()));
+    QJsonDocument jsonDocument;
+    jsonDocument.setObject(jsonObject);
+    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
+    return byteArray.toStdString();
 }
 /**
  * @brief upMessage::loadfromJson
@@ -60,24 +55,55 @@ std::string upMessage::getJsonString()
  */
 bool upMessage::loadfromJson(std::string textJson)
 {
-    cJSON *json , *json_username , *json_password;
-    // 解析数据包
-    const char* text = textJson.c_str();
-    json = cJSON_Parse(text);
-    if (!json)
-        return false;
+    QJsonParseError parseError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(QString(textJson.c_str()).toLatin1(), &parseError);
+    if(parseError.error == QJsonParseError::NoError)
+    {
+        if(jsonDocument.isObject())
+        {
+            QJsonObject jsonObject = jsonDocument.object();
+            if(jsonObject.contains("username"))
+            {
+                QJsonValue usernameValue = jsonObject.take("username");
+                if(usernameValue.isString())
+                {
+                    user = usernameValue.toString().toStdString();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+            if(jsonObject.contains("password"))
+            {
+                QJsonValue passwordValue = jsonObject.take("password");
+                if(passwordValue.isString())
+                {
+                    pass = passwordValue.toString().toStdString();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
     else
     {
-        // 解析username
-        json_username = cJSON_GetObjectItem( json , "username");
-        user=json_username->valuestring;
-        // 解析password
-        json_password = cJSON_GetObjectItem( json , "password");
-        pass=json_password->valuestring;
-        // 释放内存空间
-        cJSON_Delete(json);
-        return true;
+        return false;
     }
-
+    return true;
 }
 

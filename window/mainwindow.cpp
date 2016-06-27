@@ -60,9 +60,8 @@ void MainWindow::loadFriendList(std::vector<std::string> &users)
     {
         delete qlwi;
     }
-    qlwi = new QListWidgetItem[size + 1];
-    qlwi->setText("我的好友");
-    for(int i = 1;i < size + 1;i++)
+    qlwi = new QListWidgetItem[size];
+    for(int i = 0;i < size;i++)
     {
         (qlwi + i)->setText(friendlist[i].c_str());
         this->friendListWidget->addItem(qlwi + i);
