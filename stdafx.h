@@ -17,11 +17,16 @@
 #define STDAFX_H
 
 #include <QApplication>
+#include <QByteArray>
 #include <QBitmap>
 #include <QCloseEvent>
 #include <QDialog>
 #include <QEventLoop>
 #include <QGroupBox>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QJsonValue>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QLineEdit>
