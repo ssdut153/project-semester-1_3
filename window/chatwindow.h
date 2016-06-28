@@ -13,6 +13,7 @@ class ChatWindow : public QMainWindow
 public:
     explicit ChatWindow(std::string username, QListWidgetItem *item, MainWindow *parent = 0);
     ~ChatWindow();
+    void appendText(QString time, QString content);
     void sendFail();
     friend class Helper;
 

@@ -35,6 +35,12 @@ void ChatWindow::on_sendButton_clicked()
     }
 }
 
+void ChatWindow::appendText(QString time, QString content)
+{
+    ui->messageEdit->append(QString(this->friendName.c_str()) + " " + time);
+    ui->messageEdit->append(content);
+}
+
 void ChatWindow::sendFail()
 {
     ui->messageEdit->append("发送失败");

@@ -40,7 +40,7 @@ void MainWindow::loadFriendList(std::vector<std::string> &users, std::vector<int
         }
         else if(it.value() == 1)
         {
-            item->setText(it.key() + "(离线)");
+            item->setText(it.key() + "(在线)");
         }
         items.push_back(item);
     }
