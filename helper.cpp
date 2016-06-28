@@ -1,8 +1,10 @@
 #include "helper.h"
 #include "commonelements.h"
+#include "common/message/function/p2pmessage.h"
+#include "common/message/base/feedbackmessage.h"
 #include "common/message/loginout/loginmessage.h"
 #include "common/message/friendlist/friendlistmessage.h"
-#include <QDebug>
+//#include <QDebug>
 
 Helper::Helper():
     status("none"),
@@ -104,15 +106,27 @@ void Helper::readClient()
         }
         else if(head == "defaultFeedBack")
         {
+            feedBackMessage fbm;
+            fbm.loadfromJson(str.toStdString());
+            if(QString(fbm.stat.c_str()) == "sendsucces")
+            {
 
+            }
+            else if(QString(fbm.stat.c_str()) == "sendfail")
+            {
+                ChatWindow *chatWindow = CommonElements::getInstance()->mainWindow->findChatWindow(fbm.user.c_str());
+                chatWindow->sendFail();
+            }
         }
         else if(head == "p2p")
         {
-
+            p2pMessage pm;
+            pm.loadfromJson(str.toStdString());
+            //qDebug() << pm.FromUserName.c_str() << " " << pm.ToUserName.c_str() << " " << pm.CreateTime.c_str() << " " << pm.Content.c_str();
         }
         else
         {
-            qDebug()<<str;
+            //qDebug()<<str;
         }
 
     }

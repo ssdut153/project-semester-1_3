@@ -15,6 +15,13 @@ LoginWindow::LoginWindow(QWidget *parent):
     ui->setupUi(this);
     setWindowFlags(Qt::WindowStaysOnTopHint);
     ui->waitingGroupBox->hide();
+    ui->usernameEdit->setFocus();
+    this->setTabOrder(ui->usernameEdit, ui->passwordEdit);
+    this->setTabOrder(ui->passwordEdit, ui->loginButton);
+    this->setTabOrder(ui->loginButton, ui->regButton);
+    this->setTabOrder(ui->regButton, ui->exitButton);
+    this->setTabOrder(ui->exitButton, ui->usernameEdit);
+    this->setTabOrder(ui->cancelButton, ui->cancelButton);
 }
 
 LoginWindow::~LoginWindow()

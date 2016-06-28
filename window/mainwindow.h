@@ -14,6 +14,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void loadFriendList(std::vector<std::string> &users, std::vector<int> &onlineStatus);
+    ChatWindow *findChatWindow(QString friendName);
     friend class ChatWindow;
 
 protected:
@@ -26,7 +27,7 @@ private:
     Ui::MainWindow *ui;
     std::string username;
     QMap<QString, int> friendlist;
-    QListWidgetItem *qlwi;
+    std::vector<QListWidgetItem *> items;
     QMap<QListWidgetItem*, ChatWindow*> chatWindows;
 
 };

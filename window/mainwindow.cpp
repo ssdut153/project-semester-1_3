@@ -8,8 +8,7 @@
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    username(CommonElements::getInstance()->username),
-    qlwi(0)
+    username(CommonElements::getInstance()->username)
 {
     ui->setupUi(this);
     CommonElements *ce = CommonElements::getInstance();
@@ -21,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent):
 
 MainWindow::~MainWindow()
 {
-    delete qlwi;
     delete ui;
 }
 
@@ -33,24 +31,22 @@ void MainWindow::loadFriendList(std::vector<std::string> &users, std::vector<int
     {
         friendlist.insert(users[i].c_str(), onlineStatus[i]);
     }
-    if(qlwi != 0)
+    for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++)
     {
-        delete qlwi;
-    }
-    qlwi = new QListWidgetItem[size];
-    qlwi->setText("我的好友");
-    int i = 0;
-    for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++, i++)
-    {
+        QListWidgetItem *item = new QListWidgetItem;
         if(it.value() == 0)
         {
-            (qlwi + i)->setText(it.key() + "(离线)");
+            item->setText(it.key() + "(离线)");
         }
         else if(it.value() == 1)
         {
-            (qlwi + i)->setText(it.key() + "(在线)");
+            item->setText(it.key() + "(离线)");
         }
-        ui->friendListWidget->addItem(qlwi + i);
+        items.push_back(item);
+    }
+    for(int i = 0;i < size;i++)
+    {
+        ui->friendListWidget->addItem(items[i]);
     }
 }
 
@@ -74,6 +70,23 @@ void MainWindow::closeEvent(QCloseEvent *event)
         ce->client->waitForBytesWritten();
         ce->a->quit();
     }
+}
+
+ChatWindow *MainWindow::findChatWindow(QString friendName)
+{
+    int size = this->items.size();
+    for(int i = 0;i <size;i++)
+    {
+        QString name = this->items[i]->text();
+        if(name.left(name.size() - 4) == friendName)
+        {
+            if(this->chatWindows.contains(items[i]))
+            {
+                return chatWindows.find(items[i]).value();
+            }
+        }
+    }
+    return 0;
 }
 
 void MainWindow::on_friendListWidget_doubleClicked(const QModelIndex &)

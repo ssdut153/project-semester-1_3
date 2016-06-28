@@ -22,6 +22,7 @@ SOURCES += main.cpp \
     common/message/base/message.cpp \
     common/message/base/upmessage.cpp \
     common/message/base/usernamemessage.cpp \
+    common/message/base/feedbackmessage.cpp \
     common/message/loginout/loginmessage.cpp \
     common/message/loginout/logoutmessage.cpp \
     common/message/reg/regusermessage.cpp \
@@ -44,6 +45,7 @@ HEADERS  += stdafx.h \
     common/message/base/message.h \
     common/message/base/upmessage.h \
     common/message/base/usernamemessage.h \
+    common/message/base/feedbackmessage.h \
     common/message/loginout/loginmessage.h \
     common/message/loginout/logoutmessage.h \
     common/message/reg/regusermessage.h \

@@ -4,6 +4,7 @@
 #include "ui.h"
 #include "stdafx.h"
 #include "classes.h"
+#include "helper.h"
 
 class ChatWindow : public QMainWindow
 {
@@ -12,6 +13,8 @@ class ChatWindow : public QMainWindow
 public:
     explicit ChatWindow(std::string username, QListWidgetItem *item, MainWindow *parent = 0);
     ~ChatWindow();
+    void sendFail();
+    friend class Helper;
 
 protected:
     void closeEvent(QCloseEvent */*event*/);
