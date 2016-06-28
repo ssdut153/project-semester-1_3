@@ -110,7 +110,7 @@ void Helper::readClient()
             fbm.loadfromJson(str.toStdString());
             if(QString(fbm.stat.c_str()) == "sendfail")
             {
-                ChatWindow *chatWindow = CommonElements::getInstance()->mainWindow->findChatWindow(fbm.user.c_str());
+                ChatWindow *chatWindow = ce->mainWindow->findChatWindow(fbm.user.c_str());
                 chatWindow->sendFail();
             }
         }
@@ -118,18 +118,26 @@ void Helper::readClient()
         {
             p2pMessage pm;
             pm.loadfromJson(str.toStdString());
-            ChatWindow *chatWindow = CommonElements::getInstance()->mainWindow->findChatWindow(pm.FromUserName.c_str());
+            ChatWindow *chatWindow = ce->mainWindow->findChatWindow(pm.FromUserName.c_str());
             if(chatWindow != 0)
             {
                 chatWindow->appendText(pm.CreateTime.c_str(), pm.Content.c_str());
             }
-            //qDebug() << pm.FromUserName.c_str() << " " << pm.ToUserName.c_str() << " " << pm.CreateTime.c_str() << " " << pm.Content.c_str();
+        }
+        else if(head == "online")
+        {
+            std::string friendName = this->getfromJson(str.toStdString(), "username");
+            ce->mainWindow->setFriendStatus(friendName.c_str(), true);
+        }
+        else if(head == "offline")
+        {
+            std::string friendName = this->getfromJson(str.toStdString(), "username");
+            ce->mainWindow->setFriendStatus(friendName.c_str(), false);
         }
         else
         {
-            //qDebug()<<str;
+            qDebug()<<str;
         }
-
     }
     else if(status == "getfriendlist")
     {

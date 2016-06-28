@@ -9,7 +9,7 @@ ChatWindow::ChatWindow(std::string username, QListWidgetItem *item, MainWindow *
     ui(new Ui::ChatWindow),
     username(username),
     item(item),
-    friendName(item->text().toStdString()),
+    friendName(item->text().left(item->text().size() - 4).toStdString()),
     parent(parent)
 {
     ui->setupUi(this);

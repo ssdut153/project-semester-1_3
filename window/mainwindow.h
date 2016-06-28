@@ -15,6 +15,7 @@ public:
     ~MainWindow();
     void loadFriendList(std::vector<std::string> &users, std::vector<int> &onlineStatus);
     ChatWindow *findChatWindow(QString friendName);
+    void setFriendStatus(QString friendName, bool online);
     friend class ChatWindow;
 
 protected:

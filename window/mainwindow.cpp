@@ -72,6 +72,26 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
+void MainWindow::setFriendStatus(QString friendName, bool online)
+{
+    int size = items.size();
+    for(int i = 0;i < size;i++)
+    {
+        QListWidgetItem *item = items[i];
+        if(item->text().left(item->text().size() - 4) == friendName)
+        {
+            if(online)
+            {
+                item->setText(friendName + "(在线)");
+            }
+            else
+            {
+                item->setText(friendName + "(离线)");
+            }
+        }
+    }
+}
+
 ChatWindow *MainWindow::findChatWindow(QString friendName)
 {
     int size = this->items.size();
@@ -94,7 +114,6 @@ ChatWindow *MainWindow::findChatWindow(QString friendName)
             }
         }
     }
-
     return 0;
 }
 
