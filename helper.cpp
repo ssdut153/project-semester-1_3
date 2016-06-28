@@ -119,8 +119,10 @@ void Helper::readClient()
             p2pMessage pm;
             pm.loadfromJson(str.toStdString());
             ChatWindow *chatWindow = CommonElements::getInstance()->mainWindow->findChatWindow(pm.FromUserName.c_str());
-            qDebug()<<"test";
-            chatWindow->appendText(pm.CreateTime.c_str(), pm.Content.c_str());
+            if(chatWindow != 0)
+            {
+                chatWindow->appendText(pm.CreateTime.c_str(), pm.Content.c_str());
+            }
             //qDebug() << pm.FromUserName.c_str() << " " << pm.ToUserName.c_str() << " " << pm.CreateTime.c_str() << " " << pm.Content.c_str();
         }
         else

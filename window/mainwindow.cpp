@@ -77,15 +77,24 @@ ChatWindow *MainWindow::findChatWindow(QString friendName)
     int size = this->items.size();
     for(int i = 0;i <size;i++)
     {
-        QString name = this->items[i]->text();
+        QListWidgetItem *item = this->items[i];
+        QString name = item->text();
         if(name.left(name.size() - 4) == friendName)
         {
-            if(this->chatWindows.contains(items[i]))
+            if(this->chatWindows.contains(item))
             {
-                return chatWindows.find(items[i]).value();
+                return chatWindows.find(item).value();
+            }
+            else
+            {
+                ChatWindow *cw = new ChatWindow(this->username, item, this);
+                this->chatWindows.insert(item, cw);
+                cw->show();
+                return cw;
             }
         }
     }
+
     return 0;
 }
 
