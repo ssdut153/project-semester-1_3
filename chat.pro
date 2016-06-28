@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     common/cJSON.c \
     messagebox/exitmessagebox.cpp \
     helper.cpp \
-    window/chatwindow.cpp
+    window/chatwindow.cpp \
+    window/searchwindow.cpp
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -56,12 +57,14 @@ HEADERS  += stdafx.h \
     messagebox/exitmessagebox.h \
     helper.h \
     window/chatwindow.h \
-    classes.h
+    classes.h \
+    window/searchwindow.h
 
 FORMS    += window/loginwindow.ui \
     window/mainwindow.ui \
     window/regwindow.ui \
-    window/chatwindow.ui
+    window/chatwindow.ui \
+    window/searchwindow.ui
 
 RESOURCES += \
     images.qrc

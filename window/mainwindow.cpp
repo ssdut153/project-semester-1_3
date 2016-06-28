@@ -8,7 +8,8 @@
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    username(CommonElements::getInstance()->username)
+    username(CommonElements::getInstance()->username),
+    searchWindow(0)
 {
     ui->setupUi(this);
     CommonElements *ce = CommonElements::getInstance();
@@ -133,4 +134,10 @@ void MainWindow::on_friendListWidget_doubleClicked(const QModelIndex &)
         this->chatWindows.insert(item, cw);
         cw->show();
     }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    searchWindow = new SearchWindow(this);
+    searchWindow->show();
 }

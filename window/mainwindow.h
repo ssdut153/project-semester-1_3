@@ -5,6 +5,7 @@
 #include "ui.h"
 #include "classes.h"
 #include "chatwindow.h"
+#include "searchwindow.h"
 
 class MainWindow : public QMainWindow
 {
@@ -24,13 +25,15 @@ protected:
 private slots:
     void on_friendListWidget_doubleClicked(const QModelIndex &index);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::string username;
     QMap<QString, int> friendlist;
     std::vector<QListWidgetItem *> items;
     QMap<QListWidgetItem*, ChatWindow*> chatWindows;
-
+    SearchWindow *searchWindow;
 };
 
 #endif // MAINWINDOW_H
