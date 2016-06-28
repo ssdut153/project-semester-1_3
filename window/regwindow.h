@@ -3,6 +3,7 @@
 
 #include "ui.h"
 #include "stdafx.h"
+#include "classes.h"
 
 class RegWindow : public QMainWindow
 {

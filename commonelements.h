@@ -2,11 +2,10 @@
 #define COMMONELEMENTS_H
 
 #include "stdafx.h"
+#include "classes.h"
 #include "tray/trayicon.h"
 #include "window/loginwindow.h"
 #include "window/mainwindow.h"
-
-class LoginWindow;
 
 class CommonElements:public QObject
 {

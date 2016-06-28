@@ -2,6 +2,7 @@
 #define TRAYMENU_H
 
 #include "stdafx.h"
+#include "classes.h"
 
 class TrayMenu : public QMenu
 {

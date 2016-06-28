@@ -2,7 +2,7 @@
 #define HELPER_H
 
 #include "stdafx.h"
-#include <string>
+#include "classes.h"
 #include "common/cJSON.h"
 #include "common/message/base/message.h"
 

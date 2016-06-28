@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "ui.h"
+#include "classes.h"
 #include "commonelements.h"
 #include "regwindow.h"
 #include "helper.h"

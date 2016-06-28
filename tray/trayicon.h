@@ -2,6 +2,7 @@
 #define TRAYICON_H
 
 #include "stdafx.h"
+#include "classes.h"
 #include "traymenu.h"
 
 class TrayIcon : public QSystemTrayIcon

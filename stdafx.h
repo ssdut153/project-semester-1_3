@@ -8,6 +8,7 @@
 #include <QDialog>
 #include <QEventLoop>
 #include <QKeyEvent>
+#include <QListWidgetItem>
 #include <QMap>
 #include <QMainWindow>
 #include <QMessageBox>
@@ -23,5 +24,7 @@
 #include <QTimer>
 #include <QThread>
 #include <QtNetwork>
+#include <string>
+#include <vector>
 
 #endif //STDAFX_H

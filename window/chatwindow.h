@@ -1,19 +1,20 @@
 #ifndef CHATWINDOW_H
 #define CHATWINDOW_H
 
+#include "ui.h"
 #include "stdafx.h"
-
-namespace Ui {
-class ChatWindow;
-}
+#include "classes.h"
 
 class ChatWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ChatWindow(std::string username, std::string friendName, QWidget *parent = 0);
+    explicit ChatWindow(std::string username, QListWidgetItem *item, MainWindow *parent = 0);
     ~ChatWindow();
+
+protected:
+    void closeEvent(QCloseEvent */*event*/);
 
 private slots:
     void on_sendButton_clicked();
@@ -21,7 +22,9 @@ private slots:
 private:
     Ui::ChatWindow *ui;
     std::string username;
+    QListWidgetItem *item;
     std::string friendName;
+    MainWindow *parent;
 };
 
 #endif // CHATWINDOW_H

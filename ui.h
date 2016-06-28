@@ -7,7 +7,7 @@ namespace Ui {
 class MainWindow;
 class LoginWindow;
 class RegWindow;
-class RegDialog;
+class ChatWindow;
 }
 
 #endif // UI_H

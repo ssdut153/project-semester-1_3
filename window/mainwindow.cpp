@@ -88,7 +88,7 @@ void MainWindow::on_friendListWidget_doubleClicked(const QModelIndex &)
     }
     else
     {
-        cw = new ChatWindow(this->username, friendName.toStdString(), this);
+        cw = new ChatWindow(this->username, item, this);
         this->chatWindows.insert(item, cw);
         cw->show();
     }

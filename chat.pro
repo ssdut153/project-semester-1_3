@@ -17,7 +17,6 @@ SOURCES += main.cpp \
     window/mainwindow.cpp \
     window/regwindow.cpp \
     tray/traymenu.cpp \
-    tray/trayaction.cpp \
     tray/trayicon.cpp \
     commonelements.cpp \
     common/message/base/message.cpp \
@@ -40,7 +39,6 @@ HEADERS  += stdafx.h \
     window/regwindow.h \
     ui.h \
     tray/traymenu.h \
-    tray/trayaction.h \
     tray/trayicon.h \
     commonelements.h \
     common/message/base/message.h \
@@ -55,7 +53,8 @@ HEADERS  += stdafx.h \
     common/cJSON.h \
     messagebox/exitmessagebox.h \
     helper.h \
-    window/chatwindow.h
+    window/chatwindow.h \
+    classes.h
 
 FORMS    += window/loginwindow.ui \
     window/mainwindow.ui \
