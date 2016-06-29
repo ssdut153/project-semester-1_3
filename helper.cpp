@@ -4,6 +4,9 @@
 #include "common/message/base/feedbackmessage.h"
 #include "common/message/loginout/loginmessage.h"
 #include "common/message/friendlist/friendlistmessage.h"
+#include "common/message/addfriend/requestfriendmessage.h"
+#include "common/message/addfriend/ajfriendmessage.h"
+#include "common/message/addfriend/newfriendmessage.h"
 #include <QDebug>
 
 Helper::Helper():
@@ -51,6 +54,7 @@ void Helper::readClient()
 {
     CommonElements *ce = CommonElements::getInstance();
     QString str = ce->client->readAll();
+    qDebug()<<str;
     if(status == "none")
     {
         QString head = this->getfromJson(str, "head");
@@ -112,7 +116,6 @@ void Helper::readClient()
             p2pMessage pm;
             pm.loadfromJson(str);
             ChatWindow *chatWindow = ce->mainWindow->findChatWindow(pm.FromUserName);
-            qDebug()<<pm.Content;
             if(chatWindow != 0)
             {
                 chatWindow->appendText(pm.CreateTime, pm.Content);
@@ -127,6 +130,44 @@ void Helper::readClient()
         {
             QString friendName = this->getfromJson(str, "username");
             ce->mainWindow->setFriendStatus(friendName, false);
+        }
+        else if(head == "userInfo")
+        {
+            QString status = this->getfromJson(str, "status");
+            if(status == "true")
+            {
+                QString searchName = this->getfromJson(str, "username");
+                SearchWindow *sw = ce->mainWindow->searchWindow;
+                if(sw != 0)
+                {
+                    sw->showSearchUser(searchName);
+                }
+            }
+        }
+        else if(head == "requestFriend")
+        {
+            requestFriendMessage rfm;
+            rfm.loadfromJson(str);
+            QMessageBox messageBox(QMessageBox::Warning, "好友添加请求", rfm.fromuser + "请求添加您为好友", 0, 0);
+            messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+            messageBox.addButton("同意", QMessageBox::AcceptRole);
+            messageBox.addButton("拒绝", QMessageBox::RejectRole);
+            if(messageBox.exec() == QMessageBox::RejectRole)
+            {
+                ajFriendMessage afm(ce->username, rfm.fromuser, "false");
+                this->writeClient(afm);
+            }
+            else
+            {
+                ajFriendMessage afm(ce->username, rfm.fromuser, "true");
+                this->writeClient(afm);
+            }
+        }
+        else if(head == "newFriend")
+        {
+            newFriendMessage nfm;
+            nfm.loadfromJson(str);
+            ce->mainWindow->addFriendItem(nfm.user, 1);
         }
         else
         {

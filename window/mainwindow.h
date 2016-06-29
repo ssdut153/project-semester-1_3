@@ -6,6 +6,7 @@
 #include "classes.h"
 #include "chatwindow.h"
 #include "searchwindow.h"
+#include "helper.h"
 
 class MainWindow : public QMainWindow
 {
@@ -15,9 +16,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void loadFriendList(std::vector<QString> &users, std::vector<int> &onlineStatus);
+    void addFriendItem(QString user, int status);
     ChatWindow *findChatWindow(QString friendName);
     void setFriendStatus(QString friendName, bool online);
     friend class ChatWindow;
+    friend class SearchWindow;
+    friend class Helper;
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -33,6 +37,7 @@ private:
     std::vector<QListWidgetItem*> items;
     QMap<QListWidgetItem*, ChatWindow*> chatWindows;
     SearchWindow *searchWindow;
+
 };
 
 #endif // MAINWINDOW_H

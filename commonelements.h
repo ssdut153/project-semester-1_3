@@ -6,6 +6,7 @@
 #include "tray/trayicon.h"
 #include "window/loginwindow.h"
 #include "window/mainwindow.h"
+#include "helper.h"
 
 class CommonElements:public QObject
 {
@@ -14,6 +15,7 @@ class CommonElements:public QObject
 private:
     static CommonElements *instance;
     explicit CommonElements(QObject *parent = 0);
+    friend class Helper;
 
 public:
     ~CommonElements();

@@ -13,6 +13,7 @@
 #include <QJsonParseError>
 #include <QJsonValue>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QListWidgetItem>
 #include <QMap>
 #include <QMainWindow>
@@ -29,6 +30,7 @@
 #include <QTimer>
 #include <QThread>
 #include <QtNetwork>
+#include <QVector>
 #include <string>
 #include <vector>
 

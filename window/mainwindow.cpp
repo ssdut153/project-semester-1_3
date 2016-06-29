@@ -24,6 +24,27 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::addFriendItem(QString user, int status)
+{
+    for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++)
+    {
+        if(it.key() == user)
+        {
+            return;
+        }
+    }
+    QListWidgetItem *item = new QListWidgetItem;
+    if(status == 0)
+    {
+        item->setText(user + "(离线)");
+    }
+    else if(status == 1)
+    {
+        item->setText(user + "(在线)");
+    }
+    this->items.push_back(item);
+}
+
 void MainWindow::loadFriendList(std::vector<QString> &users, std::vector<int> &onlineStatus)
 {
     friendlist.clear();
@@ -43,7 +64,7 @@ void MainWindow::loadFriendList(std::vector<QString> &users, std::vector<int> &o
         {
             item->setText(it.key() + "(在线)");
         }
-        items.push_back(item);
+        this->items.push_back(item);
     }
     for(int i = 0;i < size;i++)
     {

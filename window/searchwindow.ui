@@ -52,6 +52,50 @@
      <string>查询</string>
     </property>
    </widget>
+   <widget class="QGroupBox" name="searchGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>100</y>
+      <width>711</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="userLabel">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>0</y>
+       <width>511</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="addButton">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>0</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>添加</string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>searchEdit</zorder>
+   <zorder>searchButton</zorder>
+   <zorder>searchGroupBox</zorder>
+   <zorder>userLabel</zorder>
+   <zorder>addButton</zorder>
   </widget>
  </widget>
  <resources/>

@@ -23,6 +23,7 @@ SOURCES += main.cpp \
     common/message/base/upmessage.cpp \
     common/message/base/usernamemessage.cpp \
     common/message/base/feedbackmessage.cpp \
+    common/message/base/uumessage.cpp \
     common/message/loginout/loginmessage.cpp \
     common/message/loginout/logoutmessage.cpp \
     common/message/reg/regusermessage.cpp \
@@ -30,6 +31,10 @@ SOURCES += main.cpp \
     common/message/friendlist/friendlistmessage.cpp \
     common/message/function/p2pmessage.cpp \
     common/message/searchuser/searchusermessage.cpp \
+    common/message/addfriend/addfriendmessage.cpp \
+    common/message/addfriend/ajfriendmessage.cpp \
+    common/message/addfriend/requestfriendmessage.cpp \
+    common/message/addfriend/newfriendmessage.cpp \
     messagebox/exitmessagebox.cpp \
     helper.cpp \
     window/chatwindow.cpp \
@@ -47,6 +52,7 @@ HEADERS  += stdafx.h \
     common/message/base/upmessage.h \
     common/message/base/usernamemessage.h \
     common/message/base/feedbackmessage.h \
+    common/message/base/uumessage.h \
     common/message/loginout/loginmessage.h \
     common/message/loginout/logoutmessage.h \
     common/message/reg/regusermessage.h \
@@ -54,6 +60,10 @@ HEADERS  += stdafx.h \
     common/message/friendlist/friendlistmessage.h \
     common/message/function/p2pmessage.h \
     common/message/searchuser/searchusermessage.h \
+    common/message/addfriend/addfriendmessage.h \
+    common/message/addfriend/ajfriendmessage.h \
+    common/message/addfriend/requestfriendmessage.h \
+    common/message/addfriend/newfriendmessage.h \
     messagebox/exitmessagebox.h \
     helper.h \
     window/chatwindow.h \

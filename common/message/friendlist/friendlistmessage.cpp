@@ -94,7 +94,6 @@ bool friendListMessage::loadfromJson(QString textJson)
                     if(tempJsonObject.contains("status"))
                     {
                         QJsonValue jsonValue = tempJsonObject.take("status");
-                        qDebug()<<jsonValue.isDouble();
                         if(jsonValue.isDouble())
                         {
                             stat.push_back(jsonValue.toInt());
