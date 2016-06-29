@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void loadFriendList(std::vector<std::string> &users, std::vector<int> &onlineStatus);
+    void loadFriendList(std::vector<QString> &users, std::vector<int> &onlineStatus);
     ChatWindow *findChatWindow(QString friendName);
     void setFriendStatus(QString friendName, bool online);
     friend class ChatWindow;
@@ -24,14 +24,13 @@ protected:
 
 private slots:
     void on_friendListWidget_doubleClicked(const QModelIndex &index);
-
     void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
-    std::string username;
+    QString username;
     QMap<QString, int> friendlist;
-    std::vector<QListWidgetItem *> items;
+    std::vector<QListWidgetItem*> items;
     QMap<QListWidgetItem*, ChatWindow*> chatWindows;
     SearchWindow *searchWindow;
 };

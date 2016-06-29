@@ -4,16 +4,16 @@
 #include "commonelements.h"
 #include "common/message/function/p2pmessage.h"
 
-ChatWindow::ChatWindow(std::string username, QListWidgetItem *item, MainWindow *parent) :
+ChatWindow::ChatWindow(QString username, QListWidgetItem *item, MainWindow *parent) :
     QMainWindow(parent),
     ui(new Ui::ChatWindow),
     username(username),
     item(item),
-    friendName(item->text().left(item->text().size() - 4).toStdString()),
+    friendName(item->text().left(item->text().size() - 4)),
     parent(parent)
 {
     ui->setupUi(this);
-    this->setWindowTitle(friendName.c_str());
+    this->setWindowTitle(friendName);
 }
 
 ChatWindow::~ChatWindow()
@@ -26,18 +26,18 @@ void ChatWindow::on_sendButton_clicked()
     QString message = ui->sendEdit->toPlainText();
     if(!(message == ""))
     {
-        p2pMessage pm(this->username, this->friendName.substr(0, this->friendName.size() - 8), message.toStdString());
+        p2pMessage pm(this->username, this->friendName, message);
         Helper *helper = Helper::getInstance();
         helper->writeClient(pm);
         ui->sendEdit->clear();
-        ui->messageEdit->append(QString(this->username.c_str()) + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        ui->messageEdit->append(this->username + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
         ui->messageEdit->append(message);
     }
 }
 
 void ChatWindow::appendText(QString time, QString content)
 {
-    ui->messageEdit->append(QString(this->friendName.c_str()) + " " + time);
+    ui->messageEdit->append(this->friendName + " " + time);
     ui->messageEdit->append(content);
 }
 

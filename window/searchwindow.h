@@ -3,6 +3,7 @@
 
 #include "ui.h"
 #include "stdafx.h"
+#include "search.h"
 
 class SearchWindow : public QMainWindow
 {

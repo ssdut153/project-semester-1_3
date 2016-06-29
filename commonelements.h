@@ -20,7 +20,7 @@ public:
     TrayIcon *trayIcon;
     QTcpSocket *client;
     static CommonElements *getInstance();
-    std::string username;
+    QString username;
     LoginWindow *loginWindow;
     MainWindow *mainWindow;
     bool login;

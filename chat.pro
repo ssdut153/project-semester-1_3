@@ -29,7 +29,7 @@ SOURCES += main.cpp \
     common/message/friendlist/getfriendlistmessage.cpp \
     common/message/friendlist/friendlistmessage.cpp \
     common/message/function/p2pmessage.cpp \
-    common/cJSON.c \
+    common/message/searchuser/searchusermessage.cpp \
     messagebox/exitmessagebox.cpp \
     helper.cpp \
     window/chatwindow.cpp \
@@ -53,7 +53,7 @@ HEADERS  += stdafx.h \
     common/message/friendlist/getfriendlistmessage.h \
     common/message/friendlist/friendlistmessage.h \
     common/message/function/p2pmessage.h \
-    common/cJSON.h \
+    common/message/searchuser/searchusermessage.h \
     messagebox/exitmessagebox.h \
     helper.h \
     window/chatwindow.h \

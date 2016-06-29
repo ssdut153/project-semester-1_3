@@ -16,14 +16,14 @@
 #ifndef LOGINMESSAGE_H
 #define LOGINMESSAGE_H
 
-#include <string>
+#include "stdafx.h"
 #include "common/message/base/upmessage.h"
 
 class loginMessage:public upMessage
 {
 public:
     loginMessage();
-    loginMessage(std::string username,std::string password);
+    loginMessage(QString username,QString password);
 };
 
 #endif // LOGINMESSAGE_H

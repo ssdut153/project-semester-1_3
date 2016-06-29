@@ -7,6 +7,7 @@ class LoginWindow;
 class RegWindow;
 class MainWindow;
 class ChatWindow;
+class SearchWindow;
 class CommonElements;
 class Helper;
 

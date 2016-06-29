@@ -13,8 +13,8 @@ public:
     explicit RegWindow(QWidget *parent = 0);
     ~RegWindow();
     void setMessageLabel(const char *message);
-    std::string username;
-    std::string password;
+    QString username;
+    QString password;
     void setRegButtonEnabled(bool enabled);
 
 protected:

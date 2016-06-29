@@ -15,16 +15,18 @@
  ****************************************************************************************/
 #ifndef FRIENDLISTMESSAGE_H
 #define FRIENDLISTMESSAGE_H
+
 #include "../base/usernamemessage.h"
-#include <vector>
+#include "stdafx.h"
+
 class friendListMessage : public Message
 {
 public:
     friendListMessage();
-    void adduser(std::string username,int status);
-    std::string getJsonString();
-    bool loadfromJson(std::string textJson);
-    std::vector<std::string> user;
+    void adduser(QString username,int status);
+    QString getJsonString();
+    bool loadfromJson(QString textJson);
+    std::vector<QString> user;
     std::vector<int> stat;
     int size;
 };

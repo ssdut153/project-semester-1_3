@@ -22,7 +22,7 @@ class logoutMessage : public usernameMessage
 {
 public:
     logoutMessage();
-    logoutMessage(std::string username);
+    logoutMessage(QString username);
 };
 
 #endif // LOGOUTMESSAGE_H

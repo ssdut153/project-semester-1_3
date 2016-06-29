@@ -62,10 +62,10 @@ void RegWindow::on_regButton_clicked()
     else
     {
         ui->regButton->setEnabled(false);
-        regUserMessage rum(username.toStdString(),password_1.toStdString());
+        regUserMessage rum(username, password_1);
         CommonElements *ce = CommonElements::getInstance();
-        this->username = username.toStdString();
-        this->password = password_1.toStdString();
+        this->username = username;
+        this->password = password_1;
         ce->connectServer();
         Helper::getInstance()->writeClient(rum);
     }

@@ -3,7 +3,6 @@
 
 #include "stdafx.h"
 #include "classes.h"
-#include "common/cJSON.h"
 #include "common/message/base/message.h"
 
 class Helper:public QObject
@@ -20,7 +19,7 @@ private slots:
 
 public:
     static Helper *getInstance();
-    std::string getfromJson(std::string textJson, const char *name);
+    QString getfromJson(QString textJson, QString name);
     void writeClient(Message &message);
     QTcpSocket *client;
     void connectServer();

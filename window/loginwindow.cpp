@@ -49,7 +49,7 @@ void LoginWindow::on_loginButton_clicked()
         ui->messageLabel->clear();
         ui->cancelButton->setFocus();
         CommonElements *ce = CommonElements::getInstance();
-        loginMessage lm(username.toStdString(), password.toStdString());
+        loginMessage lm(username, password);
         ce->connectServer();
         Helper::getInstance()->writeClient(lm);
     }

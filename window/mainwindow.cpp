@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent):
     getFriendListMessage gflm(ce->username);
     Helper *helper = Helper::getInstance();
     helper->writeClient(gflm);
-    ui->usernameLabel->setText(ce->username.c_str());
+    ui->usernameLabel->setText(ce->username);
 }
 
 MainWindow::~MainWindow()
@@ -24,13 +24,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::loadFriendList(std::vector<std::string> &users, std::vector<int> &onlineStatus)
+void MainWindow::loadFriendList(std::vector<QString> &users, std::vector<int> &onlineStatus)
 {
     friendlist.clear();
     int size = users.size();
     for(int i = 0 ;i < size;i++)
     {
-        friendlist.insert(users[i].c_str(), onlineStatus[i]);
+        friendlist.insert(users[i], onlineStatus[i]);
     }
     for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++)
     {
@@ -67,7 +67,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         logoutMessage lm(this->username);
         CommonElements *ce = CommonElements::getInstance();
         ce->trayIcon->hide();
-        ce->client->write(lm.getJsonString().c_str());
+        ce->client->write(lm.getJsonString().toLatin1());
         ce->client->waitForBytesWritten();
         ce->a->quit();
     }

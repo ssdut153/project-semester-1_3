@@ -25,33 +25,26 @@ void Helper::disconnectServer()
     client = 0;
 }
 
-std::string Helper::getfromJson(std::string textJson, const char *name)
+QString Helper::getfromJson(QString textJson, QString key)
 {
-    QString str = name;
-    str = "\"" + str + "\":";
-    if (textJson.find(str.toStdString().c_str()) >= textJson.length())
-        return "false";
-    cJSON *json , *json_head;
-    // 解析数据包
-    const char* text = textJson.c_str();
-    try
+    QJsonParseError jsonParseError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toLatin1(), &jsonParseError);
+    if(jsonParseError.error == QJsonParseError::NoError)
     {
-        json = cJSON_Parse(text);
-        if (!json)
-            return "false";
-        else
+        if(jsonDocument.isObject())
         {
-            // 解析head
-            json_head = cJSON_GetObjectItem(json , name);
-            std::string head = json_head->valuestring;
-            cJSON_Delete(json);
-            return head;
+            QJsonObject jsonObject = jsonDocument.object();
+            if(jsonObject.contains(key))
+            {
+                QJsonValue jsonValue = jsonObject.take(key);
+                if(jsonValue.isString())
+                {
+                    return jsonValue.toString();
+                }
+            }
         }
     }
-    catch(...)
-    {
-        return "false";
-    }
+    return "";
 }
 
 void Helper::readClient()
@@ -60,13 +53,13 @@ void Helper::readClient()
     QString str = ce->client->readAll();
     if(status == "none")
     {
-        QString head = this->getfromJson(str.toStdString(), "head").c_str();
+        QString head = this->getfromJson(str, "head");
         if(head == "loginFeedBack")
         {
-            QString status = this->getfromJson(str.toStdString(), "status").c_str();
+            QString status = this->getfromJson(str, "status");
             if (status == "true")
             {
-                ce->username = this->getfromJson(str.toStdString(), "username");
+                ce->username = this->getfromJson(str, "username");
                 ce->login = true;
                 ce->loginWindow->hide();
                 delete ce->loginWindow;
@@ -86,7 +79,7 @@ void Helper::readClient()
         }
         else if(head == "regFeedBack")
         {
-            QString status = this->getfromJson(str.toStdString(), "status").c_str();
+            QString status = this->getfromJson(str, "status");
             if(status == "true")
             {
                 loginMessage lm(ce->loginWindow->regWindow->username,ce->loginWindow->regWindow->password);
@@ -107,32 +100,32 @@ void Helper::readClient()
         else if(head == "defaultFeedBack")
         {
             feedBackMessage fbm;
-            fbm.loadfromJson(str.toStdString());
-            if(QString(fbm.stat.c_str()) == "sendfail")
+            fbm.loadfromJson(str);
+            if(fbm.stat == "sendfail")
             {
-                ChatWindow *chatWindow = ce->mainWindow->findChatWindow(fbm.user.c_str());
+                ChatWindow *chatWindow = ce->mainWindow->findChatWindow(fbm.user);
                 chatWindow->sendFail();
             }
         }
         else if(head == "p2p")
         {
             p2pMessage pm;
-            pm.loadfromJson(str.toStdString());
-            ChatWindow *chatWindow = ce->mainWindow->findChatWindow(pm.FromUserName.c_str());
+            pm.loadfromJson(str);
+            ChatWindow *chatWindow = ce->mainWindow->findChatWindow(pm.FromUserName);
             if(chatWindow != 0)
             {
-                chatWindow->appendText(pm.CreateTime.c_str(), pm.Content.c_str());
+                chatWindow->appendText(pm.CreateTime, pm.Content);
             }
         }
         else if(head == "online")
         {
-            std::string friendName = this->getfromJson(str.toStdString(), "username");
-            ce->mainWindow->setFriendStatus(friendName.c_str(), true);
+            QString friendName = this->getfromJson(str, "username");
+            ce->mainWindow->setFriendStatus(friendName, true);
         }
         else if(head == "offline")
         {
-            std::string friendName = this->getfromJson(str.toStdString(), "username");
-            ce->mainWindow->setFriendStatus(friendName.c_str(), false);
+            QString friendName = this->getfromJson(str, "username");
+            ce->mainWindow->setFriendStatus(friendName, false);
         }
         else
         {
@@ -143,7 +136,7 @@ void Helper::readClient()
     {
         status = "none";
         friendListMessage flm;
-        if(flm.loadfromJson(str.toStdString())){
+        if(flm.loadfromJson(str)){
             ce->mainWindow->loadFriendList(flm.user, flm.stat);
         }
     }
@@ -155,7 +148,7 @@ void Helper::readClient()
 
 void Helper::writeClient(Message &message)
 {
-    CommonElements::getInstance()->client->write(message.getJsonString().c_str());
+    CommonElements::getInstance()->client->write(message.getJsonString().toLatin1());
 }
 
 Helper *Helper::helper = 0;

@@ -6,8 +6,12 @@
 #include <QBitmap>
 #include <QCloseEvent>
 #include <QDateTime>
-#include <QDialog>
 #include <QEventLoop>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QJsonValue>
 #include <QKeyEvent>
 #include <QListWidgetItem>
 #include <QMap>

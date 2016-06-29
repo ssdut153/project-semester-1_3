@@ -11,7 +11,7 @@ class ChatWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ChatWindow(std::string username, QListWidgetItem *item, MainWindow *parent = 0);
+    explicit ChatWindow(QString username, QListWidgetItem *item, MainWindow *parent = 0);
     ~ChatWindow();
     void appendText(QString time, QString content);
     void sendFail();
@@ -25,9 +25,9 @@ private slots:
 
 private:
     Ui::ChatWindow *ui;
-    std::string username;
+    QString username;
     QListWidgetItem *item;
-    std::string friendName;
+    QString friendName;
     MainWindow *parent;
 };
 

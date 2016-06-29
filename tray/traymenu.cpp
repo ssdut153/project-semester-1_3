@@ -30,7 +30,7 @@ void TrayMenu::on_exitAction_triggered()
         if(ce->login)
         {
             logoutMessage lm(ce->username);
-            ce->client->write(lm.getJsonString().c_str());
+            ce->client->write(lm.getJsonString().toLatin1());
         }
         ce->trayIcon->hide();
         std::exit(0);
