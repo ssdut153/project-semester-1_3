@@ -2,7 +2,7 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: ajfriendmessage.h
+ *  文件名称: forcelogoutmessage.h
  *  简要描述:
  *
  *  创建日期:
@@ -13,21 +13,16 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#ifndef AJFRIENDMESSAGE_H
-#define AJFRIENDMESSAGE_H
+#ifndef FORCELOGOUTMESSAGE_H
+#define FORCELOGOUTMESSAGE_H
 #include "stdafx.h"
-#include "../base/message.h"
+#include "../base/usernamemessage.h"
 
-class ajFriendMessage : public Message
+class forceLogoutMessage : public usernameMessage
 {
 public:
-    ajFriendMessage();
-    ajFriendMessage(QString fromUserName, QString toUserName, QString accept);
-    QString getJsonString();
-    bool loadfromJson(QString textJson);
-    QString fromuser;
-    QString touser;
-    QString acpt;
+    forceLogoutMessage();
+    forceLogoutMessage(QString username);
 };
 
-#endif // AJFRIENDMESSAGE_H
+#endif // FORCELOGOUTMESSAGE_H

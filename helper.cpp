@@ -7,6 +7,7 @@
 #include "common/message/addfriend/requestfriendmessage.h"
 #include "common/message/addfriend/ajfriendmessage.h"
 #include "common/message/addfriend/newfriendmessage.h"
+#include "common/message/function/forcelogoutmessage.h"
 #include <QDebug>
 
 Helper::Helper():
@@ -148,7 +149,7 @@ void Helper::readClient()
         {
             requestFriendMessage rfm;
             rfm.loadfromJson(str);
-            QMessageBox messageBox(QMessageBox::Warning, "好友添加请求", rfm.fromuser + "请求添加您为好友", 0, 0);
+            QMessageBox messageBox(QMessageBox::Information, "好友添加请求", rfm.fromuser + "请求添加您为好友", 0, 0);
             messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
             messageBox.addButton("同意", QMessageBox::AcceptRole);
             messageBox.addButton("拒绝", QMessageBox::RejectRole);
@@ -168,6 +169,22 @@ void Helper::readClient()
             newFriendMessage nfm;
             nfm.loadfromJson(str);
             ce->mainWindow->addFriendItem(nfm.user, 1);
+        }
+        else if(head == "forceLogout")
+        {
+            forceLogoutMessage flm;
+            flm.loadfromJson(str);
+            if(flm.user == ce->username)
+            {
+                ce->disconnectServer();
+                ce->loginWindow = new LoginWindow;
+                QMessageBox messageBox(QMessageBox::Information, "提示", "您的帐号已在其他设备上登录", 0, 0);
+                delete ce->mainWindow;
+                ce->mainWindow = 0;
+                ce->username = "";
+                ce->loginWindow->show();
+                messageBox.exec();
+            }
         }
         else
         {

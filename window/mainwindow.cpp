@@ -90,7 +90,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         ce->trayIcon->hide();
         ce->client->write(lm.getJsonString().toStdString().c_str());
         ce->client->waitForBytesWritten();
-        ce->a->quit();
+        ce->application->quit();
     }
 }
 

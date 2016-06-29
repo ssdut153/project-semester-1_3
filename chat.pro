@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     messagebox/exitmessagebox.cpp \
     helper.cpp \
     window/chatwindow.cpp \
-    window/searchwindow.cpp
+    window/searchwindow.cpp \
+    common/message/function/forcelogoutmessage.cpp
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -68,7 +69,8 @@ HEADERS  += stdafx.h \
     helper.h \
     window/chatwindow.h \
     classes.h \
-    window/searchwindow.h
+    window/searchwindow.h \
+    common/message/function/forcelogoutmessage.h
 
 FORMS    += window/loginwindow.ui \
     window/mainwindow.ui \

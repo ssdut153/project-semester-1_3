@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
 //    Helper::getInstance();
 
-    ce->a = a;
+    ce->application = a;
 
     LoginWindow *lw = new LoginWindow;
     ce->loginWindow = lw;
