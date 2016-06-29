@@ -67,7 +67,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         logoutMessage lm(this->username);
         CommonElements *ce = CommonElements::getInstance();
         ce->trayIcon->hide();
-        ce->client->write(lm.getJsonString().toLatin1());
+        ce->client->write(lm.getJsonString().toStdString().c_str());
         ce->client->waitForBytesWritten();
         ce->a->quit();
     }

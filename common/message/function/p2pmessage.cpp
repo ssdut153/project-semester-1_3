@@ -59,7 +59,7 @@ QString p2pMessage::getJsonString()
 bool p2pMessage::loadfromJson(QString textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toLatin1(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
     if(jsonParseError.error == jsonParseError.NoError)
     {
         if(jsonDocument.isObject())

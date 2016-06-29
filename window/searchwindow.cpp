@@ -23,7 +23,7 @@ void SearchWindow::on_searchButton_clicked()
     }
 }
 
-void SearchWindow::closeEvent(QCloseEvent *event)
+void SearchWindow::closeEvent(QCloseEvent */*event*/)
 {
     delete this;
 }

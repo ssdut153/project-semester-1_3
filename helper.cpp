@@ -28,7 +28,7 @@ void Helper::disconnectServer()
 QString Helper::getfromJson(QString textJson, QString key)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toLatin1(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
         if(jsonDocument.isObject())
@@ -112,6 +112,7 @@ void Helper::readClient()
             p2pMessage pm;
             pm.loadfromJson(str);
             ChatWindow *chatWindow = ce->mainWindow->findChatWindow(pm.FromUserName);
+            qDebug()<<pm.Content;
             if(chatWindow != 0)
             {
                 chatWindow->appendText(pm.CreateTime, pm.Content);
@@ -148,7 +149,8 @@ void Helper::readClient()
 
 void Helper::writeClient(Message &message)
 {
-    CommonElements::getInstance()->client->write(message.getJsonString().toLatin1());
+    qDebug()<<message.getJsonString();
+    CommonElements::getInstance()->client->write(message.getJsonString().toStdString().c_str());
 }
 
 Helper *Helper::helper = 0;

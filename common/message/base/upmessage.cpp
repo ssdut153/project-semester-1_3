@@ -55,7 +55,7 @@ QString upMessage::getJsonString()
 bool upMessage::loadfromJson(QString textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toLatin1(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
         if(jsonDocument.isObject())
