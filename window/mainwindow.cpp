@@ -43,6 +43,7 @@ void MainWindow::addFriendItem(QString user, int status)
         item->setText(user + "(在线)");
     }
     this->items.push_back(item);
+    ui->friendListWidget->addItem(item);
 }
 
 void MainWindow::loadFriendList(std::vector<QString> &users, std::vector<int> &onlineStatus)

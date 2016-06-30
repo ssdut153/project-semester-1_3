@@ -10,7 +10,7 @@ SearchWindow::SearchWindow(QWidget *parent) :
     ui(new Ui::SearchWindow)
 {
     ui->setupUi(this);
-//    ui->searchGroupBox->hide();
+    ui->searchGroupBox->hide();
 }
 
 void SearchWindow::showSearchUser(QString searchName)
@@ -32,6 +32,7 @@ void SearchWindow::on_searchButton_clicked()
         searchUserMessage sum(username);
         Helper *helper = Helper::getInstance();
         helper->writeClient(sum);
+        ui->userLabel->clear();
     }
 }
 
@@ -44,8 +45,11 @@ void SearchWindow::closeEvent(QCloseEvent */*event*/)
 
 void SearchWindow::on_addButton_clicked()
 {
-    CommonElements *ce = CommonElements::getInstance();
-    addFriendMessage afm(ce->username, ui->searchEdit->text());
-    Helper *helper = Helper::getInstance();
-    helper->writeClient(afm);
+    if(ui->userLabel->text() != "")
+    {
+        CommonElements *ce = CommonElements::getInstance();
+        addFriendMessage afm(ce->username, ui->searchEdit->text());
+        Helper *helper = Helper::getInstance();
+        helper->writeClient(afm);
+    }
 }
