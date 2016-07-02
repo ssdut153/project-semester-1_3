@@ -1,27 +1,12 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: trayicon
- *  简要描述:
- *
- *  创建日期: 2016-6-22
- *  作者: Hu Wenqiang
- *  说明:
- *
- *  修改日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- ****************************************************************************************/
 #ifndef COMMONELEMENTS_H
 #define COMMONELEMENTS_H
 
 #include "stdafx.h"
+#include "classes.h"
 #include "tray/trayicon.h"
 #include "window/loginwindow.h"
 #include "window/mainwindow.h"
-
-class LoginWindow;
+#include "helper.h"
 
 class CommonElements:public QObject
 {
@@ -30,19 +15,32 @@ class CommonElements:public QObject
 private:
     static CommonElements *instance;
     explicit CommonElements(QObject *parent = 0);
-
-public:
-    ~CommonElements();
+    friend class Helper;
     TrayIcon *trayIcon;
     QTcpSocket *client;
-    static CommonElements *getInstance();
-    std::string username;
+    QString username;
     LoginWindow *loginWindow;
     MainWindow *mainWindow;
     bool login;
     QApplication *application;
+
+public:
+    ~CommonElements();
+    static CommonElements *getInstance();
     void connectServer();
     void disconnectServer();
+
+    TrayIcon *getTrayIcon();
+    QString getUsername();
+    LoginWindow *getLoginWindow();
+    MainWindow *getMainWindow();
+    QApplication *getApplication();
+    bool isLogin();
+
+    void setUsername(QString username);
+
+    void setLoginWindow(LoginWindow *loginWindow);
+    void setApplication(QApplication *application);
 
 };
 

@@ -1,111 +1,165 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: trayicon
- *  简要描述:
- *
- *  创建日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- *
- *  修改日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- ****************************************************************************************/
 #include "mainwindow.h"
-#include "common/message/loginout/logoutmessage.h"
-#include "common/message/friendlist/getfriendlistmessage.h"
 #include "commonelements.h"
 #include "helper.h"
-#include "chatwindow.h"
-/**
- * @brief MainWindow::MainWindow
- * @param parent
- */
-MainWindow::MainWindow(QWidget *parent):
+#include "common/message/friendlist/getfriendlistmessage.h"
+
+MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     usernameLabel(new QLabel(this)),
     friendListWidget(new QListWidget(this)),
-    qlwi(0)
+    searchButton(new QPushButton(this)),
+    searchWindow(new SearchWindow(this))
 {
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+
+    this->setMinimumSize(300, 700);
+    this->setMaximumSize(300, 700);
+
+    this->usernameLabel->setGeometry(30, 20, 140, 30);
+    this->friendListWidget->setGeometry(20, 70, 260, 480);
+    this->searchButton->setGeometry(20, 560, 60, 30);
+
     CommonElements *ce = CommonElements::getInstance();
-
-    this->setMinimumSize(300, 600);
-    this->setMaximumSize(300, 600);
-
-    this->usernameLabel->setGeometry(40, 20, 190, 30);
-    this->friendListWidget->setGeometry(30, 60, 240, 500);
-
-    this->usernameLabel->setText(ce->username.c_str());
+    usernameLabel->setText(ce->getUsername());
+    searchButton->setText("搜索");
 
     Helper *helper = Helper::getInstance();
-    getFriendListMessage gflm(ce->username);
+    getFriendListMessage gflm(ce->getUsername());
     helper->writeClient(gflm);
-    connect(friendListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_friendListWidget_doubleClicked(QListWidgetItem*)));
+
+    connect(this->searchButton, SIGNAL(clicked()), this,SLOT(on_searchButton_clicked()));
+    connect(this->friendListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_friendListWidget_doubleClicked(QListWidgetItem*)));
+
 }
-/**
- * @brief MainWindow::loadFriendList
- * @param users
- */
-void MainWindow::loadFriendList(std::vector<std::string> &users)
+
+void MainWindow::loadFriendList(QMap<QString, int> &users)
 {
     friendlist.clear();
-    int size = users.size();
-    for(int i = 0 ;i < size;i++)
+    for(QMap<QString, int>::iterator it = users.begin(); it != users.end(); it++)
     {
-        friendlist.push_back(users[i]);
+        friendlist.insert(it.key(), it.value());
     }
-    if(qlwi != 0)
+    for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++)
     {
-        delete qlwi;
+        QListWidgetItem *item = new QListWidgetItem;
+        if(it.value() == 0)
+        {
+            item->setText(it.key() + "(离线)");
+        }
+        else if(it.value() == 1)
+        {
+            item->setText(it.key() + "(在线)");
+        }
+        this->items.push_back(item);
+        this->friendListWidget->addItem(item);
     }
-    qlwi = new QListWidgetItem[size];
+}
+
+void MainWindow::setFriendStatus(QString friendName, bool online)
+{
+    int size = items.size();
     for(int i = 0;i < size;i++)
     {
-        (qlwi + i)->setText(friendlist[i].c_str());
-        this->friendListWidget->addItem(qlwi + i);
+        QListWidgetItem *item = items[i];
+        if(item->text().left(item->text().size() - 4) == friendName)
+        {
+            if(online)
+            {
+                item->setText(friendName + "(在线)");
+            }
+            else
+            {
+                item->setText(friendName + "(离线)");
+            }
+        }
     }
 }
-/**
- * @brief MainWindow::on_friendListWidget_doubleClicked
- * @param item
- */
+
+QMap<QListWidgetItem*, ChatWindow*> &MainWindow::getChatWindows()
+{
+    return this->chatWindows;
+}
+
+ChatWindow *MainWindow::getChatWindow(QString friendName)
+{
+    int size = this->items.size();
+    for(int i = 0;i <size;i++)
+    {
+        QListWidgetItem *item = this->items[i];
+        QString name = item->text();
+        if(name.left(name.size() - 4) == friendName)
+        {
+            if(this->chatWindows.contains(item))
+            {
+                return chatWindows.find(item).value();
+            }
+            else
+            {
+                ChatWindow *cw = new ChatWindow(item, this);
+                this->chatWindows.insert(item, cw);
+                cw->show();
+                return cw;
+            }
+        }
+    }
+    return 0;
+}
+
+SearchWindow *MainWindow::getSearchWindow()
+{
+    return this->searchWindow;
+}
+void MainWindow::addFriendItem(QString friendName, int status)
+{
+    for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++)
+    {
+        if(it.key() == friendName)
+        {
+            return;
+        }
+    }
+    QListWidgetItem *item = new QListWidgetItem;
+    if(status == 0)
+    {
+        item->setText(friendName + "(离线)");
+    }
+    else if(status == 1)
+    {
+        item->setText(friendName + "(在线)");
+    }
+    this->items.push_back(item);
+    this->friendListWidget->addItem(item);
+}
+
+//void MainWindow::setSearchWindow(SearchWindow *searchWindow)
+//{
+//    this->searchWindow = searchWindow;
+//}
+
+void MainWindow::on_searchButton_clicked()
+{
+    searchWindow->show();
+}
+
 void MainWindow::on_friendListWidget_doubleClicked(QListWidgetItem *item)
 {
-    ChatWindow *cw = new ChatWindow(this->usernameLabel->text().toStdString(), item->text().toStdString(), this);
-    this->chatWindows.push_back(cw);
-    cw->show();
+    ChatWindow *cw = 0;
+    if(chatWindows.contains(item))
+    {
+        cw = chatWindows.find(item).value();
+        cw->setFocus();
+    }
+    else
+    {
+        cw = new ChatWindow(item, this);
+        this->chatWindows.insert(item, cw);
+        cw->show();
+    }
 }
-/**
- * @brief MainWindow::closeEvent
- * @param event
- */
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
-
     Helper *helper = Helper::getInstance();
-    logoutMessage lm(this->usernameLabel->text().toStdString());
-    CommonElements *ce = CommonElements::getInstance();
-
-    QMessageBox messageBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
-    messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
-    messageBox.addButton("是", QMessageBox::AcceptRole);
-    messageBox.addButton("否", QMessageBox::RejectRole);
-
-    if(!(messageBox.exec() == QMessageBox::RejectRole))
-    {
-        helper->writeClient(lm);
-        ce->client->waitForBytesWritten();
-        ce->trayIcon->hide();
-        ce->application->quit();
-    }
-}
-/**
- * @brief MainWindow::~MainWindow
- */
-MainWindow::~MainWindow()
-{
-
+    helper->quit();
 }

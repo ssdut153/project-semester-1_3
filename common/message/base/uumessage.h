@@ -2,10 +2,10 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: regusermessage.h
+ *  文件名称: uumessage.h
  *  简要描述:
  *
- *  创建日期: 2016-6-23
+ *  创建日期: 2016-6-28
  *  作者: Yang Zhizhuang
  *  说明:
  *
@@ -13,17 +13,21 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#ifndef REGUSERMESSAGE_H
-#define REGUSERMESSAGE_H
+#ifndef UUMESSAGE_H
+#define UUMESSAGE_H
 
 #include "stdafx.h"
-#include "common/message/base/upmessage.h"
+#include "message.h"
 
-class regUserMessage : public upMessage
+class uuMessage : public Message
 {
 public:
-    regUserMessage();
-    regUserMessage(QString username, QString password);
+    uuMessage();
+    uuMessage(QString fromUserName,QString toUserName);
+    QString getJsonString();
+    bool loadfromJson(QString textJson);
+    QString fromuser;
+    QString touser;
 };
 
-#endif // REGUSERMESSAGE_H
+#endif // UUMESSAGE_H

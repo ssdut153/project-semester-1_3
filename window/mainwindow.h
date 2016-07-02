@@ -1,49 +1,41 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: trayicon
- *  简要描述:
- *
- *  创建日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- *
- *  修改日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- ****************************************************************************************/
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include "stdafx.h"
+#include "searchwindow.h"
 #include "chatwindow.h"
+#include "classes.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    void loadFriendList(std::vector<std::string> &users);
+    void loadFriendList(QMap<QString, int> &users);
+    void setFriendStatus(QString friendName, bool online);
+//    void setSearchWindow(SearchWindow *searchWindow);
+    QMap<QListWidgetItem*, ChatWindow*> &getChatWindows();
+    ChatWindow *getChatWindow(QString friendName);
+    SearchWindow *getSearchWindow();
+    void addFriendItem(QString friendName, int status);
 
 protected:
     void closeEvent(QCloseEvent *event);
 
+signals:
+
 private:
     QLabel *usernameLabel;
     QListWidget *friendListWidget;
-    std::vector<std::string> friendlist;
-    QListWidgetItem *qlwi;
-    std::vector<ChatWindow*> chatWindows;
+    QPushButton *searchButton;
+    QMap<QString, int> friendlist;
+    QVector<QListWidgetItem*> items;
+    QMap<QListWidgetItem*, ChatWindow*> chatWindows;
+    SearchWindow *searchWindow;
 
 private slots:
+    void on_searchButton_clicked();
     void on_friendListWidget_doubleClicked(QListWidgetItem *item);
-
-signals:
-
-public slots:
 
 };
 

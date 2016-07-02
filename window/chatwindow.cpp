@@ -1,9 +1,13 @@
 #include "chatwindow.h"
+#include "commonelements.h"
+#include "helper.h"
+#include "common/message/function/p2pmessage.h"
 
-ChatWindow::ChatWindow(std::string username, std::string friendName, QWidget *parent):
+ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     QMainWindow(parent),
-    username(username),
-    friendName(friendName),
+    username(CommonElements::getInstance()->getUsername()),
+    item(item),
+    friendName(item->text().left(item->text().size() - 4)),
     messageEdit(new QTextEdit(this)),
     sendEdit(new QTextEdit(this)),
     sendButton(new QPushButton(this))
@@ -11,24 +15,54 @@ ChatWindow::ChatWindow(std::string username, std::string friendName, QWidget *pa
     this->setMinimumSize(800, 600);
     this->setMaximumSize(800, 600);
 
-    this->setWindowTitle(friendName.c_str());
-
-    this->messageEdit->setGeometry(20, 20, 760, 400);
-    this->sendEdit->setGeometry(20, 430, 760, 120);
-    this->sendButton->setGeometry(700, 560, 50, 30);
+    this->setWindowTitle(this->friendName);
 
     this->sendButton->setText("发送");
 
-    connect(sendButton, SIGNAL(clicked(bool)), this, SLOT(on_sendButton_clicked()));
+    this->messageEdit->setReadOnly(true);
+
+    this->messageEdit->setGeometry(25, 20, 750, 380);
+    this->sendEdit->setGeometry(25, 420, 750, 120);
+    this->sendButton->setGeometry(710, 550, 60, 30);
+
+    connect(this->sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
 
 }
 
-ChatWindow::~ChatWindow()
+QTextEdit *ChatWindow::getMessageEdit()
 {
+    return this->messageEdit;
+}
 
+void ChatWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    this->hide();
+    CommonElements *ce = CommonElements::getInstance();
+    ce->getMainWindow()->getChatWindows().remove(this->item);
+    delete this;
+}
+
+void ChatWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+    case Qt::Key_Return:
+    case Qt::Key_Enter:
+        this->on_sendButton_clicked();
+        break;
+    }
 }
 
 void ChatWindow::on_sendButton_clicked()
 {
-
+    QString content = this->sendEdit->toPlainText();
+    if(content != "")
+    {
+        p2pMessage pm(this->username, this->friendName, content);
+        Helper *helper = Helper::getInstance();
+        helper->writeClient(pm);
+        this->sendEdit->clear();
+        this->messageEdit->append(this->username + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        this->messageEdit->append(content);
+    }
 }

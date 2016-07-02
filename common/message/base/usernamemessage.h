@@ -17,15 +17,16 @@
 #define USERNAMEMESSAGE_H
 
 #include "message.h"
+#include "stdafx.h"
 
 class usernameMessage : public Message
 {
 public:
     usernameMessage();
-    usernameMessage(std::string username);
-    std::string getJsonString();
-    bool loadfromJson(std::string textJson);
-    std::string user;
+    usernameMessage(QString username);
+    QString getJsonString();
+    bool loadfromJson(QString textJson);
+    QString user;
 };
 
 #endif // USERNAMEMESSAGE_H

@@ -14,63 +14,54 @@
  *  说明:
  ****************************************************************************************/
 #include "usernamemessage.h"
-#include "stdafx.h"
-#include "common/cJSON.h"
 /**
  * @brief usernameMessage::usernameMessage
  * @param username 用户名
  */
-usernameMessage::usernameMessage(std::string username)
+usernameMessage::usernameMessage(QString username)
 {
-    user=username;
-    head="defaultUsername";
+    user = username;
+    head = "defaultUsername";
 }
 /**
  * @brief usernameMessage::usernameMessage
  */
 usernameMessage::usernameMessage()
 {
-    head="defaultUsername";
+    head = "defaultUsername";
 }
 /**
  * @brief usernameMessage::getJsonString
  * @return  对应的单行Json字符串
  */
-std::string usernameMessage::getJsonString()
+QString usernameMessage::getJsonString()
 {
     QJsonObject jsonObject;
-    jsonObject.insert("head", QString(head.c_str()));
-    jsonObject.insert("username", QString(user.c_str()));
+    jsonObject.insert("head", head);
+    jsonObject.insert("username", user);
     QJsonDocument jsonDocument;
     jsonDocument.setObject(jsonObject);
     QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
-    return byteArray.toStdString();
+    return byteArray;
 }
 /**
  * @brief usernameMessage::loadfromJson
  * @param textJson Json字符串
  * @return  bool 是否载入成功
  */
-bool usernameMessage::loadfromJson(std::string textJson)
+bool usernameMessage::loadfromJson(QString textJson)
 {
-    QJsonParseError parseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(QString(textJson.c_str()).toLatin1(), &parseError);
-    if(parseError.error == QJsonParseError::NoError)
+    QJsonParseError jsonParseError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    if(jsonParseError.error == QJsonParseError::NoError)
     {
-        if(jsonDocument.isObject())
+        QJsonObject jsonObject  = jsonDocument.object();
+        if(jsonObject.contains("username"))
         {
-            QJsonObject jsonObject = jsonDocument.object();
-            if(jsonObject.contains("username"))
+            QJsonValue jsonValue = jsonObject.take("username");
+            if(jsonValue.isString())
             {
-                QJsonValue usernameValue = jsonObject.take("username");
-                if(usernameValue.isString())
-                {
-                    user = usernameValue.toString().toStdString();
-                }
-                else
-                {
-                    return false;
-                }
+                user = jsonValue.toString();
             }
             else
             {

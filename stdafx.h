@@ -1,28 +1,12 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: trayicon
- *  简要描述:
- *
- *  创建日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- *
- *  修改日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- ****************************************************************************************/
 #ifndef STDAFX_H
 #define STDAFX_H
 
 #include <QApplication>
-#include <QByteArray>
-#include <QBitmap>
 #include <QCloseEvent>
-#include <QDialog>
+#include <QDateTime>
 #include <QEventLoop>
 #include <QGroupBox>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
@@ -30,10 +14,10 @@
 #include <QKeyEvent>
 #include <QLabel>
 #include <QLineEdit>
-#include <QListWidget>
+#include <QListWidgetItem>
+#include <QMap>
 #include <QMainWindow>
 #include <QMessageBox>
-#include <QMetaObject>
 #include <QMouseEvent>
 #include <QMenu>
 #include <QPainter>
@@ -48,7 +32,6 @@
 #include <QTimer>
 #include <QThread>
 #include <QtNetwork>
-#include <string>
-#include <vector>
+#include <QVector>
 
-#endif // STDAFX_H
+#endif //STDAFX_H

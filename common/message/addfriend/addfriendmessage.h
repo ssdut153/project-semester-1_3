@@ -2,28 +2,27 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: regusermessage.h
+ *  文件名称: addfriendmessage.h
  *  简要描述:
  *
- *  创建日期: 2016-6-23
- *  作者: Yang Zhizhuang
+ *  创建日期:
+ *  作者:
  *  说明:
  *
  *  修改日期:
  *  作者:
  *  说明:
  ****************************************************************************************/
-#ifndef REGUSERMESSAGE_H
-#define REGUSERMESSAGE_H
-
+#ifndef ADDFRIENDMESSAGE_H
+#define ADDFRIENDMESSAGE_H
 #include "stdafx.h"
-#include "common/message/base/upmessage.h"
+#include "../base/uumessage.h"
 
-class regUserMessage : public upMessage
+class addFriendMessage : public uuMessage
 {
 public:
-    regUserMessage();
-    regUserMessage(QString username, QString password);
+    addFriendMessage();
+    addFriendMessage(QString fromUserName,QString toUserName);
 };
 
-#endif // REGUSERMESSAGE_H
+#endif // ADDFRIENDMESSAGE_H

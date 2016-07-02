@@ -1,24 +1,6 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: trayicon
- *  简要描述:
- *
- *  创建日期: 2016-6-22
- *  作者: Hu Wenqiang
- *  说明:
- *
- *  修改日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- ****************************************************************************************/
 #include "commonelements.h"
 #include "helper.h"
-/**
- * @brief CommonElements::CommonElements
- * @param parent 父级元素
- */
+
 CommonElements::CommonElements(QObject *parent):
     QObject(parent),
     trayIcon(new TrayIcon),
@@ -32,9 +14,6 @@ CommonElements::CommonElements(QObject *parent):
 
 }
 
-/**
- * @brief CommonElements::~CommonElements
- */
 CommonElements::~CommonElements()
 {
     trayIcon->hide();
@@ -42,9 +21,6 @@ CommonElements::~CommonElements()
     delete client;
 }
 
-/**
- * @brief CommonElements::connectServer
- */
 void CommonElements::connectServer()
 {
     client = new QTcpSocket(this);
@@ -54,23 +30,17 @@ void CommonElements::connectServer()
     Helper *helper = Helper::getInstance();
     helper->connectServer();
 }
-/**
- * @brief CommonElements::disconnectServer
- */
+
 void CommonElements::disconnectServer()
 {
     Helper::getInstance()->disconnectServer();
     delete client;
     client = 0;
 }
-/**
- * @brief CommonElements::instance
- */
+
 CommonElements *CommonElements::instance = 0;
-/**
- * @brief CommonElements::getInstance
- * @return CommonElements *
- */
+
+
 CommonElements *CommonElements::getInstance()
 {
     if(instance == 0)
@@ -78,4 +48,49 @@ CommonElements *CommonElements::getInstance()
         instance = new CommonElements;
     }
     return instance;
+}
+
+QString CommonElements::getUsername()
+{
+    return this->username;
+}
+
+LoginWindow *CommonElements::getLoginWindow()
+{
+    return this->loginWindow;
+}
+
+MainWindow *CommonElements::getMainWindow()
+{
+    return this->mainWindow;
+}
+
+QApplication *CommonElements::getApplication()
+{
+    return this->application;
+}
+
+bool CommonElements::isLogin()
+{
+    return this->login;
+}
+
+TrayIcon *CommonElements::getTrayIcon()
+{
+    return this->trayIcon;
+}
+
+void CommonElements::setUsername(QString username)
+{
+    this->username = username;
+}
+
+void CommonElements::setLoginWindow(LoginWindow *loginWindow)
+{
+    this->loginWindow = loginWindow;
+}
+
+void CommonElements::setApplication(QApplication *application)
+{
+    this->application = application;
 }

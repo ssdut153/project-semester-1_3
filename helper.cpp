@@ -1,188 +1,247 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: trayicon
- *  简要描述:
- *
- *  创建日期: 2016-6-23
- *  作者: Hu Wenqiang
- *  说明:
- *
- *  修改日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- ****************************************************************************************/
-#include "stdafx.h"
 #include "helper.h"
 #include "commonelements.h"
+#include "common/message/function/p2pmessage.h"
+#include "common/message/base/feedbackmessage.h"
 #include "common/message/loginout/loginmessage.h"
 #include "common/message/friendlist/friendlistmessage.h"
-#include "window/mainwindow.h"
-#include "window/regwindow.h"
+#include "common/message/addfriend/requestfriendmessage.h"
+#include "common/message/addfriend/ajfriendmessage.h"
+#include "common/message/addfriend/newfriendmessage.h"
+#include "common/message/function/forcelogoutmessage.h"
+#include "messagebox/exitmessagebox.h"
+#include "common/message/loginout/logoutmessage.h"
 #include <QDebug>
-/**
- * @brief Helper::Helper
- */
+
 Helper::Helper():
     status("none"),
     client(0)
 {
 
 }
-/**
- * @brief Helper::connectServer
- */
+
 void Helper::connectServer()
 {
     client = CommonElements::getInstance()->client;
     connect(client, SIGNAL(readyRead()), this, SLOT(readClient()));
 }
-/**
- * @brief Helper::disconnectServer
- */
+
 void Helper::disconnectServer()
 {
     disconnect(client, SIGNAL(readyRead()), this, SLOT(readClient()));
     client = 0;
 }
-/**
- * @brief Helper::readClient
- */
-void Helper::readClient()
+
+QString Helper::getfromJson(QString textJson, QString key)
 {
-    CommonElements *ce = CommonElements::getInstance();
-    QString str = client->readAll();
-    QJsonParseError jsonError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(str.toLatin1(), &jsonError);
-    if(jsonError.error == QJsonParseError::NoError)
+    QJsonParseError jsonParseError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    if(jsonParseError.error == QJsonParseError::NoError)
     {
-        if(status == "none" && jsonDocument.isObject())
+        if(jsonDocument.isObject())
         {
             QJsonObject jsonObject = jsonDocument.object();
-            if(jsonObject.contains("head"))
+            if(jsonObject.contains(key))
             {
-                QJsonValue headValue = jsonObject.take("head");
-                if(headValue.isString())
+                QJsonValue jsonValue = jsonObject.take(key);
+                if(jsonValue.isString())
                 {
-                    QString head = headValue.toString();
-                    if(head == "loginFeedBack")
-                    {
-                        if(jsonObject.contains("status")){
-                            QJsonValue statusValue = jsonObject.take("status");
-                            if(statusValue.isString())
-                            {
-                                QString status= statusValue.toString();
-                                if (status == "true")
-                                {
-                                    if(jsonObject.contains("username"))
-                                    {
-                                        QJsonValue usernameValue = jsonObject.take("username");
-                                        if(usernameValue.isString())
-                                        {
-                                            ce->username = usernameValue.toString().toStdString();
-                                        }
-                                    }
-                                    ce->login = true;
-                                    ce->loginWindow->hide();
-                                    delete ce->loginWindow;
-                                    ce->loginWindow = 0;
-                                    MainWindow *mw = new MainWindow;
-                                    ce->mainWindow = mw;
-                                    mw->show();
-                                }
-                                else
-                                {
-                                    this->disconnectServer();
-                                    client->disconnect();
-                                    ce->loginWindow->on_cancelButton_clicked();
-                                    ce->loginWindow->passwordEdit->clear();
-                                    ce->loginWindow->messageLabel->setText("用户名或密码错误");
-                                }
-                            }
-                        }
-                    }
-                    else if(head == "regFeedBack")
-                    {
-                        if(jsonObject.contains("status"))
-                        {
-                            QJsonValue statusValue = jsonObject.take("status");
-                            if(statusValue.isString())
-                            {
-                                QString status = statusValue.toString();
-                                if(status == "true")
-                                {
-                                    loginMessage lm(ce->loginWindow->regWindow->username,ce->loginWindow->regWindow->password);
-                                    this->writeClient(lm);
-                                }
-                                else
-                                {
-                                    this->disconnectServer();
-                                    client->disconnect();
-                                    ce->loginWindow->regWindow->messageLabel->setText("注册失败");
-                                    ce->loginWindow->regWindow->regButton->setEnabled(true);
-                                }
-                            }
-                        }
-                    }
-                    else if(head == "startSendList")
-                    {
-                        this->status = "getfriendlist";
-                    }
-                    else
-                    {
-
-                    }
+                    return jsonValue.toString();
                 }
             }
         }
-        else if(status == "getfriendlist" && jsonDocument.isArray())
+    }
+    return "";
+}
+
+void Helper::readClient()
+{
+    CommonElements *ce = CommonElements::getInstance();
+    QString str = ce->client->readAll();
+    qDebug()<<str;
+    if(status == "none")
+    {
+        QString head = this->getfromJson(str, "head");
+        if(head == "loginFeedBack")
         {
-            qDebug()<<"friendlist";
-            status = "none";
-            friendListMessage flm;
-            if(flm.loadfromJson(str.toStdString())){
-                ce->mainWindow->loadFriendList(flm.user);
+            QString status = this->getfromJson(str, "status");
+            if (status == "true")
+            {
+                ce->username = this->getfromJson(str, "username");
+                ce->login = true;
+                ce->loginWindow->hide();
+                delete ce->loginWindow;
+                ce->loginWindow = 0;
+                MainWindow *mw = new MainWindow;
+                ce->mainWindow = mw;
+                mw->show();
+            }
+            else
+            {
+                ce->disconnectServer();
+                ce->loginWindow->cancelLogin();
+                ce->loginWindow->getMessageLabel()->setText("用户名或密码错误");
+                ce->loginWindow->getPasswordEdit()->clear();
+            }
+        }
+        else if(head == "regFeedBack")
+        {
+            QString status = this->getfromJson(str, "status");
+            RegWindow *regWindow = ce->loginWindow->getRegWindow();
+            if(regWindow != 0)
+            {
+                if(status == "true")
+                {
+                    loginMessage lm(regWindow->getUsername(), regWindow->getPassword());
+                    this->writeClient(lm);
+                }
+                else
+                {
+                    this->disconnectServer();
+                    ce->client->disconnect();
+                    regWindow->getMessageLabel()->setText("注册失败");
+                    regWindow->getRegButton()->setEnabled(true);
+                }
+            }
+        }
+        else if(head == "startSendList")
+        {
+            this->status = "getfriendlist";
+        }
+        else if(head == "defaultFeedBack")
+        {
+            feedBackMessage fbm;
+            fbm.loadfromJson(str);
+            if(fbm.stat == "sendfail")
+            {
+                ChatWindow *chatWindow = ce->mainWindow->getChatWindow(fbm.user);
+                if(chatWindow != 0)
+                {
+                    chatWindow->getMessageEdit()->append("发送失败");
+                }
+            }
+        }
+        else if(head == "p2p")
+        {
+            p2pMessage pm;
+            pm.loadfromJson(str);
+            ChatWindow *chatWindow = ce->mainWindow->getChatWindow(pm.FromUserName);
+            if(chatWindow != 0)
+            {
+                chatWindow->getMessageEdit()->append(pm.FromUserName + pm.CreateTime);
+                chatWindow->getMessageEdit()->append(pm.Content);
+            }
+        }
+        else if(head == "online")
+        {
+            QString friendName = this->getfromJson(str, "username");
+            ce->mainWindow->setFriendStatus(friendName, true);
+        }
+        else if(head == "offline")
+        {
+            QString friendName = this->getfromJson(str, "username");
+            ce->mainWindow->setFriendStatus(friendName, false);
+        }
+        else if(head == "userInfo")
+        {
+            QString status = this->getfromJson(str, "status");
+            if(status == "true")
+            {
+                QString searchName = this->getfromJson(str, "username");
+                SearchWindow *sw = ce->mainWindow->getSearchWindow();
+                if(sw != 0)
+                {
+                    sw->showSearchUser(searchName);
+                }
+            }
+        }
+        else if(head == "requestFriend")
+        {
+            requestFriendMessage rfm;
+            rfm.loadfromJson(str);
+            QMessageBox messageBox(QMessageBox::Information, "好友添加请求", rfm.fromuser + "请求添加您为好友", 0, 0);
+            messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+            messageBox.addButton("同意", QMessageBox::AcceptRole);
+            messageBox.addButton("拒绝", QMessageBox::RejectRole);
+            if(messageBox.exec() == QMessageBox::RejectRole)
+            {
+                ajFriendMessage afm(ce->username, rfm.fromuser, "false");
+                this->writeClient(afm);
+            }
+            else
+            {
+                ajFriendMessage afm(ce->username, rfm.fromuser, "true");
+                this->writeClient(afm);
+            }
+        }
+        else if(head == "newFriend")
+        {
+            newFriendMessage nfm;
+            nfm.loadfromJson(str);
+            ce->mainWindow->addFriendItem(nfm.user, 1);
+        }
+        else if(head == "forceLogout")
+        {
+            forceLogoutMessage flm;
+            flm.loadfromJson(str);
+            if(flm.user == ce->username)
+            {
+                ce->disconnectServer();
+                ce->loginWindow = new LoginWindow;
+                QMessageBox messageBox(QMessageBox::Information, "提示", "您的帐号已在其他设备上登录", 0, 0);
+                delete ce->mainWindow;
+                ce->mainWindow = 0;
+                ce->username = "";
+                ce->login = false;
+                ce->loginWindow->show();
+                messageBox.exec();
             }
         }
         else
         {
-
+            qDebug()<<str;
         }
     }
-}
-/**
- * @brief Helper::writeClient
- * @param message 需要发送的message类型消息
- */
-void Helper::writeClient(Message &message)
-{
-    client->write(message.getJsonString().c_str());
-}
-/**
- * @brief Helper::quit
- */
-void Helper::quit()
-{
-    QMessageBox messageBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0);
-    messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
-    messageBox.addButton("是", QMessageBox::AcceptRole);
-    messageBox.addButton("否", QMessageBox::RejectRole);
-    if(!(messageBox.exec() == QMessageBox::RejectRole))
+    else if(status == "getfriendlist")
     {
-        CommonElements *ce = CommonElements::getInstance();
-        ce->trayIcon->hide();
-        ce->application->quit();
+        status = "none";
+        friendListMessage flm;
+        if(flm.loadfromJson(str)){
+            ce->mainWindow->loadFriendList(flm.users);
+        }
+    }
+    else
+    {
+
     }
 }
-/**
- * @brief Helper::helper
- */
+
+void Helper::writeClient(Message &message)
+{
+    qDebug()<<message.getJsonString();
+    QTcpSocket *client = CommonElements::getInstance()->client;
+    client->waitForBytesWritten();
+    client->write(message.getJsonString().toStdString().c_str());
+}
+
+void Helper::quit()
+{
+    ExitMessageBox emb;
+    if (emb.exec() == QMessageBox::AcceptRole)
+    {
+        CommonElements *ce = CommonElements::getInstance();
+        Helper *helper = Helper::getInstance();
+        if(ce->login)
+        {
+            logoutMessage lm(ce->username);
+            helper->writeClient(lm);
+        }
+        ce->getTrayIcon()->hide();
+        ce->getApplication()->quit();
+    }
+}
+
 Helper *Helper::helper = 0;
-/**
- * @brief Helper::getInstance
- * @return Helper *
- */
+
 Helper *Helper::getInstance()
 {
     if(helper == 0)

@@ -14,14 +14,13 @@
  *  说明:
  ****************************************************************************************/
 #include "friendlistmessage.h"
-#include "common/cJSON.h"
 /**
  * @brief friendListMessage::friendListMessage
  * @param username 用户名
  */
-void friendListMessage::adduser(std::string username)
+void friendListMessage::adduser(QString username, int status)
 {
-    user.push_back(username);
+    users.insert(username, status);
     size++;
 }
 /**
@@ -29,61 +28,84 @@ void friendListMessage::adduser(std::string username)
  */
 friendListMessage::friendListMessage()
 {
-    head="friendList";
-    size=0;
+    head = "friendList";
+    size = 0;
 }
 /**
  * @brief friendListMessage::getJsonString
  * @return
  */
-std::string friendListMessage::getJsonString()
+QString friendListMessage::getJsonString()
 {
-    cJSON *root, **dir;
-    char *out;
-    dir = (cJSON**)malloc(sizeof(cJSON*)*size);
-    //创建json数组型结构体
-    root = cJSON_CreateArray();
-    for (int i = 0; i < size; i++)
+    QJsonArray jsonArray;
+    for(QMap<QString, int>::iterator it = users.begin();it != users.end(); it++)
     {
-        //创建对象至数组
-        cJSON_AddItemToArray(root, dir[i] = cJSON_CreateObject());
-        //为对象添加字符串键值对
-        cJSON_AddStringToObject(dir[i], "username", user[i].c_str());
+        QJsonObject jsonObject;
+        jsonObject.insert("username", it.key());
+        jsonObject.insert("status", it.value());
+        jsonArray.push_back(jsonObject);
+        QJsonDocument tempJsonDocument;
+        tempJsonDocument.setObject(jsonObject);
+        jsonArray.push_back(QString(tempJsonDocument.toJson(QJsonDocument::Compact)));
     }
-    //将json结构体转换为字符串
-    out = cJSON_PrintUnformatted(root);
-    std::string temp(out);
-    //释放内存
-    free(out);
-    cJSON_Delete(root);
-    return temp;
+    QJsonDocument jsonDocument;
+    jsonDocument.setArray(jsonArray);
+    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
+    return QString(byteArray);
 }
 /**
  * @brief friendListMessage::loadfromJson
  * @param textJson
  * @return
  */
-bool friendListMessage::loadfromJson(std::string textJson)
+bool friendListMessage::loadfromJson(QString textJson)
 {
-    cJSON * root = NULL, *item = NULL, *username;
-    char *pr = NULL;
-    if ((root = cJSON_Parse(textJson.c_str())) == NULL)
-        return false;
-    int iSize = cJSON_GetArraySize(root);
-    size = iSize;
-    for (int iCnt = 0; iCnt < iSize; iCnt++)
+    QJsonParseError jsonParseError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    if(jsonParseError.error == QJsonParseError::NoError)
     {
-        cJSON * pSub = cJSON_GetArrayItem(root, iCnt);
-        pr = cJSON_Print(pSub);
-        item = cJSON_Parse(pr);
-        if (NULL == pSub)
-            continue;
-        //将键值item从json节点中取出
-        username = cJSON_GetObjectItem(item, "username");
-        //加入到题库结构体数组
-        std::string temp(username->valuestring);
-        user.push_back(temp);
+        if(jsonDocument.isArray())
+        {
+            QJsonArray jsonArray = jsonDocument.array();
+            size = jsonArray.size();
+            for(int i = 0;i < size;i++)
+            {
+                QJsonValue jsonValue = jsonArray.at(i);
+                if(jsonValue.isObject())
+                {
+                    QJsonObject tempJsonObject =jsonValue.toObject();
+                    if(tempJsonObject.contains("username") && tempJsonObject.contains("status"))
+                    {
+                        QJsonValue usernameValue = tempJsonObject.take("username");
+                        QJsonValue statusValue = tempJsonObject.take("status");
+                        if(usernameValue.isString() && statusValue.isDouble())
+                        {
+                            users.insert(usernameValue.toString(), statusValue.toInt());
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
-    cJSON_Delete(root);
+    else
+    {
+        return false;
+    }
     return true;
 }

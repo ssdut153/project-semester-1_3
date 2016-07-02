@@ -2,10 +2,10 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: upmessage.cpp
+ *  文件名称: uumessage.cpp
  *  简要描述:
  *
- *  创建日期: 2016-6-25
+ *  创建日期: 2016-6-28
  *  作者: Yang Zhizhuang
  *  说明:
  *
@@ -13,46 +13,42 @@
  *  作者:
  *  说明:
  ****************************************************************************************/
-#include "upmessage.h"
-/**
- * @brief upMessage::upMessage
- * @param username 用户名
- * @param password 密码
- */
-upMessage::upMessage(QString username, QString password)
+#include "uumessage.h"
+
+uuMessage::uuMessage(QString fromUserName, QString toUserName)
 {
-    user = username;
-    pass = password;
-    head = "defaulUP";
+    fromuser = fromUserName;
+    touser = toUserName;
+    head = "defaultUu";
 }
 /**
- * @brief upMessage::upMessage
+ * @brief uuMessage::uuMessage
  */
-upMessage::upMessage()
+uuMessage::uuMessage()
 {
-    head="defaulUP";
+    head = "defaultUu";
 }
 /**
- * @brief upMessage::getJsonString
+ * @brief uuMessage::getJsonString
  * @return  对应的单行Json字符串
  */
-QString upMessage::getJsonString()
+QString uuMessage::getJsonString()
 {
     QJsonObject jsonObject;
     jsonObject.insert("head", head);
-    jsonObject.insert("username", user);
-    jsonObject.insert("password", pass);
+    jsonObject.insert("fromusername", fromuser);
+    jsonObject.insert("tousername", touser);
     QJsonDocument jsonDocument;
     jsonDocument.setObject(jsonObject);
     QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
     return QString(byteArray);
 }
 /**
- * @brief upMessage::loadfromJson
+ * @brief uuMessage::loadfromJson
  * @param textJson Json字符串
  * @return  bool 是否载入成功
  */
-bool upMessage::loadfromJson(QString textJson)
+bool uuMessage::loadfromJson(QString textJson)
 {
     QJsonParseError jsonParseError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
@@ -61,12 +57,12 @@ bool upMessage::loadfromJson(QString textJson)
         if(jsonDocument.isObject())
         {
             QJsonObject jsonObject = jsonDocument.object();
-            if(jsonObject.contains("username"))
+            if(jsonObject.contains("fromusername"))
             {
-                QJsonValue jsonValue = jsonObject.take("username");
+                QJsonValue jsonValue = jsonObject.take("fromusername");
                 if(jsonValue.isString())
                 {
-                    user = jsonValue.toString();
+                    fromuser = jsonValue.toString();
                 }
                 else
                 {
@@ -77,12 +73,12 @@ bool upMessage::loadfromJson(QString textJson)
             {
                 return false;
             }
-            if(jsonObject.contains("password"))
+            if(jsonObject.contains("tousername"))
             {
-                QJsonValue jsonValue = jsonObject.take("password");
+                QJsonValue jsonValue = jsonObject.take("tousername");
                 if(jsonValue.isString())
                 {
-                    pass = jsonValue.toString();
+                    touser = jsonValue.toString();
                 }
                 else
                 {
@@ -105,4 +101,3 @@ bool upMessage::loadfromJson(QString textJson)
     }
     return true;
 }
-

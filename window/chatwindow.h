@@ -2,18 +2,28 @@
 #define CHATWINDOW_H
 
 #include "stdafx.h"
+#include "classes.h"
+#include "mainwindow.h"
+#include "commonelements.h"
 
 class ChatWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ChatWindow(std::string username, std::string friendName, QWidget *parent = 0);
-    ~ChatWindow();
+    explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = 0);
+    QTextEdit *getMessageEdit();
+
+signals:
+
+protected:
+    void closeEvent(QCloseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
-    std::string username;
-    std::string friendName;
+    QString username;
+    QListWidgetItem *item;
+    QString friendName;
     QTextEdit *messageEdit;
     QTextEdit *sendEdit;
     QPushButton *sendButton;
@@ -21,9 +31,6 @@ private:
 private slots:
     void on_sendButton_clicked();
 
-signals:
-
-public slots:
 };
 
 #endif // CHATWINDOW_H

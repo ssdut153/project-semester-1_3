@@ -2,32 +2,34 @@
  *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
  *  All rights reserved.
  *
- *  文件名称: upmessage.h
+ *  文件名称: p2pmessage.h
  *  简要描述:
  *
- *  创建日期: 2016-6-25
- *  作者: Yang Zhizhuang
+ *  创建日期:
+ *  作者:
  *  说明:
  *
  *  修改日期:
  *  作者:
  *  说明:
  ****************************************************************************************/
-#ifndef UPMESSAGE_H
-#define UPMESSAGE_H
+#ifndef P2PMESSAGE_H
+#define P2PMESSAGE_H
 
-#include "message.h"
+#include "../base/message.h"
 #include "stdafx.h"
 
-class upMessage : public Message
+class p2pMessage : public Message
 {
 public:
-    upMessage();
-    upMessage(QString username,QString password);
+    p2pMessage();
+    p2pMessage(QString from, QString to, QString text);
     QString getJsonString();
     bool loadfromJson(QString textJson);
-    QString user;
-    QString pass;
+    QString FromUserName;
+    QString ToUserName;
+    QString CreateTime;
+    QString Content;
 };
 
-#endif // UPMESSAGE_H
+#endif // P2PMESSAGE_H

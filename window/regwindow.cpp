@@ -1,26 +1,8 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Huwenqiang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: trayicon
- *  简要描述:
- *
- *  创建日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- *
- *  修改日期: 2016-6-26
- *  作者: Hu Wenqiang
- *  说明:
- ****************************************************************************************/
 #include "regwindow.h"
-#include "common/message/reg/regusermessage.h"
 #include "commonelements.h"
-/**
- * @brief RegWindow::RegWindow
- * @param parent
- */
-RegWindow::RegWindow(QWidget *parent):
+#include "common/message/reg/regusermessage.h"
+
+RegWindow::RegWindow(QWidget *parent) :
     QMainWindow(parent),
     messageLabel(new QLabel(this)),
     usernameEdit(new QLineEdit(this)),
@@ -35,28 +17,50 @@ RegWindow::RegWindow(QWidget *parent):
     this->setMaximumSize(270, 200);
     this->setMinimumSize(270, 200);
 
-    this->messageLabel->setGeometry(40, 0, 200, 20);
-    this->usernameEdit->setGeometry(40, 30, 200, 30);
-    this->passwordEdit_1->setGeometry(40, 70 , 200, 30);
-    this->passwordEdit_2->setGeometry(40, 110, 200, 30);
-    this->regButton->setGeometry(40, 150, 200, 30);
+    this->usernameEdit->setFocus();
 
-    this->messageLabel->setText("");
-    this->usernameEdit->setPlaceholderText("请输入用户名");
-    this->passwordEdit_1->setPlaceholderText("请输入密码");
+    this->usernameEdit->setPlaceholderText("请输入用户名(2-20位)");
+    this->passwordEdit_1->setPlaceholderText("请输入密码(6-16位)");
     this->passwordEdit_2->setPlaceholderText("请确认密码");
-
-    this->passwordEdit_1->setEchoMode(QLineEdit::Password);
-    this->passwordEdit_2->setEchoMode(QLineEdit::Password);
-
     this->regButton->setText("注册");
 
-    connect(regButton, SIGNAL(clicked(bool)), this, SLOT(on_regButton_clicked()));
+    this->messageLabel->setGeometry(30, 10, 210, 20);
+    this->usernameEdit->setGeometry(30, 30, 210, 30);
+    this->passwordEdit_1->setGeometry(30, 70, 210, 30);
+    this->passwordEdit_2->setGeometry(30, 110, 210, 30);
+    this->regButton->setGeometry(30, 150, 210, 30);
+
+    this->setTabOrder(this->usernameEdit, this->passwordEdit_1);
+    this->setTabOrder(this->passwordEdit_1, this->passwordEdit_2);
+    this->setTabOrder(this->passwordEdit_2, this->regButton);
+    this->setTabOrder(this->regButton, this->usernameEdit);
+
+    connect(this->regButton, SIGNAL(clicked()), this, SLOT(on_regButton_clicked()));
 
 }
-/**
- * @brief RegWindow::on_regButton_clicked
- */
+
+void RegWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+        this->on_regButton_clicked();
+        break;
+    case Qt::Key_Escape:
+        CommonElements *ce = CommonElements::getInstance();
+        ce->getLoginWindow()->setRegWindow(0);
+        delete this;
+    }
+}
+
+void RegWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    CommonElements *ce = CommonElements::getInstance();
+    ce->getLoginWindow()->setRegWindow(0);
+    delete this;
+}
+
 void RegWindow::on_regButton_clicked()
 {
     QString username = this->usernameEdit->text();
@@ -85,25 +89,31 @@ void RegWindow::on_regButton_clicked()
     else
     {
         this->regButton->setEnabled(false);
-        regUserMessage rum(username.toStdString(),password_1.toStdString());
+        regUserMessage rum(username, password_1);
         CommonElements *ce = CommonElements::getInstance();
-        this->username = username.toStdString();
-        this->password = password_1.toStdString();
+        this->username = username;
+        this->password = password_1;
         ce->connectServer();
         Helper::getInstance()->writeClient(rum);
     }
 }
-/**
- * @brief RegWindow::closeEvent
- */
-void RegWindow::closeEvent(QCloseEvent *)
-{
-    delete this;
-}
-/**
- * @brief RegWindow::~RegWindow
- */
-RegWindow::~RegWindow()
-{
 
+QLabel *RegWindow::getMessageLabel()
+{
+    return this->messageLabel;
+}
+
+QPushButton *RegWindow::getRegButton()
+{
+    return this->regButton;
+}
+
+QString RegWindow::getUsername()
+{
+    return this->username;
+}
+
+QString RegWindow::getPassword()
+{
+    return this->password;
 }
