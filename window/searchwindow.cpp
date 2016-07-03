@@ -25,7 +25,7 @@ SearchWindow::SearchWindow(QWidget *parent) :
     this->addButton->hide();
 
     connect(this->searchButton, SIGNAL(clicked()), this, SLOT(on_searchButton_clicked()));
-    connect(this->addButton, SIGNAL(clicked()), this, SLOT(on_searchButton_clicked()));
+    connect(this->addButton, SIGNAL(clicked()), this, SLOT(on_addButton_clicked()));
 
 }
 

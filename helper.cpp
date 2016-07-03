@@ -159,6 +159,7 @@ void Helper::readClient()
             messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
             messageBox.addButton("同意", QMessageBox::AcceptRole);
             messageBox.addButton("拒绝", QMessageBox::RejectRole);
+            qDebug()<<"test";
             if(messageBox.exec() == QMessageBox::RejectRole)
             {
                 ajFriendMessage afm(ce->username, rfm.fromuser, "false");
@@ -217,7 +218,7 @@ void Helper::writeClient(Message &message)
     qDebug()<<message.getJsonString();
     QTcpSocket *client = CommonElements::getInstance()->client;
     client->write(message.getJsonString().toStdString().c_str());
-    client->waitForBytesWritten();
+//    client->waitForBytesWritten();
 }
 
 void Helper::quit()
@@ -231,6 +232,7 @@ void Helper::quit()
         {
             logoutMessage lm(ce->username);
             helper->writeClient(lm);
+            client->waitForBytesWritten();
         }
         ce->getTrayIcon()->hide();
         ce->getApplication()->quit();
