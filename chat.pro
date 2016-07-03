@@ -39,7 +39,9 @@ SOURCES += main.cpp \
     common/message/addfriend/requestfriendmessage.cpp \
     common/message/addfriend/newfriendmessage.cpp \
     messagebox/exitmessagebox.cpp \
-    helper.cpp
+    helper.cpp \
+    groupbox/logingroupbox.cpp \
+    groupbox/waitinggroupbox.cpp
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -69,7 +71,9 @@ HEADERS  += stdafx.h \
     common/message/addfriend/newfriendmessage.h \
     messagebox/exitmessagebox.h \
     helper.h \
-    classes.h
+    classes.h \
+    groupbox/logingroupbox.h \
+    groupbox/waitinggroupbox.h
 
 RESOURCES += \
     images.qrc

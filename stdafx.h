@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QPaintEvent>
+#include <QPoint>
 #include <QPushButton>
 #include <QRect>
 #include <QString>
@@ -33,5 +34,6 @@
 #include <QThread>
 #include <QtNetwork>
 #include <QVector>
+#include <QWidget>
 
 #endif //STDAFX_H

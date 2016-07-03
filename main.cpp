@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     LoginWindow *lw = new LoginWindow;
     ce->setLoginWindow(lw);
     lw->show();
+    lw->getLoginGroupBox()->getUsernameEdit()->setFocus();
 
     ce->getTrayIcon()->show();
 

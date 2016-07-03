@@ -48,7 +48,7 @@ void RegWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Escape:
         CommonElements *ce = CommonElements::getInstance();
-        ce->getLoginWindow()->setRegWindow(0);
+        ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
         delete this;
     }
 }
@@ -57,7 +57,7 @@ void RegWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     CommonElements *ce = CommonElements::getInstance();
-    ce->getLoginWindow()->setRegWindow(0);
+    ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
     delete this;
 }
 

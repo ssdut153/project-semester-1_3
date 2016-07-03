@@ -1,24 +1,5 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: p2pmessage.cpp
- *  简要描述:
- *
- *  创建日期:
- *  作者:
- *  说明:
- *
- *  修改日期:
- *  作者:
- *  说明:
- ****************************************************************************************/
 #include "p2pmessage.h"
-/**
- * @brief p2pMessage::p2pMessage
- * @param username 用户名
- * @param status 状态
- */
+
 p2pMessage::p2pMessage(QString from, QString to, QString text)
 {
     FromUserName = from;
@@ -27,17 +8,12 @@ p2pMessage::p2pMessage(QString from, QString to, QString text)
     head = "p2p";
     CreateTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 }
-/**
- * @brief p2pMessage::p2pMessage
- */
+
 p2pMessage::p2pMessage()
 {
     head="defaultP2P";
 }
-/**
- * @brief p2pMessage::getJsonString
- * @return QString 对应的单行Json字符串
- */
+
 QString p2pMessage::getJsonString()
 {
     QJsonObject jsonObject;
@@ -51,11 +27,7 @@ QString p2pMessage::getJsonString()
     QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
     return QString(byteArray);
 }
-/**
- * @brief p2pMessage::loadfromJson
- * @param textJson Json字符串
- * @return bool 是否载入成功
- */
+
 bool p2pMessage::loadfromJson(QString textJson)
 {
     QJsonParseError jsonParseError;

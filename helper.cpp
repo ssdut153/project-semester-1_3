@@ -77,16 +77,13 @@ void Helper::readClient()
             }
             else
             {
-                ce->disconnectServer();
-                ce->loginWindow->cancelLogin();
-                ce->loginWindow->getMessageLabel()->setText("用户名或密码错误");
-                ce->loginWindow->getPasswordEdit()->clear();
+                ce->loginWindow->loginFail();
             }
         }
         else if(head == "regFeedBack")
         {
             QString status = this->getfromJson(str, "status");
-            RegWindow *regWindow = ce->loginWindow->getRegWindow();
+            RegWindow *regWindow = ce->loginWindow->getLoginGroupBox()->getRegWindow();
             if(regWindow != 0)
             {
                 if(status == "true")
@@ -219,8 +216,8 @@ void Helper::writeClient(Message &message)
 {
     qDebug()<<message.getJsonString();
     QTcpSocket *client = CommonElements::getInstance()->client;
-    client->waitForBytesWritten();
     client->write(message.getJsonString().toStdString().c_str());
+    client->waitForBytesWritten();
 }
 
 void Helper::quit()

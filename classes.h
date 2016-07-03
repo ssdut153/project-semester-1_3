@@ -10,5 +10,7 @@ class ChatWindow;
 class SearchWindow;
 class CommonElements;
 class Helper;
+class LoginGroupBox;
+class WaitingGroupBox;
 
 #endif // CLASSES_H
