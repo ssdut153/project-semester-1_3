@@ -103,6 +103,7 @@ void Helper::readClient()
         friendListMessage flm;
         if(flm.loadfromJson(str)){
             ce->mainWindow->loadFriendList(flm.users);
+            qDebug()<<"111";
         }
     }
     else if(head == "defaultFeedBack")
@@ -127,7 +128,7 @@ void Helper::readClient()
         {
             Database *db = Database::getInstance(pm.ToUserName);
             db->addMessage(pm.FromUserName, 0, pm.CreateTime,pm.Content);
-            chatWindow->getMessageEdit()->append(pm.FromUserName + pm.CreateTime);
+            chatWindow->getMessageEdit()->append(pm.FromUserName +" "+ pm.CreateTime);
             chatWindow->getMessageEdit()->append(pm.Content);
         }
     }
@@ -176,6 +177,7 @@ void Helper::readClient()
     }
     else if(head == "newFriend")
     {
+        qDebug()<<"!11";
         newFriendMessage nfm;
         nfm.loadfromJson(str);
         ce->mainWindow->addFriendItem(nfm.user, 1);
