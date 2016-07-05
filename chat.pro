@@ -6,6 +6,7 @@
 
 QT += core gui
 QT += network
+QT += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -41,7 +42,8 @@ SOURCES += main.cpp \
     messagebox/exitmessagebox.cpp \
     helper.cpp \
     groupbox/logingroupbox.cpp \
-    groupbox/waitinggroupbox.cpp
+    groupbox/waitinggroupbox.cpp \
+    database.cpp
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -73,7 +75,8 @@ HEADERS  += stdafx.h \
     helper.h \
     classes.h \
     groupbox/logingroupbox.h \
-    groupbox/waitinggroupbox.h
+    groupbox/waitinggroupbox.h \
+    database.h
 
 RESOURCES += \
     images.qrc

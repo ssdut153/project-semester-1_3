@@ -12,7 +12,7 @@ uuMessage::uuMessage()
     head = "defaultUu";
 }
 
-QString uuMessage::getJsonString()
+QByteArray uuMessage::getJsonString()
 {
     QJsonObject jsonObject;
     jsonObject.insert("head", head);
@@ -20,14 +20,13 @@ QString uuMessage::getJsonString()
     jsonObject.insert("tousername", touser);
     QJsonDocument jsonDocument;
     jsonDocument.setObject(jsonObject);
-    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
-    return QString(byteArray);
+    return jsonDocument.toJson(QJsonDocument::Compact);
 }
 
-bool uuMessage::loadfromJson(QString textJson)
+bool uuMessage::loadfromJson(QByteArray textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
         if(jsonDocument.isObject())

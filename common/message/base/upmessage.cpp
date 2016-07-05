@@ -12,7 +12,7 @@ upMessage::upMessage()
     head="defaulUP";
 }
 
-QString upMessage::getJsonString()
+QByteArray upMessage::getJsonString()
 {
     QJsonObject jsonObject;
     jsonObject.insert("head", head);
@@ -20,14 +20,13 @@ QString upMessage::getJsonString()
     jsonObject.insert("password", pass);
     QJsonDocument jsonDocument;
     jsonDocument.setObject(jsonObject);
-    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
-    return QString(byteArray);
+    return jsonDocument.toJson(QJsonDocument::Compact);
 }
 
-bool upMessage::loadfromJson(QString textJson)
+bool upMessage::loadfromJson(QByteArray textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
         if(jsonDocument.isObject())

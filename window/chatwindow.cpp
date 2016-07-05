@@ -2,6 +2,7 @@
 #include "commonelements.h"
 #include "helper.h"
 #include "common/message/function/p2pmessage.h"
+#include "database.h"
 
 ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     QMainWindow(parent),
@@ -62,7 +63,10 @@ void ChatWindow::on_sendButton_clicked()
         Helper *helper = Helper::getInstance();
         helper->writeClient(pm);
         this->sendEdit->clear();
-        this->messageEdit->append(this->username + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+        this->messageEdit->append(this->username + " " + time);
         this->messageEdit->append(content);
+        Database *db = Database::getInstance(this->username);
+        db->addMessage(this->friendName, 1, time, content);
     }
 }

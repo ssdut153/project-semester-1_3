@@ -9,8 +9,8 @@ class usernameMessage : public Message
 public:
     usernameMessage();
     usernameMessage(QString username);
-    QString getJsonString();
-    bool loadfromJson(QString textJson);
+    QByteArray getJsonString();
+    bool loadfromJson(QByteArray textJson);
     QString user;
 };
 

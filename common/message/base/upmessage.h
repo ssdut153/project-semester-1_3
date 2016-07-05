@@ -9,8 +9,8 @@ class upMessage : public Message
 public:
     upMessage();
     upMessage(QString username,QString password);
-    QString getJsonString();
-    bool loadfromJson(QString textJson);
+    QByteArray getJsonString();
+    bool loadfromJson(QByteArray textJson);
     QString user;
     QString pass;
 };

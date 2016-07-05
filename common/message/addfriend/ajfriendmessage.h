@@ -8,8 +8,8 @@ class ajFriendMessage : public Message
 public:
     ajFriendMessage();
     ajFriendMessage(QString fromUserName, QString toUserName, QString accept);
-    QString getJsonString();
-    bool loadfromJson(QString textJson);
+    QByteArray getJsonString();
+    bool loadfromJson(QByteArray textJson);
     QString fromuser;
     QString touser;
     QString acpt;

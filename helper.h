@@ -19,7 +19,7 @@ private slots:
 
 public:
     static Helper *getInstance();
-    QString getfromJson(QString textJson, QString name);
+    QString getfromJson(QByteArray textJson, QString name);
     void writeClient(Message &message);
     QTcpSocket *client;
     void connectServer();

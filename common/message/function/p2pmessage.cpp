@@ -14,7 +14,7 @@ p2pMessage::p2pMessage()
     head="defaultP2P";
 }
 
-QString p2pMessage::getJsonString()
+QByteArray p2pMessage::getJsonString()
 {
     QJsonObject jsonObject;
     jsonObject.insert("head", head);
@@ -24,14 +24,13 @@ QString p2pMessage::getJsonString()
     jsonObject.insert("content", Content);
     QJsonDocument jsonDocument;
     jsonDocument.setObject(jsonObject);
-    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
-    return QString(byteArray);
+    return jsonDocument.toJson(QJsonDocument::Compact);
 }
 
-bool p2pMessage::loadfromJson(QString textJson)
+bool p2pMessage::loadfromJson(QByteArray textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == jsonParseError.NoError)
     {
         if(jsonDocument.isObject())

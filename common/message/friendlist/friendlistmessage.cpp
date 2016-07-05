@@ -12,7 +12,7 @@ friendListMessage::friendListMessage()
     size = 0;
 }
 
-QString friendListMessage::getJsonString()
+QByteArray friendListMessage::getJsonString()
 {
     QJsonArray jsonArray;
     for(QMap<QString, int>::iterator it = users.begin();it != users.end(); it++)
@@ -27,14 +27,13 @@ QString friendListMessage::getJsonString()
     }
     QJsonDocument jsonDocument;
     jsonDocument.setArray(jsonArray);
-    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
-    return QString(byteArray);
+    return jsonDocument.toJson(QJsonDocument::Compact);
 }
 
-bool friendListMessage::loadfromJson(QString textJson)
+bool friendListMessage::loadfromJson(QByteArray textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
         if(jsonDocument.isArray())

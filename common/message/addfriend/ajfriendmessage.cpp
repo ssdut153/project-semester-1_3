@@ -14,7 +14,7 @@ ajFriendMessage::ajFriendMessage()
     head = "ajFriend";
 }
 
-QString ajFriendMessage::getJsonString()
+QByteArray ajFriendMessage::getJsonString()
 {
     QJsonObject jsonObject;
     jsonObject.insert("head", head);
@@ -23,14 +23,13 @@ QString ajFriendMessage::getJsonString()
     jsonObject.insert("accept", acpt);
     QJsonDocument jsonDocument;
     jsonDocument.setObject(jsonObject);
-    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
-    return QString(byteArray);
+    return jsonDocument.toJson(QJsonDocument::Compact);
 }
 
-bool ajFriendMessage::loadfromJson(QString textJson)
+bool ajFriendMessage::loadfromJson(QByteArray textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
         if(jsonDocument.isObject())

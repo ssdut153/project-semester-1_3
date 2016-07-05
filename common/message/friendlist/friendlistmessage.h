@@ -9,8 +9,8 @@ class friendListMessage : public Message
 public:
     friendListMessage();
     void adduser(QString username,int status);
-    QString getJsonString();
-    bool loadfromJson(QString textJson);
+    QByteArray getJsonString();
+    bool loadfromJson(QByteArray textJson);
     QMap<QString, int> users;
     int size;
 };

@@ -18,7 +18,6 @@ WaitingGroupBox::WaitingGroupBox(QWidget *parent):
     this->setTabOrder(this->cancelButton, this->cancelButton);
 
     connect(this->cancelButton, SIGNAL(clicked()), this, SLOT(on_cancelButton_clicked()));
-
 }
 
 QPushButton *WaitingGroupBox::getCancelButton()
@@ -54,7 +53,7 @@ void WaitingGroupBox::mousePressEvent(QMouseEvent *event)
     pressed = true;
 }
 
-void WaitingGroupBox::mouseReleaseEvent(QMouseEvent *event)
+void WaitingGroupBox::mouseReleaseEvent(QMouseEvent */*event*/)
 {
     pressed = false;
 }

@@ -9,8 +9,8 @@ public:
     Message();
     Message(QString h);
     virtual ~Message();
-    virtual QString getJsonString() = 0;
-    virtual bool loadfromJson(QString textJson) = 0;
+    virtual QByteArray getJsonString() = 0;
+    virtual bool loadfromJson(QByteArray textJson) = 0;
     void addHead(QString h);
     QString getHead();
     QString head;

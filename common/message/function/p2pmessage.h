@@ -9,8 +9,8 @@ class p2pMessage : public Message
 public:
     p2pMessage();
     p2pMessage(QString from, QString to, QString text);
-    QString getJsonString();
-    bool loadfromJson(QString textJson);
+    QByteArray getJsonString();
+    bool loadfromJson(QByteArray textJson);
     QString FromUserName;
     QString ToUserName;
     QString CreateTime;

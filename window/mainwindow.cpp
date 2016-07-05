@@ -2,6 +2,7 @@
 #include "commonelements.h"
 #include "helper.h"
 #include "common/message/friendlist/getfriendlistmessage.h"
+#include "database.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     usernameLabel->setText(ce->getUsername());
     searchButton->setText("搜索");
 
+    Database::getInstance(ce->getUsername());
+
     Helper *helper = Helper::getInstance();
     getFriendListMessage gflm(ce->getUsername());
     helper->writeClient(gflm);
@@ -38,6 +41,11 @@ void MainWindow::loadFriendList(QMap<QString, int> &users)
     for(QMap<QString, int>::iterator it = users.begin(); it != users.end(); it++)
     {
         friendlist.insert(it.key(), it.value());
+    }
+    Database *db = Database::getInstance("");
+    if(db->createFriendTables(friendlist))
+    {
+        qDebug()<<"test";
     }
     for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++)
     {

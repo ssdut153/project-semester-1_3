@@ -10,6 +10,7 @@
 #include "common/message/function/forcelogoutmessage.h"
 #include "messagebox/exitmessagebox.h"
 #include "common/message/loginout/logoutmessage.h"
+#include "database.h"
 #include <QDebug>
 
 Helper::Helper():
@@ -31,10 +32,10 @@ void Helper::disconnectServer()
     client = 0;
 }
 
-QString Helper::getfromJson(QString textJson, QString key)
+QString Helper::getfromJson(QByteArray textJson, QString key)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
         if(jsonDocument.isObject())
@@ -56,7 +57,7 @@ QString Helper::getfromJson(QString textJson, QString key)
 void Helper::readClient()
 {
     CommonElements *ce = CommonElements::getInstance();
-    QString str = ce->client->readAll();
+    QByteArray str = ce->client->readAll();
     qDebug()<<str;
     if(status == "none")
     {
@@ -124,6 +125,8 @@ void Helper::readClient()
             ChatWindow *chatWindow = ce->mainWindow->getChatWindow(pm.FromUserName);
             if(chatWindow != 0)
             {
+                Database *db = Database::getInstance(pm.ToUserName);
+                db->addMessage(pm.FromUserName, 0, pm.CreateTime,pm.Content);
                 chatWindow->getMessageEdit()->append(pm.FromUserName + pm.CreateTime);
                 chatWindow->getMessageEdit()->append(pm.Content);
             }
@@ -217,7 +220,7 @@ void Helper::writeClient(Message &message)
 {
     qDebug()<<message.getJsonString();
     QTcpSocket *client = CommonElements::getInstance()->client;
-    client->write(message.getJsonString().toStdString().c_str());
+    client->write(message.getJsonString());
 //    client->waitForBytesWritten();
 }
 

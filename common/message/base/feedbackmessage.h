@@ -9,8 +9,8 @@ class feedBackMessage : public Message
 public:
     feedBackMessage();
     feedBackMessage(QString username,QString status);
-    QString getJsonString();
-    bool loadfromJson(QString textJson);
+    QByteArray getJsonString();
+    bool loadfromJson(QByteArray textJson);
     QString user;
     QString stat;
 };
