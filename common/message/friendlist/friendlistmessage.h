@@ -1,8 +1,9 @@
 #ifndef FRIENDLISTMESSAGE_H
 #define FRIENDLISTMESSAGE_H
 
+#include <QVector>
+
 #include "../base/usernamemessage.h"
-#include "stdafx.h"
 
 class friendListMessage : public Message
 {

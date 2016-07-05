@@ -12,7 +12,6 @@ class Helper:public QObject
 private:
     explicit Helper();
     static Helper *helper;
-    QString status;
 
 private slots:
     void readClient();

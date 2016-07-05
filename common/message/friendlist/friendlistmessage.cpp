@@ -14,8 +14,10 @@ friendListMessage::friendListMessage()
 
 QByteArray friendListMessage::getJsonString()
 {
+    QJsonObject jsonObject;
+    jsonObject.insert("head", head);
     QJsonArray jsonArray;
-    for(QMap<QString, int>::iterator it = users.begin();it != users.end(); it++)
+    for(QMap<QString, int>::iterator it = users.begin();it != users.end();it++)
     {
         QJsonObject jsonObject;
         jsonObject.insert("username", it.key());
@@ -25,8 +27,9 @@ QByteArray friendListMessage::getJsonString()
         tempJsonDocument.setObject(jsonObject);
         jsonArray.push_back(QString(tempJsonDocument.toJson(QJsonDocument::Compact)));
     }
+    jsonObject.insert("friendlist", jsonArray);
     QJsonDocument jsonDocument;
-    jsonDocument.setArray(jsonArray);
+    jsonDocument.setObject(jsonObject);
     return jsonDocument.toJson(QJsonDocument::Compact);
 }
 
@@ -36,38 +39,54 @@ bool friendListMessage::loadfromJson(QByteArray textJson)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
-        if(jsonDocument.isArray())
+        if(jsonDocument.isObject())
         {
-            QJsonArray jsonArray = jsonDocument.array();
-            size = jsonArray.size();
-            for(int i = 0;i < size;i++)
+            QJsonObject jsonObject = jsonDocument.object();
+            if(jsonObject.contains("friendlist"))
             {
-                QJsonValue jsonValue = jsonArray.at(i);
-                if(jsonValue.isObject())
+                QJsonValue friendListValue = jsonObject.take("friendlist");
+                if(friendListValue.isArray())
                 {
-                    QJsonObject tempJsonObject =jsonValue.toObject();
-                    if(tempJsonObject.contains("username") && tempJsonObject.contains("status"))
+                    QJsonArray jsonArray = friendListValue.toArray();
+                    size = jsonArray.size();
+                    for(int i = 0;i < size;i++)
                     {
-                        QJsonValue usernameValue = tempJsonObject.take("username");
-                        QJsonValue statusValue = tempJsonObject.take("status");
-                        if(usernameValue.isString() && statusValue.isDouble())
+                        QJsonValue jsonValue = jsonArray.at(i);
+                        if(jsonValue.isObject())
                         {
-                            users.insert(usernameValue.toString(), statusValue.toInt());
+                            QJsonObject tempJsonObject =jsonValue.toObject();
+                            if(tempJsonObject.contains("username") && tempJsonObject.contains("status"))
+                            {
+                                QJsonValue usernameValue = tempJsonObject.take("username");
+                                QJsonValue statusValue = tempJsonObject.take("status");
+                                if(usernameValue.isString() && statusValue.isDouble())
+                                {
+                                    users.insert(usernameValue.toString(), statusValue.toInt());
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
                         else
                         {
                             return false;
                         }
                     }
-                    else
-                    {
-                        return false;
-                    }
                 }
                 else
                 {
                     return false;
                 }
+            }
+            else
+            {
+                return false;
             }
         }
         else
