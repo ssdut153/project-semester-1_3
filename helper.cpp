@@ -103,7 +103,6 @@ void Helper::readClient()
         friendListMessage flm;
         if(flm.loadfromJson(str)){
             ce->mainWindow->loadFriendList(flm.users);
-            qDebug()<<"111";
         }
     }
     else if(head == "defaultFeedBack")
@@ -163,7 +162,6 @@ void Helper::readClient()
         messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
         messageBox.addButton("同意", QMessageBox::AcceptRole);
         messageBox.addButton("拒绝", QMessageBox::RejectRole);
-        qDebug()<<"test";
         if(messageBox.exec() == QMessageBox::RejectRole)
         {
             ajFriendMessage afm(ce->username, rfm.fromuser, "false");
@@ -177,7 +175,6 @@ void Helper::readClient()
     }
     else if(head == "newFriend")
     {
-        qDebug()<<"!11";
         newFriendMessage nfm;
         nfm.loadfromJson(str);
         ce->mainWindow->addFriendItem(nfm.user, 1);
@@ -201,7 +198,7 @@ void Helper::readClient()
     }
     else
     {
-        qDebug()<<str;
+
     }
 }
 

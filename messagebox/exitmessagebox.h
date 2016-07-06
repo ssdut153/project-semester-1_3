@@ -6,7 +6,7 @@
 class ExitMessageBox:public QMessageBox
 {
 public:
-    explicit ExitMessageBox(QObject *parent = 0);
+    explicit ExitMessageBox(QWidget *parent = 0);
     ~ExitMessageBox();
 };
 

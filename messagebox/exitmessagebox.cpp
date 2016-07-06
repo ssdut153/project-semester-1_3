@@ -1,9 +1,11 @@
 #include "exitmessagebox.h"
 
-ExitMessageBox::ExitMessageBox(QObject *):
-    QMessageBox(QMessageBox::Warning, "警告", "您真的要退出吗?", 0, 0)
+ExitMessageBox::ExitMessageBox(QWidget *parent):
+    QMessageBox(parent)
 {
-    this->setWindowFlags(Qt::WindowStaysOnTopHint| (this->windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+    this->setWindowFlags(Qt::WindowStaysOnTopHint | (this->windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+    this->setWindowTitle("警告");
+    this->setText("您真的要退出吗?");
     this->addButton("是", QMessageBox::AcceptRole);
     this->addButton("否", QMessageBox::RejectRole);
 }

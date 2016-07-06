@@ -3,7 +3,7 @@
 #include "helper.h"
 #include "common/message/loginout/loginmessage.h"
 #include "window/loginwindow.h"
-#include <QDebug>
+#include "messagebox/exitmessagebox.h"
 
 LoginGroupBox::LoginGroupBox(QWidget *parent):
     QGroupBox(parent),
@@ -77,8 +77,13 @@ void LoginGroupBox::on_regButton_clicked()
 
 void LoginGroupBox::on_exitButton_clicked()
 {
-    Helper *helper = Helper::getInstance();
-    helper->quit();
+    ExitMessageBox emb(this);
+    if (emb.exec() == QMessageBox::AcceptRole)
+    {
+        CommonElements *ce = CommonElements::getInstance();
+        ce->getTrayIcon()->hide();
+        ce->getApplication()->quit();
+    }
 }
 
 void LoginGroupBox::keyPressEvent(QKeyEvent *event)

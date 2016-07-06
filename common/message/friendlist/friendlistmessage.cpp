@@ -1,5 +1,5 @@
 #include "friendlistmessage.h"
-#include <QDebug>
+
 void friendListMessage::adduser(QString username, int status)
 {
     users.insert(username, status);
@@ -23,9 +23,6 @@ QByteArray friendListMessage::getJsonString()
         jsonObject.insert("username", it.key());
         jsonObject.insert("status", it.value());
         jsonArray.push_back(jsonObject);
-        QJsonDocument tempJsonDocument;
-        tempJsonDocument.setObject(jsonObject);
-        jsonArray.push_back(QString(tempJsonDocument.toJson(QJsonDocument::Compact)));
     }
     jsonObject.insert("friendlist", jsonArray);
     QJsonDocument jsonDocument;
@@ -35,7 +32,6 @@ QByteArray friendListMessage::getJsonString()
 
 bool friendListMessage::loadfromJson(QByteArray textJson)
 {
-    int i=0;
     QJsonParseError jsonParseError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
@@ -48,29 +44,21 @@ bool friendListMessage::loadfromJson(QByteArray textJson)
                 QJsonValue friendListValue = jsonObject.take("friendlist");
                 if(friendListValue.isArray())
                 {
-
                     QJsonArray jsonArray = friendListValue.toArray();
                     size = jsonArray.size();
                     for(int i = 0;i < size;i++)
                     {
-
                         QJsonValue jsonValue = jsonArray.at(i);
                         if(jsonValue.isObject())
                         {
-                            qDebug()<<i<<1;
                             QJsonObject tempJsonObject =jsonValue.toObject();
                             if(tempJsonObject.contains("username") && tempJsonObject.contains("status"))
                             {
-                                qDebug()<<i<<2;
-
                                 QJsonValue usernameValue = tempJsonObject.take("username");
                                 QJsonValue statusValue = tempJsonObject.take("status");
                                 if(usernameValue.isString() && statusValue.isDouble())
                                 {
-                                    qDebug()<<i<<3;
-
                                     users.insert(usernameValue.toString(), statusValue.toInt());
-                                    qDebug()<<usernameValue.toString()<<"\t"<<statusValue.toInt();
                                 }
                                 else
                                 {
