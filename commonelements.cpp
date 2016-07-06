@@ -16,9 +16,15 @@ CommonElements::CommonElements(QObject *parent):
 
 CommonElements::~CommonElements()
 {
-    trayIcon->hide();
     delete trayIcon;
-    delete client;
+    if(login)
+    {
+        delete this->mainWindow;
+    }
+    else
+    {
+        delete this->loginWindow;
+    }
 }
 
 void CommonElements::connectServer()

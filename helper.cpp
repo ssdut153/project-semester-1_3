@@ -19,6 +19,11 @@ Helper::Helper():
 
 }
 
+Helper::~Helper()
+{
+
+}
+
 void Helper::connectServer()
 {
     client = CommonElements::getInstance()->client;
@@ -221,10 +226,14 @@ void Helper::quit()
         {
             logoutMessage lm(ce->username);
             helper->writeClient(lm);
-            client->waitForBytesWritten();
+            this->client->waitForBytesWritten();
         }
-        ce->getTrayIcon()->hide();
-        ce->getApplication()->quit();
+        if(this->client != 0)
+        {
+            ce->disconnectServer();
+        }
+        ce->trayIcon->hide();
+        ce->application->quit();
     }
 }
 

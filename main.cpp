@@ -5,11 +5,11 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication *a = new QApplication(argc, argv);
+    QApplication a(argc, argv);
 
     CommonElements *ce = CommonElements::getInstance();
 
-    ce->setApplication(a);
+    ce->setApplication(&a);
 
     LoginWindow *lw = new LoginWindow;
     ce->setLoginWindow(lw);
@@ -18,6 +18,12 @@ int main(int argc, char *argv[])
 
     ce->getTrayIcon()->show();
 
-    return a->exec();
+    int r = a.exec();
+
+    delete CommonElements::getInstance();
+
+    delete Helper::getInstance();
+
+    return r;
 
 }

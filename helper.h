@@ -17,6 +17,7 @@ private slots:
     void readClient();
 
 public:
+    ~Helper();
     static Helper *getInstance();
     QString getfromJson(QByteArray textJson, QString name);
     void writeClient(Message &message);
