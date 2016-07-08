@@ -43,7 +43,9 @@ SOURCES += main.cpp \
     helper.cpp \
     groupbox/logingroupbox.cpp \
     groupbox/waitinggroupbox.cpp \
-    database.cpp
+    database.cpp \
+    common/message/function/imagemessage.cpp \
+    common/message/function/listmessage.cpp
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -76,7 +78,9 @@ HEADERS  += stdafx.h \
     classes.h \
     groupbox/logingroupbox.h \
     groupbox/waitinggroupbox.h \
-    database.h
+    database.h \
+    common/message/function/imagemessage.h \
+    common/message/function/listmessage.h
 
 RESOURCES += \
     images.qrc

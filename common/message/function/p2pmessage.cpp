@@ -1,12 +1,12 @@
 #include "p2pmessage.h"
 
-p2pMessage::p2pMessage(QString from, QString to, QString text)
+p2pMessage::p2pMessage(QString from, QString to, QString time, QString text)
 {
     FromUserName = from;
     ToUserName = to;
     Content = text;
     head = "p2p";
-    CreateTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    CreateTime = time;
 }
 
 p2pMessage::p2pMessage()

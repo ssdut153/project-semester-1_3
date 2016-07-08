@@ -59,7 +59,7 @@ void ChatWindow::on_sendButton_clicked()
     QString content = this->sendEdit->toPlainText();
     if(content != "")
     {
-        p2pMessage pm(this->username, this->friendName, content);
+        p2pMessage pm(this->username, this->friendName, time, content);
         Helper *helper = Helper::getInstance();
         helper->writeClient(pm);
         this->sendEdit->clear();

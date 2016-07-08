@@ -8,7 +8,7 @@ class p2pMessage : public Message
 {
 public:
     p2pMessage();
-    p2pMessage(QString from, QString to, QString text);
+    p2pMessage(QString from, QString to, QString time, QString text);
     QByteArray getJsonString();
     bool loadfromJson(QByteArray textJson);
     QString FromUserName;
