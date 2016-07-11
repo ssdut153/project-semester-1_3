@@ -17,7 +17,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     this->setMaximumSize(400,280);
     this->setMinimumSize(400,280);
     QPalette palette;
-    palette.setBrush(QPalette::Background, QPixmap(":/images/Login_a"));
+    palette.setBrush(QPalette::Background, QPixmap(":/images/loginFinal_1"));
     this->setPalette(palette);
     this->closeButton->setGeometry(365,1,35,35);
 

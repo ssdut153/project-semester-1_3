@@ -5,6 +5,7 @@
 #include "searchwindow.h"
 #include "chatwindow.h"
 #include "classes.h"
+#include "button/closebutton.h"
 
 class MainWindow : public QMainWindow
 {
@@ -21,6 +22,9 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 signals:
 
@@ -28,14 +32,19 @@ private:
     QLabel *usernameLabel;
     QListWidget *friendListWidget;
     QPushButton *searchButton;
+    CloseButton *closeButton;
+    QLabel *headSculp;
     QMap<QString, int> friendlist;
     QVector<QListWidgetItem*> items;
     QMap<QListWidgetItem*, ChatWindow*> chatWindows;
     SearchWindow *searchWindow;
+    bool pressed;
+    QPoint place;
 
 private slots:
     void on_searchButton_clicked();
     void on_friendListWidget_doubleClicked(QListWidgetItem *item);
+    void on_closeButton_clicked();
 
 };
 

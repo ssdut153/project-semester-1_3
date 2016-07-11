@@ -9,16 +9,30 @@ MainWindow::MainWindow(QWidget *parent) :
     usernameLabel(new QLabel(this)),
     friendListWidget(new QListWidget(this)),
     searchButton(new QPushButton(this)),
+    closeButton(new CloseButton(this)),
+    headSculp(new QLabel(this)),
     searchWindow(new SearchWindow(this))
 {
-    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+    this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
+
 
     this->setMinimumSize(300, 700);
     this->setMaximumSize(300, 700);
 
-    this->usernameLabel->setGeometry(30, 20, 140, 30);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, QPixmap(":/images/mainWindow_1"));
+    this->setPalette(palette);
+
+    this->usernameLabel->setGeometry(70, 20, 140, 30);
     this->friendListWidget->setGeometry(20, 70, 260, 480);
     this->searchButton->setGeometry(20, 560, 60, 30);
+    this->closeButton->setGeometry(270,1,30,30);
+    this->headSculp->setGeometry(30, 20, 30, 30);
+
+    QImage head(":/images/photo");
+    head.scaled(30, 30, Qt::KeepAspectRatio);
+    this->headSculp->setScaledContents(true);
+    this->headSculp->setPixmap(QPixmap::fromImage(head));
 
     CommonElements *ce = CommonElements::getInstance();
     usernameLabel->setText(ce->getUsername());
@@ -31,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     helper->writeClient(gflm);
 
     connect(this->searchButton, SIGNAL(clicked()), this,SLOT(on_searchButton_clicked()));
+    connect(this->closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
     connect(this->friendListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_friendListWidget_doubleClicked(QListWidgetItem*)));
 
 }
@@ -170,4 +185,32 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->ignore();
     Helper *helper = Helper::getInstance();
     helper->quit();
+}
+
+void MainWindow::on_closeButton_clicked()
+{
+    Helper *helper = Helper::getInstance();
+    helper->quit();
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    place = event->pos();
+    pressed = true;
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+{
+    pressed = false;
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    QPoint temp = event->pos();
+    if(pressed)
+    {
+        CommonElements *ce = CommonElements::getInstance();
+        MainWindow *lw = ce->getMainWindow();
+        lw->move(lw->x() + temp.x() - this->place.x(), lw->y() + temp.y() - this->place.y());
+    }
 }

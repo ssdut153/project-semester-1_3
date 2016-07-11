@@ -19,6 +19,7 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
 {
     this->setGeometry(0, 0, 400, 280);
 
+
     this->passwordEdit->setEchoMode(QLineEdit::Password);
     QPalette   pal;
     pal.setColor(QPalette::ButtonText, QColor(28,0,255));

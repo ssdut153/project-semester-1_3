@@ -122,10 +122,7 @@ void RegWindow::on_regButton_clicked()
 }
 
 
-void RegWindow::paintEvent(QPaintEvent *event)
-{
 
-}
 
 
 
