@@ -193,12 +193,16 @@ void Helper::readClient()
         {
             ce->disconnectServer();
             ce->loginWindow = new LoginWindow;
-            QMessageBox messageBox(QMessageBox::Information, "提示", "您的帐号已在其他设备上登录", 0, 0);
             delete ce->mainWindow;
             ce->mainWindow = 0;
             ce->username = "";
             ce->login = false;
             ce->loginWindow->show();
+            QMessageBox messageBox;
+            messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
+            messageBox.setWindowTitle("提示");
+            messageBox.setText("您的帐号已在其他设备上登录");
+            messageBox.addButton("确定", QMessageBox::AcceptRole);
             messageBox.exec();
         }
     }
