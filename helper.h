@@ -15,7 +15,6 @@ private:
 
 private slots:
     void readClient();
-
 public:
     ~Helper();
     static Helper *getInstance();
