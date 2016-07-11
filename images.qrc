@@ -7,5 +7,6 @@
         <file alias="photo">images/素材.jpg</file>
         <file alias="loginFinal_1">images/登陆界面-2.png</file>
         <file alias="mainWindow_1">images/主界面2.png</file>
+        <file alias="regWindow">images/界面-2.png</file>
     </qresource>
 </RCC>

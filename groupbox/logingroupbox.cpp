@@ -53,9 +53,9 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->aboutUs->setGeometry(313, 150, 65, 32);
 
 
-    this->usernameEdit->setStyleSheet("background-color:rgba(255,255,255,1);border:2px;");
+    this->usernameEdit->setStyleSheet("border:2px;");
 
-    this->passwordEdit->setStyleSheet("background-color:rgba(255,255,255,1);border:2px;");
+    this->passwordEdit->setStyleSheet("border:2px;");
 
     this->regButton->setStyleSheet("QPushButton{background-color:rgba(244,13,100,0);border:0px};}"
                                    "QPushButton:hover{color:white;}"
