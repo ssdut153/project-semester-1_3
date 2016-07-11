@@ -14,8 +14,8 @@ RegWindow::RegWindow(QWidget *parent) :
     this->setWindowModality(Qt::ApplicationModal);
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
-    this->setMaximumSize(280, 196);
-    this->setMinimumSize(280, 196);
+    this->setMaximumSize(280, 230);
+    this->setMinimumSize(280, 230);
     QPalette palette;
     palette.setBrush(QPalette::Background, QPixmap(":/images/regWindow"));
     this->setPalette(palette);
@@ -33,11 +33,11 @@ RegWindow::RegWindow(QWidget *parent) :
     this->passwordEdit_1->setStyleSheet("border:0px;");
     this->passwordEdit_2->setStyleSheet("border:0px;");
 
-    this->messageLabel->setGeometry(50, 10, 180, 20);
-    this->usernameEdit->setGeometry(50, 30, 180, 30);
-    this->passwordEdit_1->setGeometry(50, 70, 180, 30);
-    this->passwordEdit_2->setGeometry(50, 110, 180, 30);
-    this->regButton->setGeometry(50, 150, 180, 30);
+    this->messageLabel->setGeometry(52, 30, 180, 20);
+    this->usernameEdit->setGeometry(50, 60, 180, 30);
+    this->passwordEdit_1->setGeometry(50, 100, 180, 30);
+    this->passwordEdit_2->setGeometry(50, 140, 180, 30);
+    this->regButton->setGeometry(50, 180, 180, 30);
     this->closeButton->setGeometry(250,1,30,30);
 
     this->setTabOrder(this->usernameEdit, this->passwordEdit_1);

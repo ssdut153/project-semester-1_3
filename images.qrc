@@ -4,10 +4,14 @@
         <file alias="close_2">images/close_4.png</file>
         <file alias="close_3">images/close_6.png</file>
         <file alias="close_0">images/close_0.png</file>
-        <file alias="photo">images/素材.jpg</file>
-        <file alias="loginFinal_1">images/登陆界面-2.png</file>
-        <file alias="mainWindow_1">images/主界面2.png</file>
-        <file alias="regWindow">images/界面-2.png</file>
-        <file alias="exitBox">images/界面-3.png</file>
+        <file alias="file">images/file.png</file>
+        <file alias="photo">images/headSculp.jpg</file>
+        <file alias="loginFinal_1">images/loginWindow.png</file>
+        <file alias="mainWindow_1">images/mainWindow.png</file>
+        <file alias="exitBox">images/exitBox.png</file>
+        <file alias="regWindow">images/regWindow.png</file>
+        <file alias="chatWindow">images/chatWindow.png</file>
+        <file alias="searchWindow">images/searchWindow.png</file>
+        <file alias="expression">images/expression.png</file>
     </qresource>
 </RCC>

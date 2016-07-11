@@ -18,6 +18,7 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
 {
     this->setGeometry(0, 0, 400, 280);
 
+    this->regButton->setFocusPolicy(Qt::ClickFocus);
 
     this->passwordEdit->setEchoMode(QLineEdit::Password);
     QPalette   pal;
@@ -32,7 +33,7 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->passwordEdit->setPlaceholderText("请输入密码");
     this->loginButton->setText("登  陆");
     this->regButton->setText("免费注册");
-    this->aboutUs->setText(tr("<style> a {text-decoration: none} </style><a href=\"http://ssdut153.cn/\">  关于我们"));
+    this->aboutUs->setText("<style>a{text-decoration: none;}</style><a href=\"http://ssdut153.cn/\">  关于我们");
 
     this->regButton->setPalette(pal);
     this->loginButton->setFont(font);
@@ -57,15 +58,15 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
 
     this->passwordEdit->setStyleSheet("border:2px;");
 
-    this->regButton->setStyleSheet("QPushButton{background-color:rgba(244,13,100,0);border:0px};}"
+    this->regButton->setStyleSheet("QPushButton{background-color:rgba(244,13,100,0);border:0px;}"
                                    "QPushButton:hover{color:white;}"
-                                   "QPushButton:pressed{color:QColor(127,127,127);}");
+                                   "QPushButton:focus{border:0px;}");
 
     QImage head(":/images/photo");
     head.scaled(74, 74, Qt::KeepAspectRatio);
     this->headSculp->setScaledContents(true);
     this->headSculp->setPixmap(QPixmap::fromImage(head));
-    this->aboutUs->setStyleSheet("QLabel:hover{color:white;}");
+
 
     this->setTabOrder(this->usernameEdit, this->passwordEdit);
     this->setTabOrder(this->passwordEdit, this->loginButton);

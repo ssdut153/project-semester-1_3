@@ -2,6 +2,7 @@
 #define SEARCHWINDOW_H
 
 #include "stdafx.h"
+#include "button/closebutton.h"
 
 class SearchWindow : public QMainWindow
 {
@@ -12,6 +13,10 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+
 
 signals:
 
@@ -20,10 +25,14 @@ private:
     QPushButton *searchButton;
     QLabel *resultLabel;
     QPushButton *addButton;
+    CloseButton *closeButton;
+    bool pressed;
+    QPoint place;
 
 private slots:
     void on_searchButton_clicked();
     void on_addButton_clicked();
+    void on_closeButton_clicked();
 
 };
 

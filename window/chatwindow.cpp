@@ -13,12 +13,19 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     sendEdit(new QTextEdit(this)),
     sendButton(new QPushButton(this)),
     picButton(new QPushButton(this)),
+    expressButton(new QPushButton(this)),
+    filButton(new QPushButton(this)),
+    closeButton(new CloseButton(this)),
     trueImage(new QRadioButton(this)),
     manager(0),
     recmanager(0)
 {
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
     this->setMinimumSize(800, 600);
     this->setMaximumSize(800, 600);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, QPixmap(":/images/chatWindow"));
+    this->setPalette(palette);
 
     this->setWindowTitle(this->friendName);
 
@@ -30,14 +37,25 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
 
     this->messageEdit->setReadOnly(true);
 
-    this->messageEdit->setGeometry(25, 20, 750, 380);
-    this->sendEdit->setGeometry(25, 420, 750, 120);
+    this->messageEdit->setGeometry(50, 40, 700, 330);
+    this->sendEdit->setGeometry(50, 420, 700, 120);
     this->sendButton->setGeometry(710, 550, 60, 30);
-    this->picButton->setGeometry(580, 550, 60, 30);
-    this->trueImage->setGeometry(350, 550, 60, 30);
+    this->picButton->setGeometry(90, 380, 30, 30);
+    this->expressButton->setGeometry(50,380,30,30);
+    this->filButton->setGeometry(130,380,30,30);
+    this->closeButton->setGeometry(770,0,30,30);
+    this->trueImage->setGeometry(350, 550, 80, 30);
+
+    this->expressButton->setIcon(QIcon(":/images/expression"));
+    this->expressButton->setIconSize(QSize(30,30));
+    this->filButton->setIcon(QIcon(":/images/file"));
+    this->expressButton->setIconSize(QSize(30,30));
 
     connect(this->sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
     connect(this->picButton, SIGNAL(clicked()), this, SLOT(on_picButton_clicked()));
+    connect(this->closeButton,SIGNAL(clicked()),this,SLOT(on_closeButton_clicked()));
+    connect(this->expressButton,SIGNAL(clicked()),this,SLOT(on_expressButton_clicked()));
+    connect(this->filButton, SIGNAL(clicked()),this,SLOT(on_filButton_clicked()));
 }
 
 QTextEdit *ChatWindow::getMessageEdit()
@@ -220,7 +238,45 @@ void ChatWindow::onReceiveFinished(QNetworkReply *reply){
     }
 }
 
+void ChatWindow::mousePressEvent(QMouseEvent *event)
+{
+    place = event->pos();
+    pressed = true;
+}
+
+void ChatWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+{
+    pressed = false;
+}
+
+void ChatWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    QPoint temp = event->pos();
+    if(pressed)
+    {
+        this->move(this->x() + temp.x() - this->place.x(), this->y() + temp.y() - this->place.y());
+    }
+}
+
 ChatWindow::~ChatWindow(){
     delete manager;
     delete recmanager;
+}
+
+void ChatWindow::on_closeButton_clicked()
+{
+    this->hide();
+    CommonElements *ce = CommonElements::getInstance();
+    ce->getMainWindow()->getChatWindows().remove(this->item);
+    delete this;
+}
+
+void ChatWindow::on_expressButton_clicked()
+{
+
+}
+
+void ChatWindow::on_filButton_clicked()
+{
+
 }

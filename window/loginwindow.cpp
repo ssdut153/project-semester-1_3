@@ -12,6 +12,8 @@ LoginWindow::LoginWindow(QWidget *parent) :
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
+    this->closeButton->setFocusPolicy(Qt::ClickFocus);
+
     this->setMaximumSize(400,280);
     this->setMinimumSize(400,280);
     QPalette palette;
