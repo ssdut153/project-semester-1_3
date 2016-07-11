@@ -3,7 +3,6 @@
 #include "helper.h"
 #include "common/message/loginout/loginmessage.h"
 #include "window/loginwindow.h"
-#include <QImage>
 
 LoginGroupBox::LoginGroupBox(QWidget *parent):
     QGroupBox(parent),
@@ -35,9 +34,6 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->regButton->setText("免费注册");
     this->aboutUs->setText(tr("<style> a {text-decoration: none} </style><a href=\"http://ssdut153.cn/\">  关于我们"));
 
-
-
-
     this->regButton->setPalette(pal);
     this->loginButton->setFont(font);
     this->regButton->setFont(font);
@@ -57,8 +53,6 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->usernameEdit->setStyleSheet("background-color:rgba(255,255,255,1);border:2px;");
 
     this->passwordEdit->setStyleSheet("background-color:rgba(255,255,255,1);border:2px;");
-
-
 
     this->regButton->setStyleSheet("QPushButton{background-color:rgba(244,13,100,0);border:0px};}"
                                    "QPushButton:hover{color:white;}"

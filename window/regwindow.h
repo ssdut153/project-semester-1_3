@@ -22,7 +22,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
 
-
 private:
     QLabel *messageLabel;
     QLineEdit *usernameEdit;

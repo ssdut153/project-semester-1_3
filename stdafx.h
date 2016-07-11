@@ -5,7 +5,10 @@
 #include <QCloseEvent>
 #include <QDateTime>
 #include <QEventLoop>
+#include <QFileDialog>
 #include <QGroupBox>
+#include <QImage>
+#include <QImageReader>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -25,6 +28,7 @@
 #include <QPaintEvent>
 #include <QPoint>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QRect>
 #include <QString>
 #include <QSystemTrayIcon>

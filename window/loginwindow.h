@@ -27,6 +27,7 @@ private:
     LoginGroupBox *loginGroupBox;
     WaitingGroupBox *waitingGroupBox;
     CloseButton *closeButton;
+
 private slots:
     void on_closeButton_clicked();
 };
