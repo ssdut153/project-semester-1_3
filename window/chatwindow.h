@@ -5,8 +5,7 @@
 #include "classes.h"
 #include "mainwindow.h"
 #include "commonelements.h"
-#include"common/message/function/imagemessage.h"
-#include<QRadioButton>
+#include "common/message/function/imagemessage.h"
 
 class ChatWindow : public QMainWindow
 {

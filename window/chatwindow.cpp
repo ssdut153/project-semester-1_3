@@ -3,8 +3,6 @@
 #include "helper.h"
 #include "common/message/function/p2pmessage.h"
 #include "database.h"
-#include<QFileDialog>
-#include<QImageReader>
 
 ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     QMainWindow(parent),
@@ -15,7 +13,9 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     sendEdit(new QTextEdit(this)),
     sendButton(new QPushButton(this)),
     picButton(new QPushButton(this)),
-    trueImage(new QRadioButton(this))
+    trueImage(new QRadioButton(this)),
+    manager(0),
+    recmanager(0)
 {
     this->setMinimumSize(800, 600);
     this->setMaximumSize(800, 600);

@@ -13,7 +13,6 @@
 #include "common/message/loginout/logoutmessage.h"
 #include "database.h"
 #include <QDebug>
-#include<QImageReader>
 
 Helper::Helper():
     client(0)

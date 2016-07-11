@@ -14,15 +14,12 @@ RegWindow::RegWindow(QWidget *parent) :
     this->setWindowModality(Qt::ApplicationModal);
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
-
-
     this->setMaximumSize(270, 200);
     this->setMinimumSize(270, 200);
     QPalette palette;
     palette.setBrush(QPalette::Background, QColor(147,224,255));
     this->setPalette(palette);
     palette.setColor(QPalette::ButtonText, QColor(255,255,255));
-
 
     this->usernameEdit->setFocus();
 
@@ -34,8 +31,6 @@ RegWindow::RegWindow(QWidget *parent) :
     this->regButton->setStyleSheet("QPushButton{background-color:rgba(244,13,100,1);border:0px};}"
                                    "QPushButton:hover{background-color:rgba(255,66,93,1);}"
                                    "QPushButton:pressed{background-color:red;}");
-
-
 
     this->messageLabel->setGeometry(30, 10, 210, 20);
     this->usernameEdit->setGeometry(30, 30, 210, 30);
@@ -121,13 +116,10 @@ void RegWindow::on_regButton_clicked()
     }
 }
 
-
-void RegWindow::paintEvent(QPaintEvent *event)
+void RegWindow::paintEvent(QPaintEvent */*event*/)
 {
 
 }
-
-
 
 void RegWindow::mousePressEvent(QMouseEvent *event)
 {
