@@ -3,7 +3,7 @@
 
 #include "p2pmessage.h"
 
-class fileMessage
+class fileMessage:public p2pMessage
 {
 public:
     fileMessage();
