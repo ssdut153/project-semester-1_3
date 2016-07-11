@@ -8,5 +8,6 @@
         <file alias="loginFinal_1">images/登陆界面-2.png</file>
         <file alias="mainWindow_1">images/主界面2.png</file>
         <file alias="regWindow">images/界面-2.png</file>
+        <file alias="exitBox">images/界面-3.png</file>
     </qresource>
 </RCC>

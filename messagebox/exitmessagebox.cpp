@@ -8,9 +8,30 @@ ExitMessageBox::ExitMessageBox(QWidget *parent):
     this->setText("您真的要退出吗?");
     this->addButton("是", QMessageBox::AcceptRole);
     this->addButton("否", QMessageBox::RejectRole);
+
 }
 
 ExitMessageBox::~ExitMessageBox()
 {
 
+}
+
+void ExitMessageBox::mousePressEvent(QMouseEvent *event)
+{
+    place = event->pos();
+    pressed = true;
+}
+
+void ExitMessageBox::mouseReleaseEvent(QMouseEvent */*event*/)
+{
+    pressed = false;
+}
+
+void ExitMessageBox::mouseMoveEvent(QMouseEvent *event)
+{
+    QPoint temp = event->pos();
+    if(pressed)
+    {
+        this->move(this->x() + temp.x() - this->place.x(), this->y() + temp.y() - this->place.y());
+    }
 }

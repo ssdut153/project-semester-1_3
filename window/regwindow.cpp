@@ -133,9 +133,7 @@ void RegWindow::mouseMoveEvent(QMouseEvent *event)
     QPoint temp = event->pos();
     if(pressed)
     {
-        CommonElements *ce = CommonElements::getInstance();
-        RegWindow *lw = ce->getLoginWindow()->getLoginGroupBox()->getRegWindow();
-        lw->move(lw->x() + temp.x() - this->place.x(), lw->y() + temp.y() - this->place.y());
+        this->move(this->x() + temp.x() - this->place.x(), this->y() + temp.y() - this->place.y());
     }
 }
 
