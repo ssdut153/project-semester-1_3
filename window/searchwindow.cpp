@@ -10,6 +10,8 @@ SearchWindow::SearchWindow(QWidget *parent) :
     resultLabel(new QLabel(this)),
     addButton(new QPushButton(this))
 {
+    this->setWindowFlags(/*Qt::FramelessWindowHint | */Qt::Tool | Qt::X11BypassWindowManagerHint);
+
     this->setMaximumSize(400, 300);
     this->setMinimumSize(400, 300);
 

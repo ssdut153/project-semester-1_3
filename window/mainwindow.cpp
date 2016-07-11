@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     headButton(new QPushButton(this)),
     closeButton(new CloseButton(this)),
     headSculp(new QLabel(this)),
-    searchWindow(new SearchWindow(this))
+    searchWindow(new SearchWindow)
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
@@ -52,6 +52,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this->headButton, SIGNAL(clicked()), this, SLOT(on_headButton_clicked()));
     connect(this->friendListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_friendListWidget_doubleClicked(QListWidgetItem*)));
 
+}
+
+MainWindow::~MainWindow()
+{
+    delete this->searchWindow;
+    for(QMap<QListWidgetItem*, ChatWindow*>::iterator it = chatWindows.begin(); it != chatWindows.end(); it++)
+    {
+        delete it.value();
+        delete it.key();
+    }
 }
 
 void MainWindow::loadFriendList(QMap<QString, int> &users)
@@ -136,6 +146,7 @@ SearchWindow *MainWindow::getSearchWindow()
 {
     return this->searchWindow;
 }
+
 void MainWindow::addFriendItem(QString friendName, int status)
 {
     for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++)
@@ -178,7 +189,7 @@ void MainWindow::on_friendListWidget_doubleClicked(QListWidgetItem *item)
     }
     else
     {
-        cw = new ChatWindow(item, this);
+        cw = new ChatWindow(item);
         this->chatWindows.insert(item, cw);
         cw->show();
     }

@@ -17,6 +17,8 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     manager(0),
     recmanager(0)
 {
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
+
     this->setMinimumSize(800, 600);
     this->setMaximumSize(800, 600);
 

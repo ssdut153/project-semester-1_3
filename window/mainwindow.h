@@ -12,6 +12,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
     void loadFriendList(QMap<QString, int> &users);
     void setFriendStatus(QString friendName, bool online);
 //    void setSearchWindow(SearchWindow *searchWindow);
