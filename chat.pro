@@ -34,6 +34,8 @@ SOURCES += main.cpp \
     common/message/friendlist/friendlistmessage.cpp \
     common/message/function/forcelogoutmessage.cpp \
     common/message/function/p2pmessage.cpp \
+    common/message/function/imagemessage.cpp \
+    common/message/function/listmessage.cpp \
     common/message/searchuser/searchusermessage.cpp \
     common/message/addfriend/addfriendmessage.cpp \
     common/message/addfriend/ajfriendmessage.cpp \
@@ -44,12 +46,7 @@ SOURCES += main.cpp \
     groupbox/logingroupbox.cpp \
     groupbox/waitinggroupbox.cpp \
     database.cpp \
-<<<<<<< HEAD
     button/closebutton.cpp
-=======
-    common/message/function/imagemessage.cpp \
-    common/message/function/listmessage.cpp
->>>>>>> f315b83654997fb3aa6f7a287c38313ab1f88ff3
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -72,6 +69,8 @@ HEADERS  += stdafx.h \
     common/message/friendlist/friendlistmessage.h \
     common/message/function/p2pmessage.h \
     common/message/function/forcelogoutmessage.h \
+    common/message/function/imagemessage.h \
+    common/message/function/listmessage.h \
     common/message/searchuser/searchusermessage.h \
     common/message/addfriend/addfriendmessage.h \
     common/message/addfriend/ajfriendmessage.h \
@@ -83,12 +82,7 @@ HEADERS  += stdafx.h \
     groupbox/logingroupbox.h \
     groupbox/waitinggroupbox.h \
     database.h \
-<<<<<<< HEAD
     button/closebutton.h
-=======
-    common/message/function/imagemessage.h \
-    common/message/function/listmessage.h
->>>>>>> f315b83654997fb3aa6f7a287c38313ab1f88ff3
 
 RESOURCES += \
     images.qrc
