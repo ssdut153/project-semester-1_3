@@ -13,8 +13,10 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *paintevent);
 
 private:
+    QImage *imp;
     bool pressed;
     QPoint place;
 };

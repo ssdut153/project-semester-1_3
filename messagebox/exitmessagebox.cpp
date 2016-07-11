@@ -8,6 +8,7 @@ ExitMessageBox::ExitMessageBox(QWidget *parent):
     this->setText("您真的要退出吗?");
     this->addButton("是", QMessageBox::AcceptRole);
     this->addButton("否", QMessageBox::RejectRole);
+    this->imp=new QImage(":/images/exitBox");
 
 }
 
@@ -34,4 +35,11 @@ void ExitMessageBox::mouseMoveEvent(QMouseEvent *event)
     {
         this->move(this->x() + temp.x() - this->place.x(), this->y() + temp.y() - this->place.y());
     }
+}
+
+void ExitMessageBox::paintEvent(QPaintEvent *paintevent)
+{
+    QPainter painter(this);
+    painter.drawImage(0, 0, imp->scaled(this->size()));
+    QMessageBox::paintEvent(paintevent);
 }
