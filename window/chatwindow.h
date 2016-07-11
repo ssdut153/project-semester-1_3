@@ -15,7 +15,7 @@ public:
     explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = 0);
     QTextEdit *getMessageEdit();
     void receivePic(imageMessage im);
-
+    ~ChatWindow();
 signals:
 
 protected:
