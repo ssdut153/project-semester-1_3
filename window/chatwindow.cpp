@@ -17,8 +17,6 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     manager(0),
     recmanager(0)
 {
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
-
     this->setMinimumSize(800, 600);
     this->setMaximumSize(800, 600);
 
@@ -111,6 +109,8 @@ void ChatWindow::on_picButton_clicked(){
         u.setUserName("upload");
         u.setPassword("killcaomai");
         manager->put(QNetworkRequest(u), by_img);
+        this->sendButton->setDisabled(true);
+        this->picButton->setDisabled(true);
     }
     else{}
 }
@@ -121,42 +121,53 @@ void ChatWindow::receivePic(imageMessage im){
     qDebug()<<url;
     QUrl u(url);
     recmanager->get(QNetworkRequest(u));
+    this->sendButton->setDisabled(true);
+    this->picButton->setDisabled(true);
 }
 
-void ChatWindow::onFinished(QNetworkReply *){
+void ChatWindow::onFinished(QNetworkReply *reply){
+    if(reply->error()== QNetworkReply::NoError)
 
-    imageMessage im(this->username, this->friendName,imgTime);
-    Helper *helper = Helper::getInstance();
-    helper->writeClient(im);
+    {
+        imageMessage im(this->username, this->friendName,imgTime);
+        Helper *helper = Helper::getInstance();
+        helper->writeClient(im);
 
-    qDebug("upload success");
+        qDebug("upload success");
 
-    messageEdit->append(this->username +" "+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
-    this->messageEdit->append("");
-    QUrl Uri (QString("file://%1").arg (picPath));
-    QImage image = QImageReader(picPath).read();
-    QTextDocument * textDocument = this->messageEdit->document();
-    textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant(image));
-    QTextCursor cursor = this->messageEdit->textCursor();
-    QTextImageFormat imageFormat;
-    if(trueImage->isChecked()){
-        imageFormat.setWidth(image.width());
-        imageFormat.setHeight(image.height());
-    }
-    else{
-        if(image.height()>200){
-
-            imageFormat.setWidth((double)image.width()/image.height()*200);
-            imageFormat.setHeight(200);
-        }
-        else{
+        messageEdit->append(this->username +" "+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        this->messageEdit->append("");
+        QUrl Uri (QString("file://%1").arg (picPath));
+        QImage image = QImageReader(picPath).read();
+        QTextDocument * textDocument = this->messageEdit->document();
+        textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant(image));
+        QTextCursor cursor = this->messageEdit->textCursor();
+        QTextImageFormat imageFormat;
+        if(trueImage->isChecked()){
             imageFormat.setWidth(image.width());
             imageFormat.setHeight(image.height());
         }
-    }
-    imageFormat.setName(Uri.toString());
-    cursor.insertImage(imageFormat);
+        else{
+            if(image.height()>200){
 
+                imageFormat.setWidth((double)image.width()/image.height()*200);
+                imageFormat.setHeight(200);
+            }
+            else{
+                imageFormat.setWidth(image.width());
+                imageFormat.setHeight(image.height());
+            }
+        }
+        imageFormat.setName(Uri.toString());
+        cursor.insertImage(imageFormat);
+        this->sendButton->setDisabled(false);
+        this->picButton->setDisabled(false);
+    } else{
+        qDebug()<<"error";
+        this->sendButton->setDisabled(false);
+        this->picButton->setDisabled(false);
+        this->messageEdit->append("can't connect to sever.");
+    }
 }
 void ChatWindow::onReceiveFinished(QNetworkReply *reply){
     if(reply->error()== QNetworkReply::NoError)
@@ -197,9 +208,19 @@ void ChatWindow::onReceiveFinished(QNetworkReply *reply){
         imageFormat.setName(Uri.toString());
         cursor.insertImage(imageFormat);
         QFile::remove(picPath);
+        delete img;
+        this->sendButton->setDisabled(false);
+        this->picButton->setDisabled(false);
     }
     else{
         qDebug()<<"error";
+        this->sendButton->setDisabled(false);
+        this->picButton->setDisabled(false);
+        this->messageEdit->append("can't connect to sever.");
     }
+}
 
+ChatWindow::~ChatWindow(){
+    delete manager;
+    delete recmanager;
 }
