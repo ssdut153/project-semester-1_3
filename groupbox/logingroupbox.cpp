@@ -40,8 +40,11 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->aboutUs->setFont(font);
     this->usernameEdit->setFont(font);
     this->passwordEdit->setFont(font);
+    this->messageLabel->setFont(font);
+    pal.setColor(QPalette::WindowText, Qt::red);
+    this->messageLabel->setPalette(pal);
 
-    this->messageLabel->setGeometry(90, 50, 260, 60);
+    this->messageLabel->setGeometry(109, 80, 192, 32);
     this->usernameEdit->setGeometry(107, 108, 192, 32);
     this->passwordEdit->setGeometry(107, 150, 192, 32);
     this->loginButton->setGeometry(106, 220, 194, 32);

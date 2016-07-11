@@ -5,14 +5,14 @@ WaitingGroupBox::WaitingGroupBox(QWidget *parent):
     waitingLabel(new QLabel(this)),
     cancelButton(new QPushButton(this))
 {
-    this->waitingLabel->setText("正 在 登 录");
+    this->waitingLabel->setText("正在登录");
     this->cancelButton->setText("取消");
 
     QFont font;
     font.setPointSize(12);
     this->waitingLabel->setFont(font);
 
-    this->waitingLabel->setGeometry(175, 100, 80, 30);
+    this->waitingLabel->setGeometry(170, 100, 80, 30);
     this->cancelButton->setGeometry(175, 160, 50, 30);
 
     this->setGeometry(0, 0, 400, 280);
