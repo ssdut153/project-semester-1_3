@@ -66,8 +66,7 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
 
     this->setTabOrder(this->usernameEdit, this->passwordEdit);
     this->setTabOrder(this->passwordEdit, this->loginButton);
-    this->setTabOrder(this->loginButton, this->regButton);
-    this->setTabOrder(this->regButton, this->usernameEdit);
+    this->setTabOrder(this->loginButton, this->usernameEdit);
 
     connect(this->loginButton, SIGNAL(clicked()), this, SLOT(on_loginButton_clicked()));
     connect(this->regButton, SIGNAL(clicked()), this, SLOT(on_regButton_clicked()));

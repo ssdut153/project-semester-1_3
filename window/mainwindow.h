@@ -32,6 +32,7 @@ private:
     QLabel *usernameLabel;
     QListWidget *friendListWidget;
     QPushButton *searchButton;
+    QPushButton *headButton;
     CloseButton *closeButton;
     QLabel *headSculp;
     QMap<QString, int> friendlist;
@@ -45,6 +46,7 @@ private slots:
     void on_searchButton_clicked();
     void on_friendListWidget_doubleClicked(QListWidgetItem *item);
     void on_closeButton_clicked();
+    void on_headButton_clicked();
 
 };
 

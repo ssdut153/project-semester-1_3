@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     usernameLabel(new QLabel(this)),
     friendListWidget(new QListWidget(this)),
     searchButton(new QPushButton(this)),
+    headButton(new QPushButton(this)),
     closeButton(new CloseButton(this)),
     headSculp(new QLabel(this)),
     searchWindow(new SearchWindow(this))
@@ -23,11 +24,12 @@ MainWindow::MainWindow(QWidget *parent) :
     palette.setBrush(QPalette::Background, QPixmap(":/images/mainWindow_1"));
     this->setPalette(palette);
 
-    this->usernameLabel->setGeometry(70, 20, 140, 30);
-    this->friendListWidget->setGeometry(20, 70, 260, 480);
-    this->searchButton->setGeometry(20, 560, 60, 30);
+    this->usernameLabel->setGeometry(70, 60, 140, 30);
+    this->friendListWidget->setGeometry(20, 110, 260, 480);
+    this->searchButton->setGeometry(20, 600, 60, 30);
+    this->headButton->setGeometry(100,600,60,30);
     this->closeButton->setGeometry(270,1,30,30);
-    this->headSculp->setGeometry(30, 20, 30, 30);
+    this->headSculp->setGeometry(30, 60, 30, 30);
 
     QImage head(":/images/photo");
     head.scaled(30, 30, Qt::KeepAspectRatio);
@@ -36,7 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     CommonElements *ce = CommonElements::getInstance();
     usernameLabel->setText(ce->getUsername());
-    searchButton->setText("搜索");
+    this->searchButton->setText("搜索");
+    this->headButton->setText("上传头像");
 
     Database::getInstance(ce->getUsername());
 
@@ -46,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(this->searchButton, SIGNAL(clicked()), this,SLOT(on_searchButton_clicked()));
     connect(this->closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
+    connect(this->headButton, SIGNAL(clicked()), this, SLOT(on_headButton_clicked()));
     connect(this->friendListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_friendListWidget_doubleClicked(QListWidgetItem*)));
 
 }
@@ -213,4 +217,9 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
         MainWindow *lw = ce->getMainWindow();
         lw->move(lw->x() + temp.x() - this->place.x(), lw->y() + temp.y() - this->place.y());
     }
+}
+
+void MainWindow::on_headButton_clicked()
+{
+
 }
