@@ -2,18 +2,26 @@
 #include "helper.h"
 #include "commonelements.h"
 #include "common/message/loginout/loginmessage.h"
+#include "messagebox/exitmessagebox.h"
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     loginGroupBox(new LoginGroupBox(this)),
-    waitingGroupBox(new WaitingGroupBox(this))
+    waitingGroupBox(new WaitingGroupBox(this)),
+    closeButton(new CloseButton(this))
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
-    this->setWindowTitle("登录");
 
-    this->setMaximumSize(270, 150);
-    this->setMinimumSize(270, 150);
+
+    this->setMaximumSize(400,280);
+    this->setMinimumSize(400,280);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, QPixmap(":/images/Login_a"));
+    this->setPalette(palette);
+    this->closeButton->setGeometry(365,1,35,35);
+
+    connect(this->closeButton,SIGNAL(clicked()),this,SLOT(on_closeButton_clicked()));
 
 }
 
@@ -43,4 +51,15 @@ void LoginWindow::closeEvent(QCloseEvent *event)
     event->ignore();
     Helper *helper = Helper::getInstance();
     helper->quit();
+}
+
+void LoginWindow::on_closeButton_clicked()
+{
+    ExitMessageBox emb(this);
+    if (emb.exec() == QMessageBox::AcceptRole)
+    {
+        CommonElements *ce = CommonElements::getInstance();
+        ce->getTrayIcon()->hide();
+        ce->getApplication()->quit();
+    }
 }

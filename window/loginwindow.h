@@ -6,6 +6,7 @@
 #include "regwindow.h"
 #include "groupbox/logingroupbox.h"
 #include "groupbox/waitinggroupbox.h"
+#include "button/closebutton.h"
 
 class LoginWindow : public QMainWindow
 {
@@ -25,8 +26,9 @@ signals:
 private:
     LoginGroupBox *loginGroupBox;
     WaitingGroupBox *waitingGroupBox;
-
-
+    CloseButton *closeButton;
+private slots:
+    void on_closeButton_clicked();
 };
 
 #endif // LOGINWINDOW_H

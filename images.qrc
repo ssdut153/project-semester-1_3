@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/images">
         <file alias="icon">images/icon.ico</file>
+        <file alias="close_2">images/close_4.png</file>
+        <file alias="close_3">images/close_6.png</file>
+        <file alias="close_0">images/close_0.png</file>
+        <file alias="photo">images/素材.jpg</file>
+        <file alias="Login_a">images/界面.png</file>
     </qresource>
 </RCC>

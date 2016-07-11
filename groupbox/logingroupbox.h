@@ -11,6 +11,7 @@ class LoginGroupBox:public QGroupBox
 
 public:
     explicit LoginGroupBox(QWidget *parent = 0);
+    ~LoginGroupBox();
     RegWindow *getRegWindow();
     void setRegWindow(RegWindow *regWindow);
     QLabel *getMessageLabel();
@@ -29,7 +30,8 @@ private:
     QLineEdit *passwordEdit;
     QPushButton *loginButton;
     QPushButton *regButton;
-    QPushButton *exitButton;
+    QLabel *headSculp;
+    QLabel *aboutUs;
     RegWindow *regWindow;
     bool pressed;
     QPoint place;
@@ -37,7 +39,6 @@ private:
 private slots:
     void on_loginButton_clicked();
     void on_regButton_clicked();
-    void on_exitButton_clicked();
 
 };
 

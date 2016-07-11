@@ -43,7 +43,8 @@ SOURCES += main.cpp \
     helper.cpp \
     groupbox/logingroupbox.cpp \
     groupbox/waitinggroupbox.cpp \
-    database.cpp
+    database.cpp \
+    button/closebutton.cpp
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -76,7 +77,8 @@ HEADERS  += stdafx.h \
     classes.h \
     groupbox/logingroupbox.h \
     groupbox/waitinggroupbox.h \
-    database.h
+    database.h \
+    button/closebutton.h
 
 RESOURCES += \
     images.qrc

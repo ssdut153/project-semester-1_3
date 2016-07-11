@@ -8,27 +8,41 @@ RegWindow::RegWindow(QWidget *parent) :
     usernameEdit(new QLineEdit(this)),
     passwordEdit_1(new QLineEdit(this)),
     passwordEdit_2(new QLineEdit(this)),
-    regButton(new QPushButton(this))
+    regButton(new QPushButton(this)),
+    closeButton(new CloseButton(this))
 {
     this->setWindowModality(Qt::ApplicationModal);
+    this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
-    this->setWindowTitle("注册");
+
 
     this->setMaximumSize(270, 200);
     this->setMinimumSize(270, 200);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, QColor(147,224,255));
+    this->setPalette(palette);
+    palette.setColor(QPalette::ButtonText, QColor(255,255,255));
+
 
     this->usernameEdit->setFocus();
 
     this->usernameEdit->setPlaceholderText("请输入用户名(2-20位)");
     this->passwordEdit_1->setPlaceholderText("请输入密码(6-16位)");
     this->passwordEdit_2->setPlaceholderText("请确认密码");
-    this->regButton->setText("注册");
+    this->regButton->setText("注     册");
+    this->regButton->setPalette(palette);
+    this->regButton->setStyleSheet("QPushButton{background-color:rgba(244,13,100,1);border:0px};}"
+                                   "QPushButton:hover{background-color:rgba(255,66,93,1);}"
+                                   "QPushButton:pressed{background-color:red;}");
+
+
 
     this->messageLabel->setGeometry(30, 10, 210, 20);
     this->usernameEdit->setGeometry(30, 30, 210, 30);
     this->passwordEdit_1->setGeometry(30, 70, 210, 30);
     this->passwordEdit_2->setGeometry(30, 110, 210, 30);
     this->regButton->setGeometry(30, 150, 210, 30);
+    this->closeButton->setGeometry(240,1,30,30);
 
     this->setTabOrder(this->usernameEdit, this->passwordEdit_1);
     this->setTabOrder(this->passwordEdit_1, this->passwordEdit_2);
@@ -36,6 +50,7 @@ RegWindow::RegWindow(QWidget *parent) :
     this->setTabOrder(this->regButton, this->usernameEdit);
 
     connect(this->regButton, SIGNAL(clicked()), this, SLOT(on_regButton_clicked()));
+    connect(this->closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
 
 }
 
@@ -56,6 +71,14 @@ void RegWindow::keyPressEvent(QKeyEvent *event)
 void RegWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
+    CommonElements *ce = CommonElements::getInstance();
+    ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
+    delete this;
+}
+
+void RegWindow::on_closeButton_clicked()
+{
+
     CommonElements *ce = CommonElements::getInstance();
     ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
     delete this;
@@ -95,6 +118,36 @@ void RegWindow::on_regButton_clicked()
         this->password = password_1;
         ce->connectServer();
         Helper::getInstance()->writeClient(rum);
+    }
+}
+
+
+void RegWindow::paintEvent(QPaintEvent *event)
+{
+
+}
+
+
+
+void RegWindow::mousePressEvent(QMouseEvent *event)
+{
+    place = event->pos();
+    pressed = true;
+}
+
+void RegWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+{
+    pressed = false;
+}
+
+void RegWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    QPoint temp = event->pos();
+    if(pressed)
+    {
+        CommonElements *ce = CommonElements::getInstance();
+        RegWindow *lw = ce->getLoginWindow()->getLoginGroupBox()->getRegWindow();
+        lw->move(lw->x() + temp.x() - this->place.x(), lw->y() + temp.y() - this->place.y());
     }
 }
 

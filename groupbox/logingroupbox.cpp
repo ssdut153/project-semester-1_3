@@ -3,7 +3,7 @@
 #include "helper.h"
 #include "common/message/loginout/loginmessage.h"
 #include "window/loginwindow.h"
-#include "messagebox/exitmessagebox.h"
+#include <QImage>
 
 LoginGroupBox::LoginGroupBox(QWidget *parent):
     QGroupBox(parent),
@@ -12,36 +12,79 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     passwordEdit(new QLineEdit(this)),
     loginButton(new QPushButton(this)),
     regButton(new QPushButton(this)),
-    exitButton(new QPushButton(this)),
-    regWindow(0)
+    headSculp(new QLabel(this)),
+    aboutUs(new QLabel(this)),
+    regWindow(0),
+    pressed(false)
 {
-    this->setGeometry(0, 0, 270, 150);
+    this->setGeometry(0, 0, 400, 280);
 
     this->passwordEdit->setEchoMode(QLineEdit::Password);
+    QPalette   pal;
+    pal.setColor(QPalette::ButtonText, QColor(28,0,255));
+
+    QFont font;
+    font.setPointSize(10);
+
+    this->aboutUs->setOpenExternalLinks(true);
 
     this->usernameEdit->setPlaceholderText("请输入用户名");
     this->passwordEdit->setPlaceholderText("请输入密码");
-    this->loginButton->setText("登录");
-    this->regButton->setText("注册");
-    this->exitButton->setText("退出");
+    this->loginButton->setText("登  陆");
+    this->regButton->setText("免费注册");
+    this->aboutUs->setText(tr("<style> a {text-decoration: none} </style><a href=\"http://ssdut153.cn/\">  关于我们"));
 
-    this->messageLabel->setGeometry(30, 10, 210, 20);
-    this->usernameEdit->setGeometry(30, 30, 210, 30);
-    this->passwordEdit->setGeometry(30, 70, 210, 30);
-    this->loginButton->setGeometry(30, 110, 50, 30);
-    this->regButton->setGeometry(110, 110, 50, 30);
-    this->exitButton->setGeometry(190, 110, 50, 30);
+
+
+
+    this->regButton->setPalette(pal);
+    this->loginButton->setFont(font);
+    this->regButton->setFont(font);
+    this->aboutUs->setFont(font);
+    this->usernameEdit->setFont(font);
+    this->passwordEdit->setFont(font);
+
+    this->messageLabel->setGeometry(90, 50, 260, 60);
+    this->usernameEdit->setGeometry(107, 108, 192, 32);
+    this->passwordEdit->setGeometry(107, 150, 192, 32);
+    this->loginButton->setGeometry(106, 220, 194, 32);
+    this->regButton->setGeometry(306, 108, 65, 32);
+    this->headSculp->setGeometry(23,108,74,74);
+    this->aboutUs->setGeometry(313, 150, 65, 32);
+
+
+    this->usernameEdit->setStyleSheet("background-color:rgba(255,255,255,1);border:2px;");
+
+    this->passwordEdit->setStyleSheet("background-color:rgba(255,255,255,1);border:2px;");
+
+
+
+    this->regButton->setStyleSheet("QPushButton{background-color:rgba(244,13,100,0);border:0px};}"
+                                   "QPushButton:hover{color:white;}"
+                                   "QPushButton:pressed{color:QColor(127,127,127);}");
+
+    QImage head(":/images/photo");
+    head.scaled(74, 74, Qt::KeepAspectRatio);
+    this->headSculp->setScaledContents(true);
+    this->headSculp->setPixmap(QPixmap::fromImage(head));
+    this->aboutUs->setStyleSheet("QLabel:hover{color:white;}");
 
     this->setTabOrder(this->usernameEdit, this->passwordEdit);
     this->setTabOrder(this->passwordEdit, this->loginButton);
     this->setTabOrder(this->loginButton, this->regButton);
-    this->setTabOrder(this->regButton, this->exitButton);
-    this->setTabOrder(this->exitButton, this->usernameEdit);
+    this->setTabOrder(this->regButton, this->usernameEdit);
 
     connect(this->loginButton, SIGNAL(clicked()), this, SLOT(on_loginButton_clicked()));
     connect(this->regButton, SIGNAL(clicked()), this, SLOT(on_regButton_clicked()));
-    connect(this->exitButton, SIGNAL(clicked()), this, SLOT(on_exitButton_clicked()));
 
+}
+
+LoginGroupBox::~LoginGroupBox()
+{
+    if(this->regWindow != 0)
+    {
+        delete this->regWindow;
+    }
 }
 
 void LoginGroupBox::on_loginButton_clicked()
@@ -71,19 +114,8 @@ void LoginGroupBox::on_loginButton_clicked()
 
 void LoginGroupBox::on_regButton_clicked()
 {
-    this->regWindow = new RegWindow(this);
+    this->regWindow = new RegWindow;
     this->regWindow->show();
-}
-
-void LoginGroupBox::on_exitButton_clicked()
-{
-    ExitMessageBox emb(this);
-    if (emb.exec() == QMessageBox::AcceptRole)
-    {
-        CommonElements *ce = CommonElements::getInstance();
-        ce->getTrayIcon()->hide();
-        ce->getApplication()->quit();
-    }
 }
 
 void LoginGroupBox::keyPressEvent(QKeyEvent *event)
@@ -101,10 +133,6 @@ void LoginGroupBox::keyPressEvent(QKeyEvent *event)
             else if(widget == this->regButton)
             {
                 this->on_regButton_clicked();
-            }
-            else if(widget == this->exitButton)
-            {
-                this->on_exitButton_clicked();
             }
         }
         break;
