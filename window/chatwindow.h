@@ -5,6 +5,8 @@
 #include "classes.h"
 #include "mainwindow.h"
 #include "commonelements.h"
+#include"common/message/function/imagemessage.h"
+#include<QRadioButton>
 
 class ChatWindow : public QMainWindow
 {
@@ -13,6 +15,7 @@ class ChatWindow : public QMainWindow
 public:
     explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = 0);
     QTextEdit *getMessageEdit();
+    void receivePic(imageMessage im);
 
 signals:
 
@@ -27,9 +30,19 @@ private:
     QTextEdit *messageEdit;
     QTextEdit *sendEdit;
     QPushButton *sendButton;
+    QPushButton *picButton;
+    QRadioButton *trueImage;
+    QString picPath;
+    QString imgTime;
+    QNetworkAccessManager *manager;
+    QNetworkAccessManager *recmanager;
+
 
 private slots:
     void on_sendButton_clicked();
+    void on_picButton_clicked();
+    void onFinished(QNetworkReply *reply);
+    void onReceiveFinished(QNetworkReply *reply);
 
 };
 

@@ -8,10 +8,12 @@
 #include "common/message/addfriend/ajfriendmessage.h"
 #include "common/message/addfriend/newfriendmessage.h"
 #include "common/message/function/forcelogoutmessage.h"
+#include"common/message/function/imagemessage.h"
 #include "messagebox/exitmessagebox.h"
 #include "common/message/loginout/logoutmessage.h"
 #include "database.h"
 #include <QDebug>
+#include<QImageReader>
 
 Helper::Helper():
     client(0)
@@ -199,6 +201,18 @@ void Helper::readClient()
             ce->login = false;
             ce->loginWindow->show();
             messageBox.exec();
+        }
+    }
+    else if(head == "image")
+    {
+        imageMessage pm;
+        pm.loadfromJson(str);
+        ChatWindow *chatWindow = ce->mainWindow->getChatWindow(pm.FromUserName);
+        if(chatWindow != 0)
+        {/*
+            Database *db = Database::getInstance(pm.ToUserName);
+            db->addMessage(pm.FromUserName, 0, pm.CreateTime,pm.Content);*/
+            chatWindow->receivePic(pm);
         }
     }
     else
