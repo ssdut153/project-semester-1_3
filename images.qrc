@@ -5,9 +5,6 @@
         <file alias="close_3">images/close_6.png</file>
         <file alias="close_0">images/close_0.png</file>
         <file alias="photo">images/素材.jpg</file>
-        <file alias="Login_a">images/界面.png</file>
-        <file alias="loginFinal">images/登陆界面.png</file>
-        <file alias="mainWindow">images/主界面.png</file>
         <file alias="loginFinal_1">images/登陆界面-2.png</file>
         <file alias="mainWindow_1">images/主界面2.png</file>
     </qresource>
