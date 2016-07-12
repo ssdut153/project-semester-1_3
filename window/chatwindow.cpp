@@ -107,9 +107,10 @@ void ChatWindow::on_sendButton_clicked()
         db->addMessage(this->friendName, 1, time, content);
     }
 }
+
 void ChatWindow::on_picButton_clicked()
 {
-    picPath = QFileDialog::getOpenFileName(this, "Open Config", "", "Image Files (*.png *.jpg *.bmp *.gif)");
+    picPath = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp *.gif)"));
     if (!picPath.isNull())
     {
         QImage *img = new QImage;
@@ -136,6 +137,7 @@ void ChatWindow::on_picButton_clicked()
         manager->put(QNetworkRequest(u), by_img);
         this->sendButton->setDisabled(true);
         this->picButton->setDisabled(true);
+        delete img;
     }
 }
 
@@ -276,8 +278,10 @@ void ChatWindow::mouseMoveEvent(QMouseEvent *event)
 
 ChatWindow::~ChatWindow()
 {
-    delete manager;
-    delete recmanager;
+    if(manager!=0)
+        delete manager;
+    if(recmanager!=0)
+        delete recmanager;
 }
 
 void ChatWindow::on_closeButton_clicked()
