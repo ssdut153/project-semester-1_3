@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include "stdafx.h"
+#include "classes.h"
 #include "searchwindow.h"
 #include "chatwindow.h"
-#include "classes.h"
 #include "button/closebutton.h"
 
 class MainWindow : public QMainWindow
@@ -44,7 +44,7 @@ private:
     bool pressed;
     QPoint place;
     QNetworkAccessManager *umanager;
-    QNetworkAccessManager*dmanager;
+    QNetworkAccessManager *dmanager;
     QString dPath;
     QString picPath;
 

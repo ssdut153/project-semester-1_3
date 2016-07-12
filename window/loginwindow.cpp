@@ -4,8 +4,6 @@
 #include "common/message/loginout/loginmessage.h"
 #include "messagebox/exitmessagebox.h"
 
-#include <QLinearGradient>
-
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     loginGroupBox(new LoginGroupBox(this)),

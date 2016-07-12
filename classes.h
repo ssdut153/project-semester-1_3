@@ -20,6 +20,7 @@ class CloseButton;
 
 class ExitMessageBox;
 class LogoutMessageBox;
+class AddFriendMessageBox;
 
 class Database;
 

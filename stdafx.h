@@ -14,6 +14,7 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QJsonValue>
+#include <QLinearGradient>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QLineEdit>
