@@ -14,6 +14,9 @@ RegWindow::RegWindow(QWidget *parent) :
     this->setWindowModality(Qt::ApplicationModal);
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
+    this->passwordEdit_1->setEchoMode(QLineEdit::Password);
+    this->passwordEdit_2->setEchoMode(QLineEdit::Password);
+
     this->setMaximumSize(280, 230);
     this->setMinimumSize(280, 230);
 
