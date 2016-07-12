@@ -231,7 +231,7 @@ void Helper::readClient()
                     Database *db = Database::getInstance(lm.user);
                     db->addMessage(lm.messageFromUsers[i], 0, lm.createTime[i], lm.createTime[i]);
                     chatWindow->getMessageEdit()->append(lm.messageFromUsers[i] +" "+ lm.createTime[i]);
-                    chatWindow->getMessageEdit()->append(lm.createTime[i]);
+                    chatWindow->getMessageEdit()->append(lm.contents[i]);
                 }
             }
             size = lm.requestUsers.size();
