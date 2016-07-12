@@ -27,11 +27,13 @@ SearchWindow::SearchWindow(QWidget *parent) :
     this->searchButton->setText("查询");
     this->addButton->setText("添加");
 
-    this->searchEdit->setGeometry(20, 50, 250, 30);
-    this->searchButton->setGeometry(320, 50, 60, 30);
-    this->resultLabel->setGeometry(20, 100, 150, 30);
-    this->addButton->setGeometry(170, 100, 60, 30);
+    this->searchEdit->setGeometry(35, 60, 200, 30);
+    this->searchButton->setGeometry(278, 60, 60, 30);
+    this->resultLabel->setGeometry(36, 110, 150, 30);
+    this->addButton->setGeometry(278, 110, 60, 30);
     this->closeButton->setGeometry(370, 0, 30, 30);
+
+    this->searchEdit->setStyleSheet("border:none;");
 
     this->resultLabel->hide();
     this->addButton->hide();

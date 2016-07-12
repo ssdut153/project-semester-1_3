@@ -39,6 +39,7 @@ private:
 private slots:
     void on_loginButton_clicked();
     void on_regButton_clicked();
+    void on_usernameEdit_textChanged();
 
 };
 

@@ -73,6 +73,7 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
 
     connect(this->loginButton, SIGNAL(clicked()), this, SLOT(on_loginButton_clicked()));
     connect(this->regButton, SIGNAL(clicked()), this, SLOT(on_regButton_clicked()));
+    connect(this->usernameEdit,SIGNAL(textChanged(QString)),this, SLOT(on_usernameEdit_textChanged()));
 
 }
 
@@ -181,4 +182,9 @@ RegWindow *LoginGroupBox::getRegWindow()
 void LoginGroupBox::setRegWindow(RegWindow *regWindow)
 {
     this->regWindow = regWindow;
+}
+
+void LoginGroupBox::on_usernameEdit_textChanged()
+{
+    qDebug()<<"111";
 }
