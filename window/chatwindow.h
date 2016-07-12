@@ -16,7 +16,6 @@ public:
     QTextEdit *getMessageEdit();
     void receivePic(imageMessage im);
     ~ChatWindow();
-signals:
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -24,7 +23,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
-
 
 private:
     QString username;
@@ -45,7 +43,6 @@ private:
     bool pressed;
     QPoint place;
 
-
 private slots:
     void on_sendButton_clicked();
     void on_picButton_clicked();
@@ -54,6 +51,7 @@ private slots:
     void on_closeButton_clicked();
     void on_expressButton_clicked();
     void on_filButton_clicked();
+
 };
 
 #endif // CHATWINDOW_H

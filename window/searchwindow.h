@@ -7,6 +7,7 @@
 class SearchWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     explicit SearchWindow(QWidget *parent = 0);
     void showSearchUser(QString searchName);
@@ -16,9 +17,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
-
-
-signals:
 
 private:
     QLineEdit *searchEdit;

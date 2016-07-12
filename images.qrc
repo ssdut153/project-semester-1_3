@@ -6,12 +6,7 @@
         <file alias="close_0">images/close_0.png</file>
         <file alias="file">images/file.png</file>
         <file alias="photo">images/headSculp.jpg</file>
-        <file alias="loginFinal_1">images/loginWindow.png</file>
-        <file alias="mainWindow_1">images/mainWindow.png</file>
         <file alias="exitBox">images/exitBox.png</file>
-        <file alias="regWindow">images/regWindow.png</file>
-        <file alias="chatWindow">images/chatWindow.png</file>
-        <file alias="searchWindow">images/searchWindow.png</file>
         <file alias="expression">images/expression.png</file>
     </qresource>
 </RCC>

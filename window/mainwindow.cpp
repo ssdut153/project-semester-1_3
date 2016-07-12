@@ -16,19 +16,22 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
-
     this->setMinimumSize(300, 700);
     this->setMaximumSize(300, 700);
 
+    QLinearGradient linearGradient(QPoint(0, 0), QPoint(0, 700));
+    linearGradient.setColorAt(0, QColor(133, 218, 223));
+    linearGradient.setColorAt(1, QColor(255, 255, 255));
+
     QPalette palette;
-    palette.setBrush(QPalette::Background, QPixmap(":/images/mainWindow_1"));
+    palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
 
     this->usernameLabel->setGeometry(70, 60, 140, 30);
     this->friendListWidget->setGeometry(20, 110, 260, 480);
     this->searchButton->setGeometry(20, 600, 60, 30);
-    this->headButton->setGeometry(100,600,60,30);
-    this->closeButton->setGeometry(270,1,30,30);
+    this->headButton->setGeometry(100, 600, 60, 30);
+    this->closeButton->setGeometry(270, 1, 30, 30);
     this->headSculp->setGeometry(30, 60, 30, 30);
 
     QImage head(":/images/photo");
@@ -37,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->headSculp->setPixmap(QPixmap::fromImage(head));
 
     CommonElements *ce = CommonElements::getInstance();
-    usernameLabel->setText(ce->getUsername());
+    this->usernameLabel->setText(ce->getUsername());
     this->searchButton->setText("搜索");
     this->headButton->setText("上传头像");
 
@@ -168,11 +171,6 @@ void MainWindow::addFriendItem(QString friendName, int status)
     this->items.push_back(item);
     this->friendListWidget->addItem(item);
 }
-
-//void MainWindow::setSearchWindow(SearchWindow *searchWindow)
-//{
-//    this->searchWindow = searchWindow;
-//}
 
 void MainWindow::on_searchButton_clicked()
 {

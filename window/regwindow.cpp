@@ -16,9 +16,16 @@ RegWindow::RegWindow(QWidget *parent) :
 
     this->setMaximumSize(280, 230);
     this->setMinimumSize(280, 230);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, QPixmap(":/images/regWindow"));
+
+    QLinearGradient linearGradient(QPoint(0, 0), QPoint(0, 230));
+    linearGradient.setColorAt(0, QColor(133, 218, 223));
+    linearGradient.setColorAt(1, QColor(255, 255, 255));
+
+    QPalette palette = this->palette();
+    palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
+
+    palette = this->messageLabel->palette();
     palette.setColor(QPalette::WindowText, Qt::red);
     this->messageLabel->setPalette(palette);
 
@@ -38,7 +45,7 @@ RegWindow::RegWindow(QWidget *parent) :
     this->passwordEdit_1->setGeometry(50, 100, 180, 30);
     this->passwordEdit_2->setGeometry(50, 140, 180, 30);
     this->regButton->setGeometry(50, 180, 180, 30);
-    this->closeButton->setGeometry(250,1,30,30);
+    this->closeButton->setGeometry(250, 1, 30, 30);
 
     this->setTabOrder(this->usernameEdit, this->passwordEdit_1);
     this->setTabOrder(this->passwordEdit_1, this->passwordEdit_2);
@@ -52,7 +59,8 @@ RegWindow::RegWindow(QWidget *parent) :
 
 void RegWindow::keyPressEvent(QKeyEvent *event)
 {
-    switch (event->key()) {
+    switch (event->key())
+    {
     case Qt::Key_Enter:
     case Qt::Key_Return:
         this->on_regButton_clicked();
@@ -74,7 +82,6 @@ void RegWindow::closeEvent(QCloseEvent *event)
 
 void RegWindow::on_closeButton_clicked()
 {
-
     CommonElements *ce = CommonElements::getInstance();
     ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
     delete this;

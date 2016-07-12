@@ -16,8 +16,12 @@ SearchWindow::SearchWindow(QWidget *parent) :
     this->setMaximumSize(400, 280);
     this->setMinimumSize(400, 280);
 
+    QLinearGradient linearGradient(QPoint(0, 0), QPoint(0, 280));
+    linearGradient.setColorAt(0, QColor(133, 218, 223));
+    linearGradient.setColorAt(1, QColor(255, 255, 255));
+
     QPalette palette;
-    palette.setBrush(QPalette::Background, QPixmap(":/images/loginFinal_1"));
+    palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
 
     this->searchButton->setText("查询");
@@ -27,9 +31,7 @@ SearchWindow::SearchWindow(QWidget *parent) :
     this->searchButton->setGeometry(320, 50, 60, 30);
     this->resultLabel->setGeometry(20, 100, 150, 30);
     this->addButton->setGeometry(170, 100, 60, 30);
-    this->closeButton->setGeometry(370,0,30,30);
-
-
+    this->closeButton->setGeometry(370, 0, 30, 30);
 
     this->resultLabel->hide();
     this->addButton->hide();
@@ -37,6 +39,7 @@ SearchWindow::SearchWindow(QWidget *parent) :
     connect(this->searchButton, SIGNAL(clicked()), this, SLOT(on_searchButton_clicked()));
     connect(this->addButton, SIGNAL(clicked()), this, SLOT(on_addButton_clicked()));
     connect(this->closeButton,SIGNAL(clicked()),this,SLOT(on_closeButton_clicked()));
+
 }
 
 void SearchWindow::on_searchButton_clicked()
@@ -80,9 +83,6 @@ void SearchWindow::closeEvent(QCloseEvent *event)
     this->resultLabel->clear();
     this->resultLabel->hide();
     this->addButton->hide();
-//    CommonElements::getInstance()->getMainWindow()->setSearchWindow(0);
-//    this->deleteLater();
-//    delete this;
 }
 
 void SearchWindow::mousePressEvent(QMouseEvent *event)

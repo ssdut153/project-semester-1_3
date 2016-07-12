@@ -1,6 +1,5 @@
 #include "database.h"
 #include "commonelements.h"
-#include <QDebug>
 
 Database::Database(QString username, QObject *parent) :
     QObject(parent),

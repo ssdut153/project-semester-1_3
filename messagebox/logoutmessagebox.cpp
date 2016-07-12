@@ -1,34 +1,32 @@
-#include "exitmessagebox.h"
+#include "logoutmessagebox.h"
 
-ExitMessageBox::ExitMessageBox(QWidget *parent):
+LogoutMessageBox::LogoutMessageBox(QWidget *parent):
     QMessageBox(parent),
     pressed(false)
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | (this->windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)) | Qt::Tool | Qt::X11BypassWindowManagerHint);
-    this->setWindowTitle("警告");
-    this->setText("您真的要退出吗?");
-    this->addButton("是", QMessageBox::AcceptRole);
-    this->addButton("否", QMessageBox::RejectRole);
-
+    this->setWindowTitle("提示");
+    this->setText("您的帐号已在其他设备上登录");
+    this->addButton("确定", QMessageBox::AcceptRole);
 }
 
-ExitMessageBox::~ExitMessageBox()
+LogoutMessageBox::~LogoutMessageBox()
 {
 
 }
 
-void ExitMessageBox::mousePressEvent(QMouseEvent *event)
+void LogoutMessageBox::mousePressEvent(QMouseEvent *event)
 {
     place = event->pos();
     pressed = true;
 }
 
-void ExitMessageBox::mouseReleaseEvent(QMouseEvent */*event*/)
+void LogoutMessageBox::mouseReleaseEvent(QMouseEvent */*event*/)
 {
     pressed = false;
 }
 
-void ExitMessageBox::mouseMoveEvent(QMouseEvent *event)
+void LogoutMessageBox::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint temp = event->pos();
     if(pressed)
@@ -37,7 +35,7 @@ void ExitMessageBox::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void ExitMessageBox::paintEvent(QPaintEvent *event)
+void LogoutMessageBox::paintEvent(QPaintEvent *event)
 {
     QImage imp(":/images/exitBox");
     QPainter painter(this);

@@ -18,15 +18,11 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
 {
     this->setGeometry(0, 0, 400, 280);
 
-    this->regButton->setFocusPolicy(Qt::ClickFocus);
-
-    this->passwordEdit->setEchoMode(QLineEdit::Password);
-    QPalette   pal;
-    pal.setColor(QPalette::ButtonText, QColor(28,0,255));
-
     QFont font;
     font.setPointSize(10);
 
+    this->regButton->setFocusPolicy(Qt::ClickFocus);
+    this->passwordEdit->setEchoMode(QLineEdit::Password);
     this->aboutUs->setOpenExternalLinks(true);
 
     this->usernameEdit->setPlaceholderText("请输入用户名");
@@ -35,6 +31,9 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->regButton->setText("免费注册");
     this->aboutUs->setText("<style>a{text-decoration: none;}</style><a href=\"http://ssdut153.cn/\">  关于我们");
 
+    QPalette pal = this->regButton->palette();
+    pal.setColor(QPalette::ButtonText, QColor(28, 0, 255));
+
     this->regButton->setPalette(pal);
     this->loginButton->setFont(font);
     this->regButton->setFont(font);
@@ -42,6 +41,8 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->usernameEdit->setFont(font);
     this->passwordEdit->setFont(font);
     this->messageLabel->setFont(font);
+
+    pal = this->messageLabel->palette();
     pal.setColor(QPalette::WindowText, Qt::red);
     this->messageLabel->setPalette(pal);
 
@@ -50,9 +51,8 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->passwordEdit->setGeometry(107, 150, 192, 32);
     this->loginButton->setGeometry(106, 220, 194, 32);
     this->regButton->setGeometry(306, 108, 65, 32);
-    this->headSculp->setGeometry(23,108,74,74);
+    this->headSculp->setGeometry(23, 108, 74, 74);
     this->aboutUs->setGeometry(313, 150, 65, 32);
-
 
     this->usernameEdit->setStyleSheet("border:2px;");
 
@@ -66,7 +66,6 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     head.scaled(74, 74, Qt::KeepAspectRatio);
     this->headSculp->setScaledContents(true);
     this->headSculp->setPixmap(QPixmap::fromImage(head));
-
 
     this->setTabOrder(this->usernameEdit, this->passwordEdit);
     this->setTabOrder(this->passwordEdit, this->loginButton);
