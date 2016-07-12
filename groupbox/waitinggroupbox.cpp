@@ -8,7 +8,7 @@ WaitingGroupBox::WaitingGroupBox(QWidget *parent):
     this->waitingLabel->setText("正在登录");
     this->cancelButton->setText("取消");
 
-    QFont font;
+    QFont font = this->waitingLabel->font();
     font.setPointSize(12);
     this->waitingLabel->setFont(font);
 

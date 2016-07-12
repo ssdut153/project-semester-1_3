@@ -31,6 +31,7 @@
 #include <QRadioButton>
 #include <QRect>
 #include <QString>
+#include <QtSql>
 #include <QSystemTrayIcon>
 #include <QTextCodec>
 #include <QTextEdit>

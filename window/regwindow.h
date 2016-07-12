@@ -8,6 +8,7 @@
 class RegWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     explicit RegWindow(QWidget *parent = 0);
     QLabel *getMessageLabel();
@@ -37,8 +38,6 @@ private:
 private slots:
     void on_regButton_clicked();
     void on_closeButton_clicked();
-
-signals:
 
 };
 

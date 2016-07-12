@@ -10,6 +10,7 @@
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -28,8 +29,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
-
-signals:
 
 private:
     QLabel *usernameLabel;

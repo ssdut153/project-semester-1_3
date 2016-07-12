@@ -16,11 +16,13 @@ public:
     QTextEdit *getMessageEdit();
     void receivePic(imageMessage im);
     ~ChatWindow();
-signals:
 
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 private:
     QString username;
@@ -30,18 +32,25 @@ private:
     QTextEdit *sendEdit;
     QPushButton *sendButton;
     QPushButton *picButton;
+    QPushButton *expressButton;
+    QPushButton *filButton;
+    CloseButton *closeButton;
     QRadioButton *trueImage;
     QString picPath;
     QString imgTime;
     QNetworkAccessManager *manager;
     QNetworkAccessManager *recmanager;
-
+    bool pressed;
+    QPoint place;
 
 private slots:
     void on_sendButton_clicked();
     void on_picButton_clicked();
     void onFinished(QNetworkReply *reply);
     void onReceiveFinished(QNetworkReply *reply);
+    void on_closeButton_clicked();
+    void on_expressButton_clicked();
+    void on_filButton_clicked();
 
 };
 

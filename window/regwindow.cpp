@@ -14,12 +14,20 @@ RegWindow::RegWindow(QWidget *parent) :
     this->setWindowModality(Qt::ApplicationModal);
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
-    this->setMaximumSize(270, 200);
-    this->setMinimumSize(270, 200);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, QColor(147,224,255));
+    this->setMaximumSize(280, 230);
+    this->setMinimumSize(280, 230);
+
+    QLinearGradient linearGradient(QPoint(0, 0), QPoint(0, 230));
+    linearGradient.setColorAt(0, QColor(133, 218, 223));
+    linearGradient.setColorAt(1, QColor(255, 255, 255));
+
+    QPalette palette = this->palette();
+    palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
-    palette.setColor(QPalette::ButtonText, QColor(255,255,255));
+
+    palette = this->messageLabel->palette();
+    palette.setColor(QPalette::WindowText, Qt::red);
+    this->messageLabel->setPalette(palette);
 
     this->usernameEdit->setFocus();
 
@@ -27,17 +35,17 @@ RegWindow::RegWindow(QWidget *parent) :
     this->passwordEdit_1->setPlaceholderText("请输入密码(6-16位)");
     this->passwordEdit_2->setPlaceholderText("请确认密码");
     this->regButton->setText("注     册");
-    this->regButton->setPalette(palette);
-    this->regButton->setStyleSheet("QPushButton{background-color:rgba(244,13,100,1);border:0px};}"
-                                   "QPushButton:hover{background-color:rgba(255,66,93,1);}"
-                                   "QPushButton:pressed{background-color:red;}");
 
-    this->messageLabel->setGeometry(30, 10, 210, 20);
-    this->usernameEdit->setGeometry(30, 30, 210, 30);
-    this->passwordEdit_1->setGeometry(30, 70, 210, 30);
-    this->passwordEdit_2->setGeometry(30, 110, 210, 30);
-    this->regButton->setGeometry(30, 150, 210, 30);
-    this->closeButton->setGeometry(240,1,30,30);
+    this->usernameEdit->setStyleSheet("border:0px;");
+    this->passwordEdit_1->setStyleSheet("border:0px;");
+    this->passwordEdit_2->setStyleSheet("border:0px;");
+
+    this->messageLabel->setGeometry(52, 30, 180, 20);
+    this->usernameEdit->setGeometry(50, 60, 180, 30);
+    this->passwordEdit_1->setGeometry(50, 100, 180, 30);
+    this->passwordEdit_2->setGeometry(50, 140, 180, 30);
+    this->regButton->setGeometry(50, 180, 180, 30);
+    this->closeButton->setGeometry(250, 1, 30, 30);
 
     this->setTabOrder(this->usernameEdit, this->passwordEdit_1);
     this->setTabOrder(this->passwordEdit_1, this->passwordEdit_2);
@@ -51,7 +59,8 @@ RegWindow::RegWindow(QWidget *parent) :
 
 void RegWindow::keyPressEvent(QKeyEvent *event)
 {
-    switch (event->key()) {
+    switch (event->key())
+    {
     case Qt::Key_Enter:
     case Qt::Key_Return:
         this->on_regButton_clicked();
@@ -73,7 +82,6 @@ void RegWindow::closeEvent(QCloseEvent *event)
 
 void RegWindow::on_closeButton_clicked()
 {
-
     CommonElements *ce = CommonElements::getInstance();
     ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
     delete this;
@@ -132,9 +140,7 @@ void RegWindow::mouseMoveEvent(QMouseEvent *event)
     QPoint temp = event->pos();
     if(pressed)
     {
-        CommonElements *ce = CommonElements::getInstance();
-        RegWindow *lw = ce->getLoginWindow()->getLoginGroupBox()->getRegWindow();
-        lw->move(lw->x() + temp.x() - this->place.x(), lw->y() + temp.y() - this->place.y());
+        this->move(this->x() + temp.x() - this->place.x(), this->y() + temp.y() - this->place.y());
     }
 }
 

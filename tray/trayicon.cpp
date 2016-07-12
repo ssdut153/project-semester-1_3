@@ -3,12 +3,12 @@
 #include "traymenu.h"
 
 TrayIcon::TrayIcon(QWidget *parent):
-    QSystemTrayIcon(parent)
+    QSystemTrayIcon(parent),
+    trmn(new TrayMenu)
 {
     this->setToolTip("聊天工具");
     this->setIcon(QIcon(":/images/icon"));
 
-    this->trmn = new TrayMenu;
     this->setContextMenu(trmn);
 }
 

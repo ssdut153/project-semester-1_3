@@ -12,23 +12,28 @@ MainWindow::MainWindow(QWidget *parent) :
     headButton(new QPushButton(this)),
     closeButton(new CloseButton(this)),
     headSculp(new QLabel(this)),
-    searchWindow(new SearchWindow)
+    searchWindow(new SearchWindow),
+    umanager(0),
+    dmanager(0)
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
-
 
     this->setMinimumSize(300, 700);
     this->setMaximumSize(300, 700);
 
+    QLinearGradient linearGradient(QPoint(0, 0), QPoint(0, 700));
+    linearGradient.setColorAt(0, QColor(133, 218, 223));
+    linearGradient.setColorAt(1, QColor(255, 255, 255));
+
     QPalette palette;
-    palette.setBrush(QPalette::Background, QPixmap(":/images/mainWindow_1"));
+    palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
 
     this->usernameLabel->setGeometry(70, 60, 140, 30);
     this->friendListWidget->setGeometry(20, 110, 260, 480);
     this->searchButton->setGeometry(20, 600, 60, 30);
-    this->headButton->setGeometry(100,600,60,30);
-    this->closeButton->setGeometry(270,1,30,30);
+    this->headButton->setGeometry(100, 600, 60, 30);
+    this->closeButton->setGeometry(270, 1, 30, 30);
     this->headSculp->setGeometry(30, 60, 30, 30);
 
     QImage head(":/images/photo");
@@ -37,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->headSculp->setPixmap(QPixmap::fromImage(head));
 
     CommonElements *ce = CommonElements::getInstance();
-    usernameLabel->setText(ce->getUsername());
+    this->usernameLabel->setText(ce->getUsername());
     this->searchButton->setText("搜索");
     this->headButton->setText("上传头像");
 
@@ -57,9 +62,10 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete this->searchWindow;
-    for(int i=0;i<dmanager.length();i++)
-        delete dmanager[i];
-    delete umanager;
+    if(dmanager!=0)
+        delete dmanager;
+    if(umanager!=0)
+        delete umanager;
     for(QMap<QListWidgetItem*, ChatWindow*>::iterator it = chatWindows.begin(); it != chatWindows.end(); it++)
     {
         delete it.value();
@@ -173,11 +179,6 @@ void MainWindow::addFriendItem(QString friendName, int status)
     this->friendListWidget->addItem(item);
 }
 
-//void MainWindow::setSearchWindow(SearchWindow *searchWindow)
-//{
-//    this->searchWindow = searchWindow;
-//}
-
 void MainWindow::on_searchButton_clicked()
 {
     searchWindow->show();
@@ -228,9 +229,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     QPoint temp = event->pos();
     if(pressed)
     {
-        CommonElements *ce = CommonElements::getInstance();
-        MainWindow *lw = ce->getMainWindow();
-        lw->move(lw->x() + temp.x() - this->place.x(), lw->y() + temp.y() - this->place.y());
+        this->move(this->x() + temp.x() - this->place.x(), this->y() + temp.y() - this->place.y());
     }
 }
 
@@ -292,6 +291,12 @@ void MainWindow::updateHeadSculp(){
             downloadHeadSculp();
         }
     }
+    if(QFile(QDir::currentPath()+"/headImages/head_"+this->usernameLabel->text()+".png").exists()){
+        QImage imgScaled(QDir::currentPath()+"/headImages/head_"+this->usernameLabel->text()+".png");
+        imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
+        this->headSculp->setScaledContents(true);
+        this->headSculp->setPixmap(QPixmap::fromImage(imgScaled));
+    }
 }
 
 void MainWindow::downloadHeadSculp(){
@@ -327,9 +332,9 @@ void MainWindow::onDownloadFinished(QNetworkReply *reply){
         else{
             img->save(dPath);\
             qDebug()<<"head saved in "<<dPath;
-            if(QFile(path+"/head_"+this->usernameLabel->text()+".png").exists()){
-                QImage imgScaled(path+"/head_"+this->usernameLabel->text()+".png");
-                imgScaled.scaled(30, 30, Qt::KeepAspectRatio);
+            if(QFile(dPath).exists()){
+                QImage imgScaled(dPath);
+                imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
                 this->headSculp->setScaledContents(true);
                 this->headSculp->setPixmap(QPixmap::fromImage(imgScaled));
             }
@@ -339,4 +344,5 @@ void MainWindow::onDownloadFinished(QNetworkReply *reply){
     else{
         qDebug()<<"download failed.";
     }
+    qDebug()<<"download finished.";
 }

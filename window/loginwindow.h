@@ -21,8 +21,6 @@ public:
 protected:
     void closeEvent(QCloseEvent *event);
 
-signals:
-
 private:
     LoginGroupBox *loginGroupBox;
     WaitingGroupBox *waitingGroupBox;

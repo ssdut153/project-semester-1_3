@@ -8,8 +8,9 @@
 #include "common/message/addfriend/ajfriendmessage.h"
 #include "common/message/addfriend/newfriendmessage.h"
 #include "common/message/function/forcelogoutmessage.h"
-#include"common/message/function/imagemessage.h"
+#include "common/message/function/imagemessage.h"
 #include "messagebox/exitmessagebox.h"
+#include "messagebox/logoutmessagebox.h"
 #include "common/message/loginout/logoutmessage.h"
 #include "database.h"
 #include <QDebug>
@@ -198,12 +199,8 @@ void Helper::readClient()
             ce->username = "";
             ce->login = false;
             ce->loginWindow->show();
-            QMessageBox messageBox;
-            messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
-            messageBox.setWindowTitle("提示");
-            messageBox.setText("您的帐号已在其他设备上登录");
-            messageBox.addButton("确定", QMessageBox::AcceptRole);
-            messageBox.exec();
+            LogoutMessageBox logoutMessageBox(ce->loginWindow);
+            logoutMessageBox.exec();
         }
     }
     else if(head == "image")

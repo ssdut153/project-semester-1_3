@@ -1,21 +1,21 @@
-#ifndef EXITMESSAGEBOX_H
-#define EXITMESSAGEBOX_H
+#ifndef LOGOUTMESSAGEBOX_H
+#define LOGOUTMESSAGEBOX_H
 
 #include "stdafx.h"
 #include "classes.h"
 
-class ExitMessageBox:public QMessageBox
+class LogoutMessageBox:public QMessageBox
 {
 
 public:
-    explicit ExitMessageBox(QWidget *parent = 0);
-    ~ExitMessageBox();
+    explicit LogoutMessageBox(QWidget *parent = 0);
+    ~LogoutMessageBox();
 
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
-    void paintEvent(QPaintEvent *paintevent);
+    void paintEvent(QPaintEvent *event);
 
 private:
     bool pressed;
@@ -23,4 +23,4 @@ private:
 
 };
 
-#endif // EXITMESSAGEBOX_H
+#endif // LOGOUTMESSAGEBOX_H

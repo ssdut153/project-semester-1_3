@@ -4,6 +4,8 @@
 #include "common/message/loginout/loginmessage.h"
 #include "messagebox/exitmessagebox.h"
 
+#include <QLinearGradient>
+
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     loginGroupBox(new LoginGroupBox(this)),
@@ -12,14 +14,22 @@ LoginWindow::LoginWindow(QWidget *parent) :
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
-    this->setMaximumSize(400,280);
-    this->setMinimumSize(400,280);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, QPixmap(":/images/loginFinal_1"));
-    this->setPalette(palette);
-    this->closeButton->setGeometry(365,1,35,35);
+    this->closeButton->setFocusPolicy(Qt::ClickFocus);
 
-    connect(this->closeButton,SIGNAL(clicked()),this,SLOT(on_closeButton_clicked()));
+    this->setMaximumSize(400, 280);
+    this->setMinimumSize(400, 280);
+
+    this->closeButton->setGeometry(365, 1, 35, 35);
+
+    QLinearGradient linearGradient(QPoint(0, 0), QPoint(0, 400));
+    linearGradient.setColorAt(0, QColor(133, 218, 223));
+    linearGradient.setColorAt(1, QColor(255, 255, 255));
+
+    QPalette palette;
+    palette.setBrush(QPalette::Background, QBrush(linearGradient));
+    this->setPalette(palette);
+
+    connect(this->closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
 
 }
 

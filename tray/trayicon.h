@@ -12,8 +12,10 @@ class TrayIcon : public QSystemTrayIcon
 public:
     explicit TrayIcon(QWidget *parent = 0);
     ~TrayIcon();
+
 private:
     TrayMenu *trmn;
+
 };
 
 #endif // TRAYICON_H
