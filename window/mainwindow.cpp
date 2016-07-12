@@ -57,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete this->searchWindow;
+    for(int i=0;i<dmanager.length();i++)
+        delete dmanager[i];
+    delete umanager;
     for(QMap<QListWidgetItem*, ChatWindow*>::iterator it = chatWindows.begin(); it != chatWindows.end(); it++)
     {
         delete it.value();
@@ -90,6 +93,7 @@ void MainWindow::loadFriendList(QMap<QString, int> &users)
         this->items.push_back(item);
         this->friendListWidget->addItem(item);
     }
+    updateHeadSculp();
 }
 
 void MainWindow::setFriendStatus(QString friendName, bool online)
@@ -230,7 +234,109 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void MainWindow::on_headButton_clicked()
-{
+void MainWindow::on_headButton_clicked(){
+    picPath = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp *.gif)"));
+    if (!picPath.isNull())
+    {
+        QImage *img=new QImage;
+        if(!(img->load(picPath)))
+        {
+            QMessageBox::information(this,
+                                     tr("打开图像失败"),
+                                     tr("打开图像失败!"));
+            delete img;
+            return;
+        }
+        img->save(QDir::currentPath()+"/headImages/head_"+this->usernameLabel->text()+".png");
+        QFile Image(picPath);
+        Image.open(QIODevice::ReadOnly);
+        qDebug()<<Image.isOpen();
+        qDebug()<<picPath;
+        QByteArray by_img=Image.readAll();
+        Image.close();
+        umanager=new QNetworkAccessManager(this);
+        connect(umanager,SIGNAL(finished(QNetworkReply*)),this,SLOT(onUploadFinished(QNetworkReply*)));
+        QString url="ftp://103.13.222.121/wwwroot/touxiang/head_"+this->usernameLabel->text()+".png";
+        qDebug()<<url;
+        QUrl u(url);
+        u.setPort(90);
+        u.setUserName("upload");
+        u.setPassword("killcaomai");
+        umanager->put(QNetworkRequest(u), by_img);
+        delete img;
+        this->headButton->setText("上传中");
+        this->headButton->setDisabled(true);
+    }
+    else{}
+}
 
+void MainWindow::updateHeadSculp(){
+    QDir temp;
+    QString path=QDir::currentPath()+"/headImages";
+    bool exist = temp.exists(path);
+    if(exist){
+            QFile tempFile(path+"/head_"+this->usernameLabel->text()+".png");
+            if(!tempFile.exists()){
+                qDebug()<<this->usernameLabel->text()<<"didnt exist";
+                downloadHeadSculp();
+            }
+            else{
+                qDebug()<<this->usernameLabel->text()<<"exists";
+            }
+    }
+    else{
+        bool ok = temp.mkdir(path);
+        if( ok ){
+            qDebug()<<"xinjian wenjianjia";
+            qDebug()<<"start download "<<this->usernameLabel->text()<<" head";
+            downloadHeadSculp();
+        }
+    }
+}
+
+void MainWindow::downloadHeadSculp(){
+    dPath=QDir::currentPath()+"/headImages/head_"+this->usernameLabel->text()+".png";
+    dmanager = new QNetworkAccessManager(this);
+    connect(dmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onDownloadFinished(QNetworkReply*)));
+    QString url="http://upload.ssdut153.cn/touxiang/head_"+this->usernameLabel->text()+".png";
+    qDebug()<<url;
+    QUrl u(url);
+    dmanager->get(QNetworkRequest(u));
+}
+
+void MainWindow::onUploadFinished(QNetworkReply *){
+    qDebug()<<"upload success";
+    this->headButton->setText("上传头像");
+    this->headButton->setDisabled(false);
+    if(QFile(QDir::currentPath()+"/headImages/head_"+this->usernameLabel->text()+".png").exists()){
+        QImage imgScaled(QDir::currentPath()+"/headImages/head_"+this->usernameLabel->text()+".png");
+        imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
+        this->headSculp->setScaledContents(true);
+        this->headSculp->setPixmap(QPixmap::fromImage(imgScaled));
+    }
+}
+
+void MainWindow::onDownloadFinished(QNetworkReply *reply){
+    if(reply->error()== QNetworkReply::NoError){
+        QImage *img=new QImage;
+        img->loadFromData(reply->readAll());
+        qDebug()<<img->isNull();
+        if(img->isNull()){
+            qDebug()<<"no head image";
+        }
+        else{
+            img->save(dPath);\
+            qDebug()<<"head saved in "<<dPath;
+            if(QFile(path+"/head_"+this->usernameLabel->text()+".png").exists()){
+                QImage imgScaled(path+"/head_"+this->usernameLabel->text()+".png");
+                imgScaled.scaled(30, 30, Qt::KeepAspectRatio);
+                this->headSculp->setScaledContents(true);
+                this->headSculp->setPixmap(QPixmap::fromImage(imgScaled));
+            }
+        }
+        delete img;
+    }
+    else{
+        qDebug()<<"download failed.";
+    }
 }

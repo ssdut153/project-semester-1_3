@@ -81,7 +81,7 @@ void ChatWindow::on_sendButton_clicked()
     }
 }
 void ChatWindow::on_picButton_clicked(){
-    picPath = QFileDialog::getOpenFileName(this,tr("Open Config"), "", tr("Image Files (*.png *.jpg *.bmp *.gif)"));
+    picPath = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp *.gif)"));
     if (!picPath.isNull())
     {
         QImage *img=new QImage;
@@ -111,6 +111,7 @@ void ChatWindow::on_picButton_clicked(){
         manager->put(QNetworkRequest(u), by_img);
         this->sendButton->setDisabled(true);
         this->picButton->setDisabled(true);
+        delete img;
     }
     else{}
 }

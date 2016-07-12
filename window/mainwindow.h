@@ -20,6 +20,8 @@ public:
     ChatWindow *getChatWindow(QString friendName);
     SearchWindow *getSearchWindow();
     void addFriendItem(QString friendName, int status);
+    void updateHeadSculp();
+    void downloadHeadSculp();
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -42,12 +44,18 @@ private:
     SearchWindow *searchWindow;
     bool pressed;
     QPoint place;
+    QNetworkAccessManager *umanager;
+    QNetworkAccessManager*dmanager;
+    QString dPath;
+    QString picPath;
 
 private slots:
     void on_searchButton_clicked();
     void on_friendListWidget_doubleClicked(QListWidgetItem *item);
     void on_closeButton_clicked();
     void on_headButton_clicked();
+    void onUploadFinished(QNetworkReply *reply);
+    void onDownloadFinished(QNetworkReply *reply);
 
 };
 
