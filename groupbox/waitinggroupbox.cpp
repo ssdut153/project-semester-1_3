@@ -9,7 +9,7 @@ WaitingGroupBox::WaitingGroupBox(QWidget *parent):
     this->cancelButton->setText("取消");
 
     QFont font = this->waitingLabel->font();
-    font.setPointSize(12);
+    font.setPointSize(10);
     this->waitingLabel->setFont(font);
 
     this->waitingLabel->setGeometry(170, 100, 80, 30);

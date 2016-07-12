@@ -27,12 +27,12 @@ MainWindow::MainWindow(QWidget *parent) :
     palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
 
-    this->usernameLabel->setGeometry(70, 60, 140, 30);
+    this->usernameLabel->setGeometry(88, 42, 140, 30);
     this->friendListWidget->setGeometry(20, 110, 260, 480);
     this->searchButton->setGeometry(20, 600, 60, 30);
     this->headButton->setGeometry(100, 600, 60, 30);
     this->closeButton->setGeometry(270, 1, 30, 30);
-    this->headSculp->setGeometry(30, 60, 30, 30);
+    this->headSculp->setGeometry(30, 42, 48, 48);
 
     QImage head(":/images/photo");
     head.scaled(30, 30, Qt::KeepAspectRatio);
