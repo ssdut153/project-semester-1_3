@@ -1,18 +1,20 @@
 #include "helper.h"
 #include "commonelements.h"
-#include "common/message/function/p2pmessage.h"
 #include "common/message/base/feedbackmessage.h"
 #include "common/message/loginout/loginmessage.h"
+#include "common/message/loginout/logoutmessage.h"
+#include "common/message/loginout/getlistmessage.h"
+#include "common/message/loginout/listmessage.h"
 #include "common/message/friendlist/friendlistmessage.h"
 #include "common/message/addfriend/requestfriendmessage.h"
 #include "common/message/addfriend/ajfriendmessage.h"
 #include "common/message/addfriend/newfriendmessage.h"
+#include "common/message/function/p2pmessage.h"
 #include "common/message/function/forcelogoutmessage.h"
 #include "common/message/function/imagemessage.h"
 #include "messagebox/exitmessagebox.h"
 #include "messagebox/logoutmessagebox.h"
 #include "messagebox/addfriendmessagebox.h"
-#include "common/message/loginout/logoutmessage.h"
 #include "database.h"
 #include <QDebug>
 
@@ -111,6 +113,8 @@ void Helper::readClient()
         friendListMessage flm;
         if(flm.loadfromJson(str)){
             ce->mainWindow->loadFriendList(flm.users);
+            getListMessage glm(ce->username);
+            this->writeClient(glm);
         }
     }
     else if(head == "defaultFeedBack")
@@ -211,6 +215,41 @@ void Helper::readClient()
             Database *db = Database::getInstance(pm.ToUserName);
             db->addMessage(pm.FromUserName, 0, pm.CreateTime,pm.Content);*/
             chatWindow->receivePic(pm);
+        }
+    }
+    else if(head == "listmessage")
+    {
+        listMessage lm;
+        if(lm.loadfromJson(str))
+        {
+            int size = lm.messageFromUsers.size();
+            for(int i = 0; i < size; i++)
+            {
+                ChatWindow *chatWindow = ce->mainWindow->getChatWindow(lm.messageFromUsers[i]);
+                if(chatWindow != 0)
+                {
+                    Database *db = Database::getInstance(lm.user);
+                    db->addMessage(lm.messageFromUsers[i], 0, lm.createTime[i], lm.createTime[i]);
+                    chatWindow->getMessageEdit()->append(lm.messageFromUsers[i] +" "+ lm.createTime[i]);
+                    chatWindow->getMessageEdit()->append(lm.createTime[i]);
+                }
+            }
+            size = lm.requestUsers.size();
+            for(int i = 0; i < size; i++)
+            {
+                QString requestName = lm.requestUsers[i];
+                AddFriendMessageBox afmb(requestName);
+                if(afmb.exec() == QMessageBox::RejectRole)
+                {
+                    ajFriendMessage afm(ce->username, requestName, "false");
+                    this->writeClient(afm);
+                }
+                else
+                {
+                    ajFriendMessage afm(ce->username, requestName, "true");
+                    this->writeClient(afm);
+                }
+            }
         }
     }
     else
