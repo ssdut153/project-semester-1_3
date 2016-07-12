@@ -63,9 +63,13 @@ MainWindow::~MainWindow()
 {
     delete this->searchWindow;
     if(dmanager!=0)
+    {
         delete dmanager;
+    }
     if(umanager!=0)
+    {
         delete umanager;
+    }
     for(QMap<QListWidgetItem*, ChatWindow*>::iterator it = chatWindows.begin(); it != chatWindows.end(); it++)
     {
         delete it.value();

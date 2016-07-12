@@ -187,16 +187,20 @@ void LoginGroupBox::setRegWindow(RegWindow *regWindow)
 void LoginGroupBox::on_usernameEdit_textChanged()
 {
     QDir temp;
-    QString path=QDir::currentPath()+"/headImages";
+    QString path = QDir::currentPath() + "/headImages";
     if(!temp.exists(path))
+    {
         return;
+    }
     QDir dir(path);
     QStringList filter;
-    filter<<"*.png";
+    filter << "*.png";
     dir.setNameFilters(filter);
     QList<QFileInfo> fileInfo(dir.entryInfoList(filter));
-    for(int i=0;i<fileInfo.count();i++){
-        if(fileInfo.at(i).fileName()=="head_"+this->usernameEdit->text()+".png") {
+    for(int i = 0; i < fileInfo.count(); i++)
+    {
+        if(fileInfo.at(i).fileName() == "head_" + this->usernameEdit->text() + ".png")
+        {
             QImage head(fileInfo.at(i).filePath());
             head.scaled(74, 74, Qt::KeepAspectRatio);
             this->headSculp->setScaledContents(true);

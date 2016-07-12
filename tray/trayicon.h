@@ -16,6 +16,9 @@ public:
 private:
     TrayMenu *trmn;
 
+private slots:
+    void on_trayIcon_clicked(QSystemTrayIcon::ActivationReason reason);
+
 };
 
 #endif // TRAYICON_H

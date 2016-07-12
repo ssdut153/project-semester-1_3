@@ -6,6 +6,7 @@
 
 class LogoutMessageBox:public QMessageBox
 {
+    Q_OBJECT
 
 public:
     explicit LogoutMessageBox(QWidget *parent = 0);

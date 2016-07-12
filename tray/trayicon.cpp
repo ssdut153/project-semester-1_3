@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "trayicon.h"
 #include "traymenu.h"
+#include <QDebug>
 
 TrayIcon::TrayIcon(QWidget *parent):
     QSystemTrayIcon(parent),
@@ -10,9 +11,22 @@ TrayIcon::TrayIcon(QWidget *parent):
     this->setIcon(QIcon(":/images/icon"));
 
     this->setContextMenu(trmn);
+    connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(on_trayIcon_clicked(QSystemTrayIcon::ActivationReason)));
+
 }
 
 TrayIcon::~TrayIcon()
 {
     delete trmn;
+}
+
+void TrayIcon::on_trayIcon_clicked(QSystemTrayIcon::ActivationReason reason)
+{
+    switch(reason)
+    {
+    case QSystemTrayIcon::Trigger:
+    case QSystemTrayIcon::DoubleClick:
+
+        break;
+    }
 }

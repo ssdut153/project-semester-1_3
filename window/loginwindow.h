@@ -28,6 +28,7 @@ private:
 
 private slots:
     void on_closeButton_clicked();
+
 };
 
 #endif // LOGINWINDOW_H
