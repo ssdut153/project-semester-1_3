@@ -11,6 +11,7 @@
 #include "common/message/function/imagemessage.h"
 #include "messagebox/exitmessagebox.h"
 #include "messagebox/logoutmessagebox.h"
+#include "messagebox/addfriendmessagebox.h"
 #include "common/message/loginout/logoutmessage.h"
 #include "database.h"
 #include <QDebug>
@@ -165,11 +166,8 @@ void Helper::readClient()
     {
         requestFriendMessage rfm;
         rfm.loadfromJson(str);
-        QMessageBox messageBox(QMessageBox::Information, "好友添加请求", rfm.fromuser + "请求添加您为好友", 0, 0);
-        messageBox.setWindowFlags(Qt::WindowStaysOnTopHint | (messageBox.windowFlags() &~ (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint)));
-        messageBox.addButton("同意", QMessageBox::AcceptRole);
-        messageBox.addButton("拒绝", QMessageBox::RejectRole);
-        if(messageBox.exec() == QMessageBox::RejectRole)
+        AddFriendMessageBox afmb(rfm.fromuser);
+        if(afmb.exec() == QMessageBox::RejectRole)
         {
             ajFriendMessage afm(ce->username, rfm.fromuser, "false");
             this->writeClient(afm);

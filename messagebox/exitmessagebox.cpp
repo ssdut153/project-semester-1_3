@@ -9,7 +9,6 @@ ExitMessageBox::ExitMessageBox(QWidget *parent):
     this->setText("您真的要退出吗?");
     this->addButton("是", QMessageBox::AcceptRole);
     this->addButton("否", QMessageBox::RejectRole);
-
 }
 
 ExitMessageBox::~ExitMessageBox()

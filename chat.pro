@@ -48,7 +48,8 @@ SOURCES += main.cpp \
     database.cpp \
     button/closebutton.cpp \
     common/message/function/filemessage.cpp \
-    messagebox/logoutmessagebox.cpp
+    messagebox/logoutmessagebox.cpp \
+    messagebox/addfriendmessagebox.cpp
 
 HEADERS  += stdafx.h \
     window/loginwindow.h \
@@ -86,7 +87,8 @@ HEADERS  += stdafx.h \
     database.h \
     button/closebutton.h \
     common/message/function/filemessage.h \
-    messagebox/logoutmessagebox.h
+    messagebox/logoutmessagebox.h \
+    messagebox/addfriendmessagebox.h
 
 RESOURCES += \
     images.qrc
