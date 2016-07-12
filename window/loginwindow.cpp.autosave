@@ -30,7 +30,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     this->setPalette(palette);
 
     connect(this->closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
-
+    connect(this->minButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
 }
 
 LoginGroupBox *LoginWindow::getLoginGroupBox()

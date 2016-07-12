@@ -8,5 +8,6 @@
         <file alias="photo">images/headSculp.jpg</file>
         <file alias="exitBox">images/exitBox.png</file>
         <file alias="expression">images/expression.png</file>
+        <file alias="minButton">images/min.png</file>
     </qresource>
 </RCC>
