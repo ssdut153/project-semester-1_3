@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "trayicon.h"
 #include "traymenu.h"
-#include <QDebug>
+#include "commonelements.h"
 
 TrayIcon::TrayIcon(QWidget *parent):
     QSystemTrayIcon(parent),
@@ -26,7 +26,15 @@ void TrayIcon::on_trayIcon_clicked(QSystemTrayIcon::ActivationReason reason)
     {
     case QSystemTrayIcon::Trigger:
     case QSystemTrayIcon::DoubleClick:
-
+        CommonElements *ce = CommonElements::getInstance();
+        if(ce->isLogin())
+        {
+            ce->getMainWindow()->show();
+        }
+        else
+        {
+            ce->getLoginWindow()->show();
+        }
         break;
     }
 }

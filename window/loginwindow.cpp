@@ -9,11 +9,9 @@ LoginWindow::LoginWindow(QWidget *parent) :
     loginGroupBox(new LoginGroupBox(this)),
     waitingGroupBox(new WaitingGroupBox(this)),
     closeButton(new CloseButton(this)),
-    minButton (new MiniumButton(this))
+    minButton(new MiniumButton(this))
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
-
-    this->closeButton->setFocusPolicy(Qt::ClickFocus);
 
     this->setMaximumSize(400, 280);
     this->setMinimumSize(400, 280);
@@ -30,6 +28,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     this->setPalette(palette);
 
     connect(this->closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
+    connect(this->minButton, SIGNAL(clicked()), this, SLOT(on_minButton_clicked()));
 
 }
 
@@ -70,4 +69,9 @@ void LoginWindow::on_closeButton_clicked()
         ce->getTrayIcon()->hide();
         ce->getApplication()->quit();
     }
+}
+
+void LoginWindow::on_minButton_clicked()
+{
+    this->hide();
 }
