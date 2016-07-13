@@ -3,13 +3,14 @@
 #include "helper.h"
 #include "common/message/function/p2pmessage.h"
 #include "database.h"
-#include<QTextDocumentFragment>
 
 ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     QMainWindow(parent),
     username(CommonElements::getInstance()->getUsername()),
     item(item),
     friendName(item->text().left(item->text().size() - 4)),
+    friendHead(new QLabel(this)),
+    friendnameLabel(new QLabel(this)),
     messageEdit(new QTextEdit(this)),
     sendEdit(new QTextEdit(this)),
     sendButton(new QPushButton(this)),
@@ -18,9 +19,10 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     filButton(new QPushButton(this)),
     closeButton(new CloseButton(this)),
     minButton(new MiniumButton(this)),
-    trueImage(new QRadioButton(this)),
+    trueImage(new QCheckBox(this)),
     manager(0),
     recmanager(0),
+    pressed(false),
     expWindow(0)
 {
 
@@ -37,17 +39,21 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
 
+    QFont font;
+    font.setPointSize(16);
+
     this->setWindowTitle(this->friendName);
 
     this->sendButton->setText("发送");
-    this->picButton->setText("图");
     this->trueImage->setText("显示原图");
 
     this->trueImage->setChecked(false);
 
     this->messageEdit->setReadOnly(true);
 
-    this->messageEdit->setGeometry(50, 40, 700, 330);
+    this->friendHead->setGeometry(60, 32, 48, 48);
+    this->friendnameLabel->setGeometry(120,32, 200,48);
+    this->messageEdit->setGeometry(50, 85, 700, 285);
     this->sendEdit->setGeometry(50, 420, 700, 120);
     this->sendButton->setGeometry(710, 550, 60, 30);
     this->picButton->setGeometry(90, 380, 30, 30);
@@ -55,12 +61,28 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     this->filButton->setGeometry(130, 380, 30, 30);
     this->closeButton->setGeometry(770, 0, 30, 30);
     this->minButton->setGeometry(740, 0, 30, 30);
-    this->trueImage->setGeometry(350, 550, 80, 30);
+    this->trueImage->setGeometry(170, 380, 80, 30);
 
-    this->expressButton->setIcon(QIcon(":/images/expression"));
-    this->expressButton->setIconSize(QSize(30, 30));
-    this->filButton->setIcon(QIcon(":/images/file"));
-    this->expressButton->setIconSize(QSize(30, 30));
+    QImage head(":/images/photo");
+    head.scaled(48, 48, Qt::KeepAspectRatio);
+    this->friendHead->setScaledContents(true);
+    this->friendHead->setPixmap(QPixmap::fromImage(head));
+    this->friendnameLabel->setText("friendName");
+    this->friendnameLabel->setFont(font);
+
+    font.setPointSize(10);
+    this->messageEdit->setFont(font);
+
+    this->expressButton->setStyleSheet("QPushButton{border-image:url(:/images/expression);}"
+                                       "QPushButton:hover{border-image:url(:/images/expression_1);}"
+                                       "QPushButton:pressed{border-image:url(:/images/expression_2);}");
+    this->picButton->setStyleSheet("QPushButton{border-image:url(:/images/pic_0);}"
+                                   "QPushButton:hover{border-image:url(:/images/pic_1);}"
+                                   "QPushButton:pressed{border-image:url(:/images/pic_2);}");
+    this->filButton->setStyleSheet("QPushButton{border-image:url(:/images/file);}"
+                                   "QPushButton:hover{border-image:url(:/images/file_1);}"
+                                   "QPushButton:pressed{border-image:url(:/images/file_2);}");
+
 
     connect(this->sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
     connect(this->picButton, SIGNAL(clicked()), this, SLOT(on_picButton_clicked()));

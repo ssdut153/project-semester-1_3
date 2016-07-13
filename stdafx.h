@@ -35,6 +35,7 @@
 #include <QtSql>
 #include <QSystemTrayIcon>
 #include <QTextCodec>
+#include <QTextDocumentFragment>
 #include <QTextEdit>
 #include <QTimer>
 #include <QThread>

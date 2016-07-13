@@ -6,7 +6,8 @@
 #include "mainwindow.h"
 #include "commonelements.h"
 #include "common/message/function/imagemessage.h"
-#include"expreessionwindow.h"
+#include "expreessionwindow.h"
+#include <QCheckBox>
 
 class ChatWindow : public QMainWindow
 {
@@ -32,6 +33,8 @@ private:
     QString username;
     QListWidgetItem *item;
     QString friendName;
+    QLabel *friendHead;
+    QLabel *friendnameLabel;
     QTextEdit *messageEdit;
     QTextEdit *sendEdit;
     QPushButton *sendButton;
@@ -40,7 +43,7 @@ private:
     QPushButton *filButton;
     CloseButton *closeButton;
     MiniumButton *minButton;
-    QRadioButton *trueImage;
+    QCheckBox *trueImage;
     QString picPath;
     QString imgTime;
     QNetworkAccessManager *manager;

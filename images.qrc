@@ -12,6 +12,14 @@
         <file alias="minButton_0">images/MINIMUM.png</file>
         <file alias="minButton_1">images/min_hover.png</file>
         <file alias="minButton_2">images/min_pressed.png</file>
+        <file alias="ico_64">images/logo_64.ico</file>
+        <file alias="expression_1">images/expression_hover.png</file>
+        <file alias="expression_2">images/expression_press.png</file>
+        <file alias="file_1">images/file_hover.png</file>
+        <file alias="file_2">images/file_press.png</file>
+        <file alias="pic_0">images/pic.png</file>
+        <file alias="pic_1">images/pic_hover.png</file>
+        <file alias="pic_2">images/pic_press.png</file>
     </qresource>
     <qresource prefix="/expressions">
         <file alias="dahan">expressions/dahan.png</file>
