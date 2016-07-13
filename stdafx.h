@@ -2,6 +2,7 @@
 #define STDAFX_H
 
 #include <QApplication>
+#include <QCheckBox>
 #include <QCloseEvent>
 #include <QDateTime>
 #include <QEventLoop>

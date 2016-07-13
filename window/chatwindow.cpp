@@ -4,7 +4,7 @@
 #include "common/message/function/p2pmessage.h"
 #include "database.h"
 
-ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
+ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     QMainWindow(parent),
     username(CommonElements::getInstance()->getUsername()),
     item(item),
@@ -26,7 +26,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     expWindow(0)
 {
 
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
+    this->setWindowFlags(Qt::FramelessWindowHint/* | Qt::Tool*/ | Qt::X11BypassWindowManagerHint);
 
     this->setMinimumSize(800, 600);
     this->setMaximumSize(800, 600);
@@ -91,15 +91,15 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     connect(this->expressButton, SIGNAL(clicked()), this, SLOT(on_expressButton_clicked()));
     connect(this->filButton, SIGNAL(clicked()), this, SLOT(on_filButton_clicked()));
 
-    expMap.insert("huaji","(#滑稽)");
-    expMap.insert("dahan","(#大汗)");
-    expMap.insert("fennu","(#愤怒)");
-    expMap.insert("guaiqiao","(#乖巧)");
-    expMap.insert("hecha","(#喝茶)");
-    expMap.insert("kaixin","(#开心)");
-    expMap.insert("penshui","(#喷水)");
-    expMap.insert("weixiao","(#微笑)");
-    expMap.insert("yinxian","(#阴险)");
+    expMap.insert("huaji", "(#滑稽)");
+    expMap.insert("dahan", "(#大汗)");
+    expMap.insert("fennu", "(#愤怒)");
+    expMap.insert("guaiqiao", "(#乖巧)");
+    expMap.insert("hecha", "(#喝茶)");
+    expMap.insert("kaixin", "(#开心)");
+    expMap.insert("penshui", "(#喷水)");
+    expMap.insert("weixiao", "(#微笑)");
+    expMap.insert("yinxian", "(#阴险)");
 
 }
 
@@ -147,21 +147,20 @@ void ChatWindow::on_sendButton_clicked()
 
 void ChatWindow::on_picButton_clicked()
 {
-    picPath = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp *.gif)"));
+    picPath = QFileDialog::getOpenFileName(this, "Open Image", "", "Image Files (*.png *.jpg *.bmp *.gif)");
     if (!picPath.isNull())
     {
         QImage *img = new QImage;
         if(!(img->load(picPath)))
         {
-            QMessageBox::information(this, "打开图像失败", "打开图像失败!");
             delete img;
             return;
         }
-        QFile Image(picPath);
-        Image.open(QIODevice::ReadOnly);
+        QFile image(picPath);
+        image.open(QIODevice::ReadOnly);
 
-        QByteArray by_img=Image.readAll();
-        Image.close();
+        QByteArray by_img = image.readAll();
+        image.close();
         manager = new QNetworkAccessManager(this);
         imgTime = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh_mm_ss");
         connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinished(QNetworkReply*)));
@@ -182,7 +181,7 @@ void ChatWindow::receivePic(imageMessage im)
 {
     recmanager = new QNetworkAccessManager(this);
     connect(recmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onReceiveFinished(QNetworkReply*)));
-    QString url="http://upload.ssdut153.cn/chatpic/"+im.FromUserName+"_"+im.ToUserName+"_"+im.CreateTime+".png";
+    QString url = QString("http://upload.ssdut153.cn/chatpic/") + im.FromUserName + "_" + im.ToUserName + "_" + im.CreateTime + ".png";
 
     QUrl u(url);
     recmanager->get(QNetworkRequest(u));
@@ -237,7 +236,7 @@ void ChatWindow::onFinished(QNetworkReply *reply)
     {
         this->sendButton->setDisabled(false);
         this->picButton->setDisabled(false);
-        this->messageEdit->append("can't connect to sever.");
+        this->messageEdit->append("发送失败");
     }
 }
 void ChatWindow::onReceiveFinished(QNetworkReply *reply)
@@ -250,7 +249,7 @@ void ChatWindow::onReceiveFinished(QNetworkReply *reply)
         img->save("./temp.png");
         messageEdit->append(this->friendName + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
         messageEdit->append("");
-        QString picPath=QDir::currentPath()+"/temp.png";
+        QString picPath = QDir::currentPath() + "/temp.png";
 
         QUrl uri(QString("file://%1").arg(picPath));
         QImage image = QImageReader(picPath).read();
@@ -259,6 +258,7 @@ void ChatWindow::onReceiveFinished(QNetworkReply *reply)
         textDocument->addResource( QTextDocument::ImageResource, uri, QVariant(image));
         QTextCursor cursor = messageEdit->textCursor();
         QTextImageFormat imageFormat;
+
         if(trueImage->isChecked())
         {
             imageFormat.setWidth(image.width());
@@ -289,7 +289,7 @@ void ChatWindow::onReceiveFinished(QNetworkReply *reply)
     {
         this->sendButton->setDisabled(false);
         this->picButton->setDisabled(false);
-        this->messageEdit->append("can't connect to sever.");
+        this->messageEdit->append("发送失败");
     }
 }
 
@@ -315,10 +315,14 @@ void ChatWindow::mouseMoveEvent(QMouseEvent *event)
 
 ChatWindow::~ChatWindow()
 {
-    if(manager!=0)
+    if(manager != 0)
+    {
         delete manager;
-    if(recmanager!=0)
+    }
+    if(recmanager != 0)
+    {
         delete recmanager;
+    }
 }
 
 void ChatWindow::on_closeButton_clicked()
@@ -333,76 +337,92 @@ void ChatWindow::on_expressButton_clicked()
 {
     if(this->expWindow == 0)
     {
-        this->expWindow=new ExpreessionWindow(this);
+        this->expWindow = new ExpressionWindow(this);
         expWindow->show();
     }
 }
 
-void ChatWindow::setExpreessionWindow(ExpreessionWindow* exp){
-    this->expWindow=exp;
+void ChatWindow::setExpressionWindow(ExpressionWindow *exp)
+{
+    this->expWindow = exp;
 }
 
-QTextEdit* ChatWindow::getSendEdit(){
+QTextEdit* ChatWindow::getSendEdit()
+{
     return this->sendEdit;
 }
 
-void ChatWindow::readContent(QString content){
+void ChatWindow::readContent(QString content)
+{
     messageEdit->append("");
-    int expst,forexpst = -5;
+
+    int expst, forexpst = -5;
     QString exp;
     bool isExp = 0;
+
     QTextCursor cursor = messageEdit->textCursor();
-    expst = content.indexOf("(",0);
-    do{
-        if(expst == -1){
+    expst = content.indexOf("(", 0);
+
+    do
+    {
+        if(expst == -1)
+        {
             messageEdit->insertPlainText(content);
             if(!cursor.atEnd())
             {
-            cursor.movePosition(QTextCursor::End);
-            messageEdit->setTextCursor(cursor);
+                cursor.movePosition(QTextCursor::End);
+                messageEdit->setTextCursor(cursor);
             }
             return;
         }
-        else{
-            exp = content.mid(expst,5);
+        else
+        {
+            exp = content.mid(expst, 5);
             for(QMap<QString, QString>::iterator it = expMap.begin();it != expMap.end(); it++)
             {
                 if(exp == it.value())
                 {
-                    messageEdit->insertPlainText(content.mid(forexpst+5,expst-forexpst-5));
+                    messageEdit->insertPlainText(content.mid(forexpst + 5, expst - forexpst - 5));
                     if(!cursor.atEnd())
                     {
-                    cursor.movePosition(QTextCursor::End);
-                    messageEdit->setTextCursor(cursor);
+                        cursor.movePosition(QTextCursor::End);
+                        messageEdit->setTextCursor(cursor);
                     }
-                    insertExp(it.key(),cursor);
+                    insertExp(it.key(), cursor);
                     isExp = true;
                 }
             }
-            if(!isExp){
-                expst = content.indexOf("(",expst+1);
+            if(!isExp)
+            {
+                expst = content.indexOf("(", expst + 1);
                 continue;
             }
         }
-        forexpst=expst;
-        expst = content.indexOf("(",expst+5);
-    }while(expst!=-1);
-    messageEdit->insertPlainText(content.mid(forexpst+5));
+
+        forexpst = expst;
+        expst = content.indexOf("(", expst + 5);
+
+    }while(expst != -1);
+
+    messageEdit->insertPlainText(content.mid(forexpst + 5));
+
     if(!cursor.atEnd())
     {
-    cursor.movePosition(QTextCursor::End);
-    messageEdit->setTextCursor(cursor);
+        cursor.movePosition(QTextCursor::End);
+        messageEdit->setTextCursor(cursor);
     }
 }
 
-void ChatWindow::insertExp(QString expKey, QTextCursor cursor){
+void ChatWindow::insertExp(QString expKey, QTextCursor cursor)
+{
     cursor.movePosition(QTextCursor::End);
     messageEdit->setTextCursor(cursor);
-    cursor.insertImage(QImage(":/expressions/"+expKey));
+    cursor.insertImage(QImage(":/expressions/" + expKey));
+
     if(!cursor.atEnd())
     {
-    cursor.movePosition(QTextCursor::End);
-    messageEdit->setTextCursor(cursor);
+        cursor.movePosition(QTextCursor::End);
+        messageEdit->setTextCursor(cursor);
     }
 }
 
@@ -413,5 +433,5 @@ void ChatWindow::on_filButton_clicked()
 
 void ChatWindow::on_minButton_clicked()
 {
-
+    this->showMinimized();
 }

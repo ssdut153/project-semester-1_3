@@ -7,8 +7,6 @@
         <file alias="file">images/file.png</file>
         <file alias="photo">images/headSculp.jpg</file>
         <file alias="exitBox">images/exitBox.png</file>
-        <file alias="expression">images/expression.png</file>
-        <file alias="minButton">images/min.png</file>
         <file alias="minButton_0">images/MINIMUM.png</file>
         <file alias="minButton_1">images/min_hover.png</file>
         <file alias="minButton_2">images/min_pressed.png</file>
@@ -20,6 +18,7 @@
         <file alias="pic_0">images/pic.png</file>
         <file alias="pic_1">images/pic_hover.png</file>
         <file alias="pic_2">images/pic_press.png</file>
+        <file alias="expression">images/expression.png</file>
     </qresource>
     <qresource prefix="/expressions">
         <file alias="dahan">expressions/dahan.png</file>

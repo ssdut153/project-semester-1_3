@@ -19,7 +19,7 @@ SOURCES += main.cpp \
     window/regwindow.cpp \
     window/chatwindow.cpp \
     window/searchwindow.cpp \
-    window/expreessionwindow.cpp \
+    window/expressionwindow.cpp \
     tray/traymenu.cpp \
     tray/trayicon.cpp \
     button/closebutton.cpp \
@@ -60,7 +60,7 @@ HEADERS  += stdafx.h \
     window/regwindow.h \
     window/chatwindow.h \
     window/searchwindow.h \
-    window/expreessionwindow.h \
+    window/expressionwindow.h \
     tray/traymenu.h \
     tray/trayicon.h \
     button/closebutton.h \
