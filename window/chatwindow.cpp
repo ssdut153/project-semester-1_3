@@ -3,7 +3,6 @@
 #include "helper.h"
 #include "common/message/function/p2pmessage.h"
 #include "database.h"
-#include<QTextDocumentFragment>
 
 ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     QMainWindow(parent),
@@ -24,7 +23,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     expWindow(0)
 {
 
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool/* | Qt::X11BypassWindowManagerHint*/);
+    this->setWindowFlags(Qt::FramelessWindowHint/* | Qt::Tool*/ | Qt::X11BypassWindowManagerHint);
 
     this->setMinimumSize(800, 600);
     this->setMaximumSize(800, 600);
@@ -411,5 +410,5 @@ void ChatWindow::on_filButton_clicked()
 
 void ChatWindow::on_minButton_clicked()
 {
-
+    this->showMinimized();
 }
