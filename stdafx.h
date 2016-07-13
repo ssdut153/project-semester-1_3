@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QCloseEvent>
+#include <QDialog>
 #include <QDateTime>
 #include <QEventLoop>
 #include <QFileDialog>

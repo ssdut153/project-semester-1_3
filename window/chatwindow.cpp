@@ -25,7 +25,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     filemanager(0),
     dmanager(0),
     pressed(false),
-    expWindow(0)
+    expDialog(0)
 {
 
     this->setWindowFlags(Qt::FramelessWindowHint/* | Qt::Tool*/ | Qt::X11BypassWindowManagerHint);
@@ -360,16 +360,16 @@ void ChatWindow::on_closeButton_clicked()
 
 void ChatWindow::on_expressButton_clicked()
 {
-    if(this->expWindow == 0)
+    if(this->expDialog == 0)
     {
-        this->expWindow = new ExpressionWindow(this);
-        expWindow->show();
+        this->expDialog = new ExpressionDialog(this);
+        expDialog->show();
     }
 }
 
-void ChatWindow::setExpressionWindow(ExpressionWindow *exp)
+void ChatWindow::setExpressionDialog(ExpressionDialog *exp)
 {
-    this->expWindow = exp;
+    this->expDialog = exp;
 }
 
 QTextEdit* ChatWindow::getSendEdit()

@@ -1,10 +1,10 @@
-#include "searchwindow.h"
+#include "dialog/searchdialog.h"
 #include "commonelements.h"
 #include "common/message/addfriend/addfriendmessage.h"
 #include "common/message/searchuser/searchusermessage.h"
 
-SearchWindow::SearchWindow(QWidget *parent) :
-    QMainWindow(parent),
+SearchDialog::SearchDialog(QWidget *parent) :
+    QDialog(parent),
     searchEdit(new QLineEdit(this)),
     searchButton(new QPushButton(this)),
     resultLabel(new QLabel(this)),
@@ -44,7 +44,7 @@ SearchWindow::SearchWindow(QWidget *parent) :
 
 }
 
-void SearchWindow::on_searchButton_clicked()
+void SearchDialog::on_searchButton_clicked()
 {
     this->resultLabel->clear();
     this->resultLabel->hide();
@@ -58,7 +58,7 @@ void SearchWindow::on_searchButton_clicked()
     }
 }
 
-void SearchWindow::on_addButton_clicked()
+void SearchDialog::on_addButton_clicked()
 {
     QString addName = this->resultLabel->text();
     if(addName != "")
@@ -70,14 +70,14 @@ void SearchWindow::on_addButton_clicked()
     }
 }
 
-void SearchWindow::showSearchUser(QString searchName)
+void SearchDialog::showSearchUser(QString searchName)
 {
     this->resultLabel->setText(searchName);
     this->resultLabel->show();
     this->addButton->show();
 }
 
-void SearchWindow::closeEvent(QCloseEvent *event)
+void SearchDialog::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     this->hide();
@@ -87,18 +87,18 @@ void SearchWindow::closeEvent(QCloseEvent *event)
     this->addButton->hide();
 }
 
-void SearchWindow::mousePressEvent(QMouseEvent *event)
+void SearchDialog::mousePressEvent(QMouseEvent *event)
 {
     place = event->pos();
     pressed = true;
 }
 
-void SearchWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+void SearchDialog::mouseReleaseEvent(QMouseEvent */*event*/)
 {
     pressed = false;
 }
 
-void SearchWindow::mouseMoveEvent(QMouseEvent *event)
+void SearchDialog::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint temp = event->pos();
     if(pressed)
@@ -107,7 +107,7 @@ void SearchWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void SearchWindow::on_closeButton_clicked()
+void SearchDialog::on_closeButton_clicked()
 {
     this->hide();
     this->searchEdit->clear();

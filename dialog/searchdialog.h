@@ -1,15 +1,15 @@
-#ifndef SEARCHWINDOW_H
-#define SEARCHWINDOW_H
+#ifndef SEARCHDIALOG_H
+#define SEARCHDIALOG_H
 
 #include "stdafx.h"
 #include "button/closebutton.h"
 
-class SearchWindow : public QMainWindow
+class SearchDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SearchWindow(QWidget *parent = 0);
+    explicit SearchDialog(QWidget *parent = 0);
     void showSearchUser(QString searchName);
 
 protected:
@@ -34,4 +34,4 @@ private slots:
 
 };
 
-#endif // SEARCHWINDOW_H
+#endif // SEARCHDIALOG_H

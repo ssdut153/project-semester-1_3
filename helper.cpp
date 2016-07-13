@@ -90,20 +90,20 @@ void Helper::readClient()
     else if(head == "regFeedBack")
     {
         QString status = this->getfromJson(str, "status");
-        RegWindow *regWindow = ce->loginWindow->getLoginGroupBox()->getRegWindow();
-        if(regWindow != 0)
+        RegDialog *regDialog = ce->loginWindow->getLoginGroupBox()->getRegDialog();
+        if(regDialog != 0)
         {
             if(status == "true")
             {
-                loginMessage lm(regWindow->getUsername(), regWindow->getPassword());
+                loginMessage lm(regDialog->getUsername(), regDialog->getPassword());
                 this->writeClient(lm);
             }
             else
             {
                 this->disconnectServer();
                 ce->client->disconnect();
-                regWindow->getMessageLabel()->setText("注册失败");
-                regWindow->getRegButton()->setEnabled(true);
+                regDialog->getMessageLabel()->setText("注册失败");
+                regDialog->getRegButton()->setEnabled(true);
             }
         }
     }
@@ -159,10 +159,10 @@ void Helper::readClient()
         if(status == "true")
         {
             QString searchName = this->getfromJson(str, "username");
-            SearchWindow *sw = ce->mainWindow->getSearchWindow();
-            if(sw != 0)
+            SearchDialog *sd = ce->mainWindow->getSearchDialog();
+            if(sd != 0)
             {
-                sw->showSearchUser(searchName);
+                sd->showSearchUser(searchName);
             }
         }
     }

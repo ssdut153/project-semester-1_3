@@ -16,10 +16,10 @@ TEMPLATE = app
 SOURCES += main.cpp \
     window/loginwindow.cpp \
     window/mainwindow.cpp \
-    window/regwindow.cpp \
     window/chatwindow.cpp \
-    window/searchwindow.cpp \
-    window/expressionwindow.cpp \
+    dialog/searchdialog.cpp \
+    dialog/expressiondialog.cpp \
+    dialog/regdialog.cpp \
     tray/traymenu.cpp \
     tray/trayicon.cpp \
     button/closebutton.cpp \
@@ -57,10 +57,10 @@ SOURCES += main.cpp \
 HEADERS  += stdafx.h \
     window/loginwindow.h \
     window/mainwindow.h \
-    window/regwindow.h \
     window/chatwindow.h \
-    window/searchwindow.h \
-    window/expressionwindow.h \
+    dialog/searchdialog.h \
+    dialog/expressiondialog.h \
+    dialog/regdialog.h \
     tray/traymenu.h \
     tray/trayicon.h \
     button/closebutton.h \
@@ -100,7 +100,10 @@ RESOURCES += \
     images.qrc
 
 DISTFILES += \
-    ico.rc
+    ico.rc \
+    .gitignore \
+    LICENSE \
+    README.md
 
 RC_FILE = \
      ico.rc

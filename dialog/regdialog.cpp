@@ -1,9 +1,9 @@
-#include "regwindow.h"
+#include "regdialog.h"
 #include "commonelements.h"
 #include "common/message/reg/regusermessage.h"
 
-RegWindow::RegWindow(QWidget *parent) :
-    QMainWindow(parent),
+RegDialog::RegDialog(QWidget *parent):
+    QDialog(parent),
     messageLabel(new QLabel(this)),
     usernameEdit(new QLineEdit(this)),
     passwordEdit_1(new QLineEdit(this)),
@@ -60,7 +60,7 @@ RegWindow::RegWindow(QWidget *parent) :
 
 }
 
-void RegWindow::keyPressEvent(QKeyEvent *event)
+void RegDialog::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {
@@ -70,27 +70,27 @@ void RegWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Escape:
         CommonElements *ce = CommonElements::getInstance();
-        ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
+        ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(0);
         delete this;
     }
 }
 
-void RegWindow::closeEvent(QCloseEvent *event)
+void RegDialog::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     CommonElements *ce = CommonElements::getInstance();
-    ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
+    ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(0);
     delete this;
 }
 
-void RegWindow::on_closeButton_clicked()
+void RegDialog::on_closeButton_clicked()
 {
     CommonElements *ce = CommonElements::getInstance();
-    ce->getLoginWindow()->getLoginGroupBox()->setRegWindow(0);
+    ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(0);
     delete this;
 }
 
-void RegWindow::on_regButton_clicked()
+void RegDialog::on_regButton_clicked()
 {
     QString username = this->usernameEdit->text();
     QString password_1 = this->passwordEdit_1->text();
@@ -127,18 +127,18 @@ void RegWindow::on_regButton_clicked()
     }
 }
 
-void RegWindow::mousePressEvent(QMouseEvent *event)
+void RegDialog::mousePressEvent(QMouseEvent *event)
 {
     place = event->pos();
     pressed = true;
 }
 
-void RegWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+void RegDialog::mouseReleaseEvent(QMouseEvent */*event*/)
 {
     pressed = false;
 }
 
-void RegWindow::mouseMoveEvent(QMouseEvent *event)
+void RegDialog::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint temp = event->pos();
     if(pressed)
@@ -147,22 +147,22 @@ void RegWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-QLabel *RegWindow::getMessageLabel()
+QLabel *RegDialog::getMessageLabel()
 {
     return this->messageLabel;
 }
 
-QPushButton *RegWindow::getRegButton()
+QPushButton *RegDialog::getRegButton()
 {
     return this->regButton;
 }
 
-QString RegWindow::getUsername()
+QString RegDialog::getUsername()
 {
     return this->username;
 }
 
-QString RegWindow::getPassword()
+QString RegDialog::getPassword()
 {
     return this->password;
 }

@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
-#include "searchwindow.h"
+#include "dialog/searchdialog.h"
 #include "chatwindow.h"
 #include "button/closebutton.h"
 #include "button/miniumbutton.h"
@@ -17,10 +17,10 @@ public:
     ~MainWindow();
     void loadFriendList(QMap<QString, int> &users);
     void setFriendStatus(QString friendName, bool online);
-//    void setSearchWindow(SearchWindow *searchWindow);
+//    void setSearchDialog(SearchDialog *searchDialog);
     QMap<QListWidgetItem*, ChatWindow*> &getChatWindows();
     ChatWindow *getChatWindow(QString friendName);
-    SearchWindow *getSearchWindow();
+    SearchDialog *getSearchDialog();
     void addFriendItem(QString friendName, int status);
     void updateHeadSculp();
     void downloadHeadSculp();
@@ -42,7 +42,7 @@ private:
     QMap<QString, int> friendlist;
     QVector<QListWidgetItem*> items;
     QMap<QListWidgetItem*, ChatWindow*> chatWindows;
-    SearchWindow *searchWindow;
+    SearchDialog *searchDialog;
     bool pressed;
     QPoint place;
     QNetworkAccessManager *umanager;

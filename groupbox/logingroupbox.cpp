@@ -13,7 +13,7 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     regButton(new QPushButton(this)),
     headSculp(new QLabel(this)),
     aboutUs(new QLabel(this)),
-    regWindow(0),
+    regDialog(0),
     pressed(false)
 {
     this->setGeometry(0, 0, 400, 280);
@@ -79,9 +79,9 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
 
 LoginGroupBox::~LoginGroupBox()
 {
-    if(this->regWindow != 0)
+    if(this->regDialog != 0)
     {
-        delete this->regWindow;
+        delete this->regDialog;
     }
 }
 
@@ -112,8 +112,8 @@ void LoginGroupBox::on_loginButton_clicked()
 
 void LoginGroupBox::on_regButton_clicked()
 {
-    this->regWindow = new RegWindow;
-    this->regWindow->show();
+    this->regDialog = new RegDialog;
+    this->regDialog->show();
 }
 
 void LoginGroupBox::keyPressEvent(QKeyEvent *event)
@@ -174,14 +174,14 @@ QLineEdit *LoginGroupBox::getPasswordEdit()
     return this->passwordEdit;
 }
 
-RegWindow *LoginGroupBox::getRegWindow()
+RegDialog *LoginGroupBox::getRegDialog()
 {
-    return this->regWindow;
+    return this->regDialog;
 }
 
-void LoginGroupBox::setRegWindow(RegWindow *regWindow)
+void LoginGroupBox::setRegDialog(RegDialog *regDialog)
 {
-    this->regWindow = regWindow;
+    this->regDialog = regDialog;
 }
 
 void LoginGroupBox::on_usernameEdit_textChanged()

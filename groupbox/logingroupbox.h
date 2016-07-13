@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
-#include "window/regwindow.h"
+#include "dialog/regdialog.h"
 
 class LoginGroupBox:public QGroupBox
 {
@@ -12,8 +12,8 @@ class LoginGroupBox:public QGroupBox
 public:
     explicit LoginGroupBox(QWidget *parent = 0);
     ~LoginGroupBox();
-    RegWindow *getRegWindow();
-    void setRegWindow(RegWindow *regWindow);
+    RegDialog *getRegDialog();
+    void setRegDialog(RegDialog *regDialog);
     QLabel *getMessageLabel();
     QLineEdit *getUsernameEdit();
     QLineEdit *getPasswordEdit();
@@ -32,7 +32,7 @@ private:
     QPushButton *regButton;
     QLabel *headSculp;
     QLabel *aboutUs;
-    RegWindow *regWindow;
+    RegDialog *regDialog;
     bool pressed;
     QPoint place;
 
