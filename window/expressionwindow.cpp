@@ -1,8 +1,7 @@
 #include "expressionwindow.h"
 
-ExpressionWindow::ExpressionWindow(ChatWindow *parent) :
+ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     QMainWindow(parent),
-    cancelButton(new QPushButton(this)),
     huajiButton(new QPushButton(this)),
     dahanButton(new QPushButton(this)),
     fennuButton(new QPushButton(this)),
@@ -12,6 +11,7 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent) :
     penshuiButton(new QPushButton(this)),
     weixiaoButton(new QPushButton(this)),
     yinxianButton(new QPushButton(this)),
+    cancelButton(new QPushButton(this)),
     chatwindow(parent)
 {
     this->setMinimumSize(300, 350);
@@ -50,6 +50,14 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent) :
     connect(yinxianButton, SIGNAL(clicked()), this, SLOT(on_yinxianButton_clicked()));
 
     connect(cancelButton, SIGNAL(clicked()), this,SLOT(on_cancelButton_clicked()));
+
+}
+
+void ExpressionWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    chatwindow->setExpressionWindow(0);
+    delete this;
 }
 
 

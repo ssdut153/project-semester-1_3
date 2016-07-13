@@ -54,7 +54,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     this->messageEdit->setReadOnly(true);
 
     this->friendHead->setGeometry(60, 32, 48, 48);
-    this->friendnameLabel->setGeometry(120,32, 200,48);
+    this->friendnameLabel->setGeometry(120,32, 200, 48);
     this->messageEdit->setGeometry(50, 85, 700, 285);
     this->sendEdit->setGeometry(50, 420, 700, 120);
     this->sendButton->setGeometry(710, 550, 60, 30);
@@ -84,7 +84,6 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     this->filButton->setStyleSheet("QPushButton{border-image:url(:/images/file);}"
                                    "QPushButton:hover{border-image:url(:/images/file_1);}"
                                    "QPushButton:pressed{border-image:url(:/images/file_2);}");
-
 
     connect(this->sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
     connect(this->picButton, SIGNAL(clicked()), this, SLOT(on_picButton_clicked()));
@@ -424,7 +423,7 @@ void ChatWindow::readContent(QString content)
         forexpst = expst;
         expst = content.indexOf("(", expst + 5);
 
-    }while(expst != -1);
+    } while(expst != -1);
 
     messageEdit->insertPlainText(content.mid(forexpst + 5));
 
@@ -450,18 +449,20 @@ void ChatWindow::insertExp(QString expKey, QTextCursor cursor)
 
 void ChatWindow::on_filButton_clicked()
 {
-    filePath = QFileDialog::getOpenFileName(this,tr("Open file"), "", tr("All files(*.*)"));
+    filePath = QFileDialog::getOpenFileName(this,"Open file", "", "All files(*.*)");
     if (!filePath.isNull())
     {
         QFile file(filePath);
         file.open(QIODevice::ReadOnly);
-        fileFormalName=QFileInfo(filePath).fileName();
-        filename = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh_mm_ss")+"."+QFileInfo(filePath).suffix();
-        if(file.size()>2097152){
+        fileFormalName = QFileInfo(filePath).fileName();
+        filename = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh_mm_ss") + "." + QFileInfo(filePath).suffix();
+
+        if(file.size()>2097152)
+        {
             messageEdit->append("文件过大！发送的文件应不超过2mb。");
             return;
         }
-        QByteArray by_file=file.readAll();
+        QByteArray by_file = file.readAll();
         file.close();
 
         filemanager = new QNetworkAccessManager(this);
@@ -480,10 +481,11 @@ void ChatWindow::on_filButton_clicked()
     }
 }
 
-void ChatWindow::onFileFinished(QNetworkReply *reply){
+void ChatWindow::onFileFinished(QNetworkReply *reply)
+{
     if(reply->error() == QNetworkReply::NoError)
     {
-        fileMessage fm(this->username, this->friendName,filename, fileFormalName);
+        fileMessage fm(this->username, this->friendName, filename, fileFormalName);
         Helper *helper = Helper::getInstance();
         helper->writeClient(fm);
 
@@ -501,20 +503,20 @@ void ChatWindow::onFileFinished(QNetworkReply *reply){
         this->picButton->setDisabled(false);
         this->filButton->setDisabled(false);
         this->sendButton->setText("发送");
-        this->messageEdit->append("can't connect to sever.");
+        this->messageEdit->append("发送失败");
     }
 }
 
 
-void ChatWindow::receiveFile(fileMessage fm){
-    receiveFilename=fm.Content;
+void ChatWindow::receiveFile(fileMessage fm)
+{
+    receiveFilename = fm.Content;
     fileRecManager = new QNetworkAccessManager(this);
     connect(fileRecManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFileReceiveFinished(QNetworkReply*)));
-    //QString url="http://upload.ssdut153.cn/file/"+fm.FromUserName+"_"+fm.ToUserName+"_"+fm.CreateTime;
     QUrl u;
     u.setScheme("ftp");
     u.setHost("103.13.222.121");
-    u.setPath("wwwroot/file/"+fm.FromUserName+"_"+fm.ToUserName+"_"+fm.CreateTime);
+    u.setPath("wwwroot/file/" + fm.FromUserName + "_" + fm.ToUserName + "_" + fm.CreateTime);
     u.setPort(90);
     u.setUserName("upload");
     u.setPassword("killcaomai");
@@ -525,11 +527,12 @@ void ChatWindow::receiveFile(fileMessage fm){
     this->filButton->setDisabled(true);
 }
 
-void ChatWindow::onFileReceiveFinished(QNetworkReply *reply){
+void ChatWindow::onFileReceiveFinished(QNetworkReply *reply)
+{
     if(reply->error() == QNetworkReply::NoError)
     {
         QDir temp;
-        QString path=QDir::currentPath()+"/fileReceive";
+        QString path = QDir::currentPath() + "/fileReceive";
         bool exist = temp.exists(path);
         if(!exist)
         {
@@ -539,15 +542,14 @@ void ChatWindow::onFileReceiveFinished(QNetworkReply *reply){
                 return;
             }
         }
-        QFile file(path+"/"+receiveFilename);
+        QFile file(path + "/" + receiveFilename);
         file.open(QIODevice::WriteOnly);
         file.write(reply->readAll());
         file.flush();
         file.close();
 
-
         messageEdit->append(this->friendName + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
-        messageEdit->append("收到"+this->friendName+"发送的文件"+receiveFilename);
+        messageEdit->append("收到" + this->friendName + "发送的文件" + receiveFilename);
         this->sendButton->setDisabled(false);
         this->picButton->setDisabled(false);
         this->filButton->setDisabled(false);

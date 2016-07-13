@@ -10,7 +10,6 @@ class MiniumButton : public QPushButton
 public:
     explicit MiniumButton(QWidget *parent = 0);
 
-
 };
 
 #endif // MINIUMBUTTON_H
