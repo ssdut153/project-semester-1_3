@@ -136,7 +136,7 @@ void Helper::readClient()
             Database *db = Database::getInstance(pm.ToUserName);
             db->addMessage(pm.FromUserName, 0, pm.CreateTime,pm.Content);
             chatWindow->getMessageEdit()->append(pm.FromUserName +" "+ pm.CreateTime);
-            chatWindow->getMessageEdit()->append(pm.Content);
+            chatWindow->readContent(pm.Content);
         }
     }
     else if(head == "online")
