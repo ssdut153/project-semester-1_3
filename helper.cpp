@@ -12,6 +12,7 @@
 #include "common/message/function/p2pmessage.h"
 #include "common/message/function/forcelogoutmessage.h"
 #include "common/message/function/imagemessage.h"
+#include "common/message/function/filemessage.h"
 #include "messagebox/exitmessagebox.h"
 #include "messagebox/logoutmessagebox.h"
 #include "messagebox/addfriendmessagebox.h"
@@ -231,7 +232,7 @@ void Helper::readClient()
                     Database *db = Database::getInstance(lm.user);
                     db->addMessage(lm.messageFromUsers[i], 0, lm.createTime[i], lm.createTime[i]);
                     chatWindow->getMessageEdit()->append(lm.messageFromUsers[i] +" "+ lm.createTime[i]);
-                    chatWindow->getMessageEdit()->append(lm.contents[i]);
+                    chatWindow->readContent(lm.contents[i]);
                 }
             }
             size = lm.requestUsers.size();
@@ -250,6 +251,16 @@ void Helper::readClient()
                     this->writeClient(afm);
                 }
             }
+        }
+    }
+    else if(head == "file")
+    {
+        fileMessage fm;
+        fm.loadfromJson(str);
+        ChatWindow *chatWindow = ce->mainWindow->getChatWindow(fm.FromUserName);
+        if(chatWindow != 0)
+        {
+            chatWindow->receiveFile(fm);
         }
     }
     else

@@ -21,6 +21,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     trueImage(new QRadioButton(this)),
     manager(0),
     recmanager(0),
+    filemanager(0),
     expWindow(0)
 {
 
@@ -152,6 +153,7 @@ void ChatWindow::on_picButton_clicked()
         manager->put(QNetworkRequest(u), by_img);
         this->sendButton->setDisabled(true);
         this->picButton->setDisabled(true);
+        this->filButton->setDisabled(true);
         delete img;
     }
 }
@@ -166,6 +168,7 @@ void ChatWindow::receivePic(imageMessage im)
     recmanager->get(QNetworkRequest(u));
     this->sendButton->setDisabled(true);
     this->picButton->setDisabled(true);
+    this->filButton->setDisabled(true);
 
 }
 
@@ -210,11 +213,13 @@ void ChatWindow::onFinished(QNetworkReply *reply)
         cursor.insertImage(imageFormat);
         this->sendButton->setDisabled(false);
         this->picButton->setDisabled(false);
+        this->filButton->setDisabled(false);
     }
     else
     {
         this->sendButton->setDisabled(false);
         this->picButton->setDisabled(false);
+        this->filButton->setDisabled(false);
         this->messageEdit->append("can't connect to sever.");
     }
 }
@@ -262,11 +267,13 @@ void ChatWindow::onReceiveFinished(QNetworkReply *reply)
         delete img;
         this->sendButton->setDisabled(false);
         this->picButton->setDisabled(false);
+        this->filButton->setDisabled(false);
     }
     else
     {
         this->sendButton->setDisabled(false);
         this->picButton->setDisabled(false);
+        this->filButton->setDisabled(false);
         this->messageEdit->append("can't connect to sever.");
     }
 }
@@ -297,6 +304,8 @@ ChatWindow::~ChatWindow()
         delete manager;
     if(recmanager!=0)
         delete recmanager;
+    if(filemanager!=0)
+        delete filemanager;
 }
 
 void ChatWindow::on_closeButton_clicked()
@@ -386,6 +395,121 @@ void ChatWindow::insertExp(QString expKey, QTextCursor cursor){
 
 void ChatWindow::on_filButton_clicked()
 {
+    filePath = QFileDialog::getOpenFileName(this,tr("Open file"), "", tr("All files(*.*)"));
+    if (!filePath.isNull())
+    {
+        QFile file(filePath);
+        file.open(QIODevice::ReadOnly);
+        fileFormalName=QFileInfo(filePath).fileName();
+        filename = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh_mm_ss")+"."+QFileInfo(filePath).suffix();
+        qDebug()<<filename;
+        if(file.size()>2097152){
+            messageEdit->append("文件过大！发送的文件应不超过2mb。");
+            return;
+        }
+        QByteArray by_file=file.readAll();
+        file.close();
+
+        filemanager = new QNetworkAccessManager(this);
+        connect(filemanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFileFinished(QNetworkReply*)));
+        QString url = "ftp://103.13.222.121/wwwroot/file/" + this->username + "_" + this->friendName + "_" + filename;
+        qDebug()<<url;
+
+        QUrl u(url);
+        u.setPort(90);
+        u.setUserName("upload");
+        u.setPassword("killcaomai");
+        filemanager->put(QNetworkRequest(u), by_file);
+        this->sendButton->setDisabled(true);
+        this->sendButton->setText("发送中");
+        this->picButton->setDisabled(true);
+        this->filButton->setDisabled(true);
+    }
+}
+
+void ChatWindow::onFileFinished(QNetworkReply *reply){
+    if(reply->error() == QNetworkReply::NoError)
+    {
+        qDebug()<<"finished";
+        fileMessage fm(this->username, this->friendName,filename, fileFormalName);
+        Helper *helper = Helper::getInstance();
+        helper->writeClient(fm);
+
+        messageEdit->append(this->username + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        this->messageEdit->append("已向对方发送"+fileFormalName);
+
+        this->sendButton->setDisabled(false);
+        this->picButton->setDisabled(false);
+        this->filButton->setDisabled(false);
+        this->sendButton->setText("发送");
+    }
+    else
+    {
+        this->sendButton->setDisabled(false);
+        this->picButton->setDisabled(false);
+        this->filButton->setDisabled(false);
+        this->sendButton->setText("发送");
+        this->messageEdit->append("can't connect to sever.");
+    }
+}
+
+
+void ChatWindow::receiveFile(fileMessage fm){
+    receiveFilename=fm.Content;
+    qDebug()<<receiveFilename;
+    fileRecManager = new QNetworkAccessManager(this);
+    connect(fileRecManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFileReceiveFinished(QNetworkReply*)));
+    //QString url="http://upload.ssdut153.cn/file/"+fm.FromUserName+"_"+fm.ToUserName+"_"+fm.CreateTime;
+    QUrl u;
+    u.setScheme("ftp");
+    u.setHost("103.13.222.121");
+    u.setPath("wwwroot/file/"+fm.FromUserName+"_"+fm.ToUserName+"_"+fm.CreateTime);
+    u.setPort(90);
+    u.setUserName("upload");
+    u.setPassword("killcaomai");
+    fileRecManager->get(QNetworkRequest(u));
+    this->sendButton->setDisabled(true);
+    this->sendButton->setText("接收文件中");
+    this->picButton->setDisabled(true);
+    this->filButton->setDisabled(true);
+}
+
+void ChatWindow::onFileReceiveFinished(QNetworkReply *reply){
+    if(reply->error() == QNetworkReply::NoError)
+    {
+        QDir temp;
+        QString path=QDir::currentPath()+"/fileReceive";
+        bool exist = temp.exists(path);
+        if(!exist)
+        {
+            bool ok = temp.mkdir(path);
+            if(!ok)
+            {
+                return;
+            }
+        }
+        QFile file(path+"/"+receiveFilename);
+        file.open(QIODevice::WriteOnly);
+        file.write(reply->readAll());
+        file.flush();
+        file.close();
+
+
+        messageEdit->append(this->friendName + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        messageEdit->append("收到"+this->friendName+"发送的文件"+receiveFilename);
+        this->sendButton->setDisabled(false);
+        this->picButton->setDisabled(false);
+        this->filButton->setDisabled(false);
+        this->sendButton->setText("发送");
+    }
+    else
+    {
+        this->sendButton->setDisabled(false);
+        this->picButton->setDisabled(false);
+        this->filButton->setDisabled(false);
+        this->sendButton->setText("发送");
+        this->messageEdit->append("can't connect to sever.");
+    }
 
 }
 

@@ -7,7 +7,7 @@ class fileMessage:public p2pMessage
 {
 public:
     fileMessage();
-    fileMessage(QString from, QString to, QString time, QString text="");
+    fileMessage(QString from, QString to, QString severName, QString formalName);
 };
 
 #endif // FILEMESSAGE_H

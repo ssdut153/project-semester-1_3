@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "commonelements.h"
 #include "common/message/function/imagemessage.h"
+#include "common/message/function/filemessage.h"
 #include"expreessionwindow.h"
 
 class ChatWindow : public QMainWindow
@@ -17,6 +18,7 @@ public:
     QTextEdit *getMessageEdit();
     void setExpreessionWindow(ExpreessionWindow* exp);
     void receivePic(imageMessage im);
+    void receiveFile(fileMessage fm);
     QTextEdit* getSendEdit();
     void readContent(QString content);
     ~ChatWindow();
@@ -41,10 +43,16 @@ private:
     CloseButton *closeButton;
     MiniumButton *minButton;
     QRadioButton *trueImage;
+    QString filePath;
     QString picPath;
     QString imgTime;
+    QString filename;
+    QString fileFormalName;
+    QString receiveFilename;
     QNetworkAccessManager *manager;
     QNetworkAccessManager *recmanager;
+    QNetworkAccessManager *filemanager;
+    QNetworkAccessManager *fileRecManager;
     bool pressed;
     QPoint place;
     ExpreessionWindow *expWindow;
@@ -58,6 +66,8 @@ private slots:
     void on_picButton_clicked();
     void onFinished(QNetworkReply *reply);
     void onReceiveFinished(QNetworkReply *reply);
+    void onFileFinished(QNetworkReply *reply);
+    void onFileReceiveFinished(QNetworkReply *reply);
     void on_closeButton_clicked();
     void on_expressButton_clicked();
     void on_filButton_clicked();
