@@ -7,7 +7,7 @@
 #include "commonelements.h"
 #include "common/message/function/imagemessage.h"
 #include "common/message/function/filemessage.h"
-#include"expreessionwindow.h"
+#include "expressionwindow.h"
 
 class ChatWindow : public QMainWindow
 {
@@ -16,7 +16,7 @@ class ChatWindow : public QMainWindow
 public:
     explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = 0);
     QTextEdit *getMessageEdit();
-    void setExpreessionWindow(ExpreessionWindow* exp);
+    void setExpressionWindow(ExpressionWindow* exp);
     void receivePic(imageMessage im);
     void receiveFile(fileMessage fm);
     QTextEdit* getSendEdit();
@@ -34,6 +34,8 @@ private:
     QString username;
     QListWidgetItem *item;
     QString friendName;
+    QLabel *friendHead;
+    QLabel *friendnameLabel;
     QTextEdit *messageEdit;
     QTextEdit *sendEdit;
     QPushButton *sendButton;
@@ -42,8 +44,8 @@ private:
     QPushButton *filButton;
     CloseButton *closeButton;
     MiniumButton *minButton;
-    QRadioButton *trueImage;
     QString filePath;
+    QCheckBox *trueImage;
     QString picPath;
     QString imgTime;
     QString filename;
@@ -55,11 +57,10 @@ private:
     QNetworkAccessManager *fileRecManager;
     bool pressed;
     QPoint place;
-    ExpreessionWindow *expWindow;
+    ExpressionWindow *expWindow;
     QMap<QString,QString> expMap;
 
     void insertExp(QString expKey,QTextCursor cursor);
-
 
 private slots:
     void on_sendButton_clicked();

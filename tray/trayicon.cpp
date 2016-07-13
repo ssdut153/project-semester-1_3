@@ -8,7 +8,7 @@ TrayIcon::TrayIcon(QWidget *parent):
     trmn(new TrayMenu)
 {
     this->setToolTip("聊天工具");
-    this->setIcon(QIcon(":/images/icon"));
+    this->setIcon(QIcon(":/images/ico_64"));
 
     this->setContextMenu(trmn);
     connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(on_trayIcon_clicked(QSystemTrayIcon::ActivationReason)));

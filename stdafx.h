@@ -2,6 +2,7 @@
 #define STDAFX_H
 
 #include <QApplication>
+#include <QCheckBox>
 #include <QCloseEvent>
 #include <QDateTime>
 #include <QEventLoop>
@@ -35,6 +36,7 @@
 #include <QtSql>
 #include <QSystemTrayIcon>
 #include <QTextCodec>
+#include <QTextDocumentFragment>
 #include <QTextEdit>
 #include <QTimer>
 #include <QThread>

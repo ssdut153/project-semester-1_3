@@ -153,7 +153,7 @@ ChatWindow *MainWindow::getChatWindow(QString friendName)
             }
             else
             {
-                ChatWindow *cw = new ChatWindow(item, this);
+                ChatWindow *cw = new ChatWindow(item);
                 this->chatWindows.insert(item, cw);
                 cw->show();
                 return cw;
