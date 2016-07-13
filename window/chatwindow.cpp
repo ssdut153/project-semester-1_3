@@ -3,6 +3,7 @@
 #include "helper.h"
 #include "common/message/function/p2pmessage.h"
 #include "database.h"
+#include<QTextDocumentFragment>
 
 ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     QMainWindow(parent),
@@ -19,7 +20,8 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     minButton(new MiniumButton(this)),
     trueImage(new QRadioButton(this)),
     manager(0),
-    recmanager(0)
+    recmanager(0),
+    expWindow(0)
 {
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
@@ -67,6 +69,16 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     connect(this->expressButton, SIGNAL(clicked()), this, SLOT(on_expressButton_clicked()));
     connect(this->filButton, SIGNAL(clicked()), this, SLOT(on_filButton_clicked()));
 
+    expMap.insert("huaji","(#滑稽)");
+    expMap.insert("dahan","(#大汗)");
+    expMap.insert("fennu","(#愤怒)");
+    expMap.insert("guaiqiao","(#乖巧)");
+    expMap.insert("hecha","(#喝茶)");
+    expMap.insert("kaixin","(#开心)");
+    expMap.insert("penshui","(#喷水)");
+    expMap.insert("weixiao","(#微笑)");
+    expMap.insert("yinxian","(#阴险)");
+
 }
 
 QTextEdit *ChatWindow::getMessageEdit()
@@ -105,7 +117,7 @@ void ChatWindow::on_sendButton_clicked()
         helper->writeClient(pm);
         this->sendEdit->clear();
         this->messageEdit->append(this->username + " " + time);
-        this->messageEdit->append(content);
+        readContent(content);
         Database *db = Database::getInstance(this->username);
         db->addMessage(this->friendName, 1, time, content);
     }
@@ -297,7 +309,79 @@ void ChatWindow::on_closeButton_clicked()
 
 void ChatWindow::on_expressButton_clicked()
 {
+    if(this->expWindow == 0)
+    {
+        this->expWindow=new ExpreessionWindow(this);
+        expWindow->show();
+    }
+}
 
+void ChatWindow::setExpreessionWindow(ExpreessionWindow* exp){
+    this->expWindow=exp;
+}
+
+QTextEdit* ChatWindow::getSendEdit(){
+    return this->sendEdit;
+}
+
+void ChatWindow::readContent(QString content){
+    messageEdit->append("");
+    int expst,forexpst = -5;
+    QString exp;
+    bool isExp = 0;
+    QTextCursor cursor = messageEdit->textCursor();
+    expst = content.indexOf("(",0);
+    do{
+        if(expst == -1){
+            messageEdit->insertPlainText(content);
+            if(!cursor.atEnd())
+            {
+            cursor.movePosition(QTextCursor::End);
+            messageEdit->setTextCursor(cursor);
+            }
+            return;
+        }
+        else{
+            exp = content.mid(expst,5);
+            for(QMap<QString, QString>::iterator it = expMap.begin();it != expMap.end(); it++)
+            {
+                if(exp == it.value())
+                {
+                    messageEdit->insertPlainText(content.mid(forexpst+5,expst-forexpst-5));
+                    if(!cursor.atEnd())
+                    {
+                    cursor.movePosition(QTextCursor::End);
+                    messageEdit->setTextCursor(cursor);
+                    }
+                    insertExp(it.key(),cursor);
+                    isExp = true;
+                }
+            }
+            if(!isExp){
+                expst = content.indexOf("(",expst+1);
+                continue;
+            }
+        }
+        forexpst=expst;
+        expst = content.indexOf("(",expst+5);
+    }while(expst!=-1);
+    messageEdit->insertPlainText(content.mid(forexpst+5));
+    if(!cursor.atEnd())
+    {
+    cursor.movePosition(QTextCursor::End);
+    messageEdit->setTextCursor(cursor);
+    }
+}
+
+void ChatWindow::insertExp(QString expKey, QTextCursor cursor){
+    cursor.movePosition(QTextCursor::End);
+    messageEdit->setTextCursor(cursor);
+    cursor.insertImage(QImage(":/expressions/"+expKey));
+    if(!cursor.atEnd())
+    {
+    cursor.movePosition(QTextCursor::End);
+    messageEdit->setTextCursor(cursor);
+    }
 }
 
 void ChatWindow::on_filButton_clicked()
