@@ -11,15 +11,32 @@ class ExpressionWindow : public QMainWindow
 public:
     explicit ExpressionWindow(ChatWindow *parent = 0);
 private:
-    QPushButton *comfirmButton;
+    QPushButton *huajiButton;
+    QPushButton *dahanButton;
+    QPushButton *fennuButton;
+    QPushButton *guaiqiaoButton;
+    QPushButton *hechaButton;
+    QPushButton *kaixinButton;
+    QPushButton *penshuiButton;
+    QPushButton *weixiaoButton;
+    QPushButton *yinxianButton;
+
     QPushButton *cancelButton;
-    QComboBox *expressions;
     ChatWindow *chatwindow;
 
 signals:
 
 public slots:
-    void on_comfirmButton_clicked();
+    void on_huajiButton_clicked();
+    void on_dahanButton_clicked();
+    void on_fennuButton_clicked();
+    void on_guaiqiaoButton_clicked();
+    void on_hechaButton_clicked();
+    void on_kaixinButton_clicked();
+    void on_penshuiButton_clicked();
+    void on_weixiaoButton_clicked();
+    void on_yinxianButton_clicked();
+
     void on_cancelButton_clicked();
 };
 

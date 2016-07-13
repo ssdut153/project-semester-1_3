@@ -23,6 +23,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     manager(0),
     recmanager(0),
     filemanager(0),
+    dmanager(0),
     pressed(false),
     expWindow(0)
 {
@@ -68,7 +69,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     head.scaled(48, 48, Qt::KeepAspectRatio);
     this->friendHead->setScaledContents(true);
     this->friendHead->setPixmap(QPixmap::fromImage(head));
-    this->friendnameLabel->setText("friendName");
+    this->friendnameLabel->setText(this->friendName);
     this->friendnameLabel->setFont(font);
 
     font.setPointSize(10);
@@ -101,6 +102,16 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     expMap.insert("penshui", "(#喷水)");
     expMap.insert("weixiao", "(#微笑)");
     expMap.insert("yinxian", "(#阴险)");
+
+    dPath = QDir::currentPath() + "/headImages/head_" + this->friendName + ".png";
+    updateFriendHead();
+    if(QFile(dPath).exists())
+    {
+        QImage imgScaled(dPath);
+        imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
+        this->friendHead->setScaledContents(true);
+        this->friendHead->setPixmap(QPixmap::fromImage(imgScaled));
+    }
 
 }
 
@@ -548,7 +559,7 @@ void ChatWindow::onFileReceiveFinished(QNetworkReply *reply){
         this->picButton->setDisabled(false);
         this->filButton->setDisabled(false);
         this->sendButton->setText("发送");
-        this->messageEdit->append("can't connect to sever.");
+        this->messageEdit->append("发送失败");
     }
 
 }
@@ -556,4 +567,54 @@ void ChatWindow::onFileReceiveFinished(QNetworkReply *reply){
 void ChatWindow::on_minButton_clicked()
 {
     this->showMinimized();
+}
+
+void ChatWindow::updateFriendHead(){
+    QDir temp;
+    QString path=QDir::currentPath()+"/headImages";
+    bool exist = temp.exists(path);
+    if(exist)
+    {
+        QFile tempFile(path + "/head_" + this->friendName + ".png");
+        if(tempFile.exists())
+        {
+            return;
+        }
+    }
+    else
+    {
+        bool ok = temp.mkdir(path);
+        if(!ok)
+        {
+            return;
+        }
+    }
+    dmanager = new QNetworkAccessManager(this);
+    connect(dmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onDownloadFinished(QNetworkReply*)));
+    QString url = "http://upload.ssdut153.cn/touxiang/head_" + this->friendName + ".png";
+    QUrl u(url);
+    qDebug()<<url;
+    dmanager->get(QNetworkRequest(u));
+}
+
+void ChatWindow::onDownloadFinished(QNetworkReply *reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+        QImage *img=new QImage;
+        img->loadFromData(reply->readAll());
+        if(!(img->isNull()))
+        {
+            img->save(dPath);
+            qDebug()<<dPath;
+            if(QFile(dPath).exists())
+            {
+                QImage imgScaled(dPath);
+                imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
+                this->friendHead->setScaledContents(true);
+                this->friendHead->setPixmap(QPixmap::fromImage(imgScaled));
+            }
+        }
+        delete img;
+    }
 }

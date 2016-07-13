@@ -55,12 +55,15 @@ private:
     QNetworkAccessManager *recmanager;
     QNetworkAccessManager *filemanager;
     QNetworkAccessManager *fileRecManager;
+    QNetworkAccessManager *dmanager;
     bool pressed;
     QPoint place;
     ExpressionWindow *expWindow;
     QMap<QString,QString> expMap;
+    QString dPath;
 
     void insertExp(QString expKey,QTextCursor cursor);
+    void updateFriendHead();
 
 private slots:
     void on_sendButton_clicked();
@@ -69,6 +72,7 @@ private slots:
     void onReceiveFinished(QNetworkReply *reply);
     void onFileFinished(QNetworkReply *reply);
     void onFileReceiveFinished(QNetworkReply *reply);
+    void onDownloadFinished(QNetworkReply *reply);
     void on_closeButton_clicked();
     void on_expressButton_clicked();
     void on_filButton_clicked();
