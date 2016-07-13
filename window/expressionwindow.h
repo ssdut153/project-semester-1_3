@@ -5,9 +5,10 @@
 #include "classes.h"
 #include "chatwindow.h"
 
-class ExpressionWindow : public QMainWindow
+class ExpressionWindow: public QMainWindow
 {
     Q_OBJECT
+
 public:
     explicit ExpressionWindow(ChatWindow *parent = 0);
 
@@ -17,9 +18,10 @@ private:
     QComboBox *expressions;
     ChatWindow *chatwindow;
 
-signals:
+protected:
+    void closeEvent(QCloseEvent *event);
 
-public slots:
+private slots:
     void on_comfirmButton_clicked();
     void on_cancelButton_clicked();
 

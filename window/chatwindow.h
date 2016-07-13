@@ -16,7 +16,7 @@ class ChatWindow : public QMainWindow
 public:
     explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = 0);
     QTextEdit *getMessageEdit();
-    void setExpressionWindow(ExpressionWindow* exp);
+    void setExpressionWindow(ExpressionWindow *exp);
     void receivePic(imageMessage im);
     void receiveFile(fileMessage fm);
     QTextEdit* getSendEdit();

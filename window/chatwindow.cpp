@@ -53,7 +53,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     this->messageEdit->setReadOnly(true);
 
     this->friendHead->setGeometry(60, 32, 48, 48);
-    this->friendnameLabel->setGeometry(120,32, 200,48);
+    this->friendnameLabel->setGeometry(120,32, 200, 48);
     this->messageEdit->setGeometry(50, 85, 700, 285);
     this->sendEdit->setGeometry(50, 420, 700, 120);
     this->sendButton->setGeometry(710, 550, 60, 30);

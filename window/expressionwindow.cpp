@@ -1,6 +1,6 @@
 #include "expressionwindow.h"
 
-ExpressionWindow::ExpressionWindow(ChatWindow *parent) :
+ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     QMainWindow(parent),
     comfirmButton(new QPushButton(this)),
     cancelButton(new QPushButton(this)),
@@ -27,6 +27,14 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent) :
 
     connect(comfirmButton, SIGNAL(clicked()), this, SLOT(on_comfirmButton_clicked()));
     connect(cancelButton, SIGNAL(clicked()), this,SLOT(on_cancelButton_clicked()));
+
+}
+
+void ExpressionWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    chatwindow->setExpressionWindow(0);
+    delete this;
 }
 
 void ExpressionWindow::on_comfirmButton_clicked()
