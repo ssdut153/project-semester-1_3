@@ -149,7 +149,7 @@ void ChatWindow::on_sendButton_clicked()
         Helper *helper = Helper::getInstance();
         helper->writeClient(pm);
         this->sendEdit->clear();
-        this->messageEdit->append(this->username + " " + time);
+        this->messageEdit->append(QString("<span style=\"color: blue;\">") + this->username +  "</span> <span style=\"color:green;\">" + time + "</span>");
         readContent(content);
         Database *db = Database::getInstance(this->username);
         db->addMessage(this->friendName, 1, time, content);

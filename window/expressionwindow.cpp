@@ -1,7 +1,7 @@
 #include "expressionwindow.h"
 
 ExpressionWindow::ExpressionWindow(ChatWindow *parent):
-    QMainWindow(parent),
+    //QMainWindow(parent),
     huajiButton(new QPushButton(this)),
     dahanButton(new QPushButton(this)),
     fennuButton(new QPushButton(this)),
@@ -14,28 +14,50 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     cancelButton(new QPushButton(this)),
     chatwindow(parent)
 {
-    this->setMinimumSize(300, 350);
-    this->cancelButton->setGeometry(50, 310, 200, 30);
+    this->setMinimumSize(210, 250);
+    this->setMaximumSize(210, 250);
+    this->cancelButton->setGeometry(30, 200, 150, 30);
 
-    this->dahanButton->setGeometry(25, 225, 50, 50);
-    this->fennuButton->setGeometry(25, 125, 50, 50);
-    this->guaiqiaoButton->setGeometry(25, 25, 50, 50);
-    this->hechaButton->setGeometry(125, 225, 50, 50);
-    this->kaixinButton->setGeometry(125, 125, 50, 50);
-    this->penshuiButton->setGeometry(125, 25, 50, 50);
-    this->weixiaoButton->setGeometry(225, 225, 50, 50);
-    this->yinxianButton->setGeometry(225, 125, 50, 50);
-    this->huajiButton->setGeometry(225, 25, 50, 50);
+    this->setWindowFlags(Qt::FramelessWindowHint);
 
-    this->huajiButton->setText("滑稽");
-    this->dahanButton->setText("大汗");
-    this->fennuButton->setText("愤怒");
-    this->guaiqiaoButton->setText("乖巧");
-    this->hechaButton->setText("喝茶");
-    this->kaixinButton->setText("开心");
-    this->penshuiButton->setText("喷水");
-    this->weixiaoButton->setText("微笑");
-    this->yinxianButton->setText("阴险");
+    QLinearGradient linearGradient(QPoint(0, 0), QPoint(0, 210));
+    linearGradient.setColorAt(0, QColor(133, 218, 223));
+    linearGradient.setColorAt(1, QColor(255, 255, 255));
+
+    QPalette palette;
+    palette.setBrush(QPalette::Background, QBrush(linearGradient));
+    this->setPalette(palette);
+
+
+    this->dahanButton->setGeometry(30, 130, 50, 50);
+    this->fennuButton->setGeometry(30, 80, 50, 50);
+    this->guaiqiaoButton->setGeometry(30, 30, 50, 50);
+    this->hechaButton->setGeometry(80, 130, 50, 50);
+    this->kaixinButton->setGeometry(80, 80, 50, 50);
+    this->penshuiButton->setGeometry(80, 30, 50, 50);
+    this->weixiaoButton->setGeometry(130, 130, 50, 50);
+    this->yinxianButton->setGeometry(130, 80, 50, 50);
+    this->huajiButton->setGeometry(130, 30, 50, 50);
+
+
+    this->huajiButton->setIcon(QIcon(":/expressions/huaji"));
+    this->dahanButton->setIcon(QIcon(":/expressions/dahan"));
+    this->fennuButton->setIcon(QIcon(":/expressions/fennu"));
+    this->guaiqiaoButton->setIcon(QIcon(":/expressions/guaiqiao"));
+    this->hechaButton->setIcon(QIcon(":/expressions/hecha"));
+    this->kaixinButton->setIcon(QIcon(":/expressions/kaixin"));
+    this->penshuiButton->setIcon(QIcon(":/expressions/penshui"));
+    this->weixiaoButton->setIcon(QIcon(":/expressions/weixiao"));
+    this->yinxianButton->setIcon(QIcon(":/expressions/yinxian"));
+    this->huajiButton->setIconSize(QSize(50,50));
+    this->dahanButton->setIconSize(QSize(50,50));
+    this->fennuButton->setIconSize(QSize(50,50));
+    this->guaiqiaoButton->setIconSize(QSize(50,50));
+    this->hechaButton->setIconSize(QSize(50,50));
+    this->kaixinButton->setIconSize(QSize(50,50));
+    this->penshuiButton->setIconSize(QSize(50,50));
+    this->weixiaoButton->setIconSize(QSize(50,50));
+    this->yinxianButton->setIconSize(QSize(50,50));
     this->cancelButton->setText("取消");
 
 
@@ -201,4 +223,24 @@ void ExpressionWindow::on_yinxianButton_clicked(){
 
     chatwindow->setExpressionWindow(0);
     delete this;
+}
+
+void ExpressionWindow::mousePressEvent(QMouseEvent *event)
+{
+    place = event->pos();
+    pressed = true;
+}
+
+void ExpressionWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+{
+    pressed = false;
+}
+
+void ExpressionWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    QPoint temp = event->pos();
+    if(pressed)
+    {
+        this->move(this->x() + temp.x() - this->place.x(), this->y() + temp.y() - this->place.y());
+    }
 }
