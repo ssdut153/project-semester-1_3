@@ -5,11 +5,11 @@
 #include "classes.h"
 #include "chatwindow.h"
 
-class ExpreessionWindow : public QMainWindow
+class ExpressionWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit ExpreessionWindow(ChatWindow *parent = 0);
+    explicit ExpressionWindow(ChatWindow *parent = 0);
 private:
     QPushButton *comfirmButton;
     QPushButton *cancelButton;

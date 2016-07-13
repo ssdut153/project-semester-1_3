@@ -9,7 +9,7 @@ class RegWindow;
 class MainWindow;
 class ChatWindow;
 class SearchWindow;
-class ExpreessionWindow;
+class ExpressionWindow;
 
 class CommonElements;
 class Helper;

@@ -6,7 +6,7 @@
 #include "mainwindow.h"
 #include "commonelements.h"
 #include "common/message/function/imagemessage.h"
-#include"expreessionwindow.h"
+#include "expressionwindow.h"
 
 class ChatWindow : public QMainWindow
 {
@@ -15,7 +15,7 @@ class ChatWindow : public QMainWindow
 public:
     explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = 0);
     QTextEdit *getMessageEdit();
-    void setExpreessionWindow(ExpreessionWindow* exp);
+    void setExpressionWindow(ExpressionWindow* exp);
     void receivePic(imageMessage im);
     QTextEdit* getSendEdit();
     void readContent(QString content);
@@ -47,11 +47,10 @@ private:
     QNetworkAccessManager *recmanager;
     bool pressed;
     QPoint place;
-    ExpreessionWindow *expWindow;
+    ExpressionWindow *expWindow;
     QMap<QString,QString> expMap;
 
     void insertExp(QString expKey,QTextCursor cursor);
-
 
 private slots:
     void on_sendButton_clicked();
