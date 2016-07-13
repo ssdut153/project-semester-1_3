@@ -17,6 +17,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     QLineEdit *searchEdit;
@@ -26,6 +27,7 @@ private:
     CloseButton *closeButton;
     bool pressed;
     QPoint place;
+    QLabel *messageLabel;
 
 private slots:
     void on_searchButton_clicked();

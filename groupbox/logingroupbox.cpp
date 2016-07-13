@@ -24,6 +24,7 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     this->regButton->setFocusPolicy(Qt::ClickFocus);
     this->passwordEdit->setEchoMode(QLineEdit::Password);
     this->aboutUs->setOpenExternalLinks(true);
+    this->usernameEdit->setFocus();
 
     this->usernameEdit->setPlaceholderText("请输入用户名");
     this->passwordEdit->setPlaceholderText("请输入密码");

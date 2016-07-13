@@ -150,6 +150,16 @@ void ExpressionDialog::on_yinxianButton_clicked()
     this->addExpression("(#阴险)");
 }
 
+void ExpressionDialog::keyPressEvent(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+    case Qt::Key_Escape:
+        this->on_cancelButton_clicked();
+        break;
+    }
+}
+
 void ExpressionDialog::mousePressEvent(QMouseEvent *event)
 {
     place = event->pos();

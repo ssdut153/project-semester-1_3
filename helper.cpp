@@ -156,13 +156,17 @@ void Helper::readClient()
     else if(head == "userInfo")
     {
         QString status = this->getfromJson(str, "status");
-        if(status == "true")
+        SearchDialog *sd = ce->mainWindow->getSearchDialog();
+        if(sd != 0)
         {
-            QString searchName = this->getfromJson(str, "username");
-            SearchDialog *sd = ce->mainWindow->getSearchDialog();
-            if(sd != 0)
+            if(status == "true")
             {
+                QString searchName = this->getfromJson(str, "username");
                 sd->showSearchUser(searchName);
+            }
+            else
+            {
+                sd->showSearchUser("");
             }
         }
     }
@@ -273,7 +277,7 @@ void Helper::writeClient(Message &message)
 {
     QTcpSocket *client = CommonElements::getInstance()->client;
     client->write(message.getJsonString());
-//    client->waitForBytesWritten();
+    //    client->waitForBytesWritten();
 }
 
 void Helper::quit()
