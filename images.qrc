@@ -10,4 +10,15 @@
         <file alias="expression">images/expression.png</file>
         <file alias="minButton">images/min.png</file>
     </qresource>
+    <qresource prefix="/expressions">
+        <file alias="dahan">expressions/dahan.png</file>
+        <file alias="fennu">expressions/fennu.png</file>
+        <file alias="guaiqiao">expressions/guaiqiao.png</file>
+        <file alias="hecha">expressions/hecha.png</file>
+        <file alias="huaji">expressions/huaji.png</file>
+        <file alias="kaixin">expressions/kaixin.png</file>
+        <file alias="penshui">expressions/penshui.png</file>
+        <file alias="weixiao">expressions/weixiao.png</file>
+        <file alias="yinxian">expressions/yinxian.png</file>
+    </qresource>
 </RCC>
