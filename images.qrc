@@ -9,5 +9,8 @@
         <file alias="exitBox">images/exitBox.png</file>
         <file alias="expression">images/expression.png</file>
         <file alias="minButton">images/min.png</file>
+        <file alias="minButton_0">images/MINIMUM.png</file>
+        <file alias="minButton_1">images/min_hover.png</file>
+        <file alias="minButton_2">images/min_pressed.png</file>
     </qresource>
 </RCC>

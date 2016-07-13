@@ -3,8 +3,9 @@
 MiniumButton::MiniumButton(QWidget *parent) :
     QPushButton(parent)
 {
-    this->setIcon(QIcon(":/images/minButton"));
-    this->setIconSize(QSize(30,30));
-    this->setStyleSheet("background-color:rgba(0,0,0,0);");
+
+    this->setStyleSheet("QPushButton{border-image:url(:/images/minButton_0);}"
+                        "QPushButton:hover{border-image:url(:/images/minButton_1);}"
+                        "QPushButton:pressed{border-image:url(:/images/minButton_2);}");
     this->setFocusPolicy(Qt::ClickFocus);
 }

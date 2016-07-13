@@ -16,6 +16,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     expressButton(new QPushButton(this)),
     filButton(new QPushButton(this)),
     closeButton(new CloseButton(this)),
+    minButton(new MiniumButton(this)),
     trueImage(new QRadioButton(this)),
     manager(0),
     recmanager(0)
@@ -51,6 +52,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     this->expressButton->setGeometry(50, 380, 30, 30);
     this->filButton->setGeometry(130, 380, 30, 30);
     this->closeButton->setGeometry(770, 0, 30, 30);
+    this->minButton->setGeometry(740, 0, 30, 30);
     this->trueImage->setGeometry(350, 550, 80, 30);
 
     this->expressButton->setIcon(QIcon(":/images/expression"));
@@ -61,6 +63,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent) :
     connect(this->sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
     connect(this->picButton, SIGNAL(clicked()), this, SLOT(on_picButton_clicked()));
     connect(this->closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
+    connect(this->minButton, SIGNAL(clicked()), this, SLOT(on_minButton_clicked()));
     connect(this->expressButton, SIGNAL(clicked()), this, SLOT(on_expressButton_clicked()));
     connect(this->filButton, SIGNAL(clicked()), this, SLOT(on_filButton_clicked()));
 
@@ -298,6 +301,11 @@ void ChatWindow::on_expressButton_clicked()
 }
 
 void ChatWindow::on_filButton_clicked()
+{
+
+}
+
+void ChatWindow::on_minButton_clicked()
 {
 
 }

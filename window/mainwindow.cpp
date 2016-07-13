@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     searchButton(new QPushButton(this)),
     headButton(new QPushButton(this)),
     closeButton(new CloseButton(this)),
+    minButton(new MiniumButton(this)),
     headSculp(new QLabel(this)),
     searchWindow(new SearchWindow),
     umanager(0),
@@ -29,12 +30,21 @@ MainWindow::MainWindow(QWidget *parent) :
     palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
 
-    this->usernameLabel->setGeometry(88, 42, 140, 30);
+    QFont font;
+    font.setPointSize(16);
+
+    this->usernameLabel->setGeometry(88, 47, 140, 40);
     this->friendListWidget->setGeometry(20, 110, 260, 480);
     this->searchButton->setGeometry(20, 600, 60, 30);
     this->headButton->setGeometry(100, 600, 60, 30);
     this->closeButton->setGeometry(270, 1, 30, 30);
+    this->minButton->setGeometry(240, 1, 30, 30);
     this->headSculp->setGeometry(30, 42, 48, 48);
+
+    this->usernameLabel->setFont(font);
+    font.setPointSize(10);
+    this->friendListWidget->setFont(font);
+
 
     QImage head(":/images/photo");
     head.scaled(30, 30, Qt::KeepAspectRatio);
@@ -54,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(this->searchButton, SIGNAL(clicked()), this,SLOT(on_searchButton_clicked()));
     connect(this->closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_clicked()));
+    connect(this->minButton, SIGNAL(clicked()),this , SLOT(on_minButton_clicked()));
     connect(this->headButton, SIGNAL(clicked()), this, SLOT(on_headButton_clicked()));
     connect(this->friendListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_friendListWidget_doubleClicked(QListWidgetItem*)));
 
@@ -335,4 +346,9 @@ void MainWindow::onDownloadFinished(QNetworkReply *reply)
         }
         delete img;
     }
+}
+
+void MainWindow::on_minButton_clicked()
+{
+    this->hide();
 }

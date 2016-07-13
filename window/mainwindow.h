@@ -6,6 +6,7 @@
 #include "searchwindow.h"
 #include "chatwindow.h"
 #include "button/closebutton.h"
+#include "button/miniumbutton.h"
 
 class MainWindow : public QMainWindow
 {
@@ -36,6 +37,7 @@ private:
     QPushButton *searchButton;
     QPushButton *headButton;
     CloseButton *closeButton;
+    MiniumButton *minButton;
     QLabel *headSculp;
     QMap<QString, int> friendlist;
     QVector<QListWidgetItem*> items;
@@ -52,6 +54,7 @@ private slots:
     void on_searchButton_clicked();
     void on_friendListWidget_doubleClicked(QListWidgetItem *item);
     void on_closeButton_clicked();
+    void on_minButton_clicked();
     void on_headButton_clicked();
     void onUploadFinished(QNetworkReply *reply);
     void onDownloadFinished(QNetworkReply *reply);

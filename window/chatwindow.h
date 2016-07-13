@@ -35,6 +35,7 @@ private:
     QPushButton *expressButton;
     QPushButton *filButton;
     CloseButton *closeButton;
+    MiniumButton *minButton;
     QRadioButton *trueImage;
     QString picPath;
     QString imgTime;
@@ -51,6 +52,7 @@ private slots:
     void on_closeButton_clicked();
     void on_expressButton_clicked();
     void on_filButton_clicked();
+    void on_minButton_clicked();
 
 };
 
