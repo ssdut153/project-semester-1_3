@@ -18,6 +18,7 @@ class LoginGroupBox;
 class WaitingGroupBox;
 
 class CloseButton;
+class MiniumButton;
 
 class ExitMessageBox;
 class LogoutMessageBox;
