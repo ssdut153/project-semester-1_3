@@ -13,7 +13,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = chat
 TEMPLATE = app
 
-SOURCES += main.cpp \
+SOURCES += \
+    main.cpp \
     window/loginwindow.cpp \
     window/mainwindow.cpp \
     window/chatwindow.cpp \
@@ -54,7 +55,8 @@ SOURCES += main.cpp \
     helper.cpp \
     database.cpp
 
-HEADERS  += stdafx.h \
+HEADERS  += \
+    stdafx.h \
     window/loginwindow.h \
     window/mainwindow.h \
     window/chatwindow.h \
@@ -100,10 +102,7 @@ RESOURCES += \
     images.qrc
 
 DISTFILES += \
-    ico.rc \
-    .gitignore \
-    LICENSE \
-    README.md
+    ico.rc
 
 RC_FILE = \
      ico.rc

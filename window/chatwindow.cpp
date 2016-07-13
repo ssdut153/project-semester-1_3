@@ -251,6 +251,7 @@ void ChatWindow::onFinished(QNetworkReply *reply)
         this->messageEdit->append("发送失败");
     }
 }
+
 void ChatWindow::onReceiveFinished(QNetworkReply *reply)
 {
     if(reply->error() == QNetworkReply::NoError)
