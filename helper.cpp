@@ -17,7 +17,6 @@
 #include "messagebox/logoutmessagebox.h"
 #include "messagebox/addfriendmessagebox.h"
 #include "database.h"
-#include <QDebug>
 
 Helper::Helper():
     client(0)
@@ -68,7 +67,6 @@ void Helper::readClient()
 {
     CommonElements *ce = CommonElements::getInstance();
     QByteArray str = ce->client->readAll();
-    qDebug()<<str;
     QString head = this->getfromJson(str, "head");
     if(head == "loginFeedBack")
     {
@@ -140,7 +138,8 @@ void Helper::readClient()
         {
             Database *db = Database::getInstance(pm.ToUserName);
             db->addMessage(pm.FromUserName, 0, pm.CreateTime,pm.Content);
-            chatWindow->getMessageEdit()->append(pm.FromUserName +" "+ pm.CreateTime);
+            QString str = QString("<span style=\"color:green;\">") + pm.FromUserName + "</span> <span style=\"color:cyan;\">" + pm.CreateTime + "</span>";
+            chatWindow->getMessageEdit()->append(str);
             chatWindow->readContent(pm.Content);
         }
     }
@@ -231,7 +230,8 @@ void Helper::readClient()
                 {
                     Database *db = Database::getInstance(lm.user);
                     db->addMessage(lm.messageFromUsers[i], 0, lm.createTime[i], lm.createTime[i]);
-                    chatWindow->getMessageEdit()->append(lm.messageFromUsers[i] +" "+ lm.createTime[i]);
+                    QString str = QString("<span style=\"color:green;\">") + lm.messageFromUsers[i] + "</span> <span style=\"color:cyan;\">" + lm.createTime[i] + "</span>";
+                    chatWindow->getMessageEdit()->append(str);
                     chatWindow->readContent(lm.contents[i]);
                 }
             }
@@ -271,7 +271,6 @@ void Helper::readClient()
 
 void Helper::writeClient(Message &message)
 {
-    qDebug()<<message.getJsonString();
     QTcpSocket *client = CommonElements::getInstance()->client;
     client->write(message.getJsonString());
 //    client->waitForBytesWritten();

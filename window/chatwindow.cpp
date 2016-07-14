@@ -112,6 +112,10 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
         this->friendHead->setPixmap(QPixmap::fromImage(imgScaled));
     }
 
+    Database *db = Database::getInstance("");
+
+    db->loadMessage(this, this->friendName);
+
 }
 
 QTextEdit *ChatWindow::getMessageEdit()
@@ -149,7 +153,7 @@ void ChatWindow::on_sendButton_clicked()
         Helper *helper = Helper::getInstance();
         helper->writeClient(pm);
         this->sendEdit->clear();
-        this->messageEdit->append(QString("<span style=\"color: blue;\">") + this->username +  "</span> <span style=\"color:green;\">" + time + "</span>");
+        this->messageEdit->append(QString("<span style=\"color: blue;\">") + this->username +  "</span> <span style=\"color:cyan;\">" + time + "</span>");
         readContent(content);
         Database *db = Database::getInstance(this->username);
         db->addMessage(this->friendName, 1, time, content);
@@ -595,7 +599,6 @@ void ChatWindow::updateFriendHead(){
     connect(dmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onDownloadFinished(QNetworkReply*)));
     QString url = "http://upload.ssdut153.cn/touxiang/head_" + this->friendName + ".png";
     QUrl u(url);
-    qDebug()<<url;
     dmanager->get(QNetworkRequest(u));
 }
 
@@ -608,7 +611,6 @@ void ChatWindow::onDownloadFinished(QNetworkReply *reply)
         if(!(img->isNull()))
         {
             img->save(dPath);
-            qDebug()<<dPath;
             if(QFile(dPath).exists())
             {
                 QImage imgScaled(dPath);

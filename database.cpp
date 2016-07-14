@@ -6,12 +6,10 @@ Database::Database(QString username, QObject *parent) :
     database(QSqlDatabase::addDatabase("QSQLITE"))
 {
     database.setDatabaseName(username);
-    database.setUserName("root");
-    database.setPassword("12345678");
     if(!database.open())
     {
-        CommonElements *ce = CommonElements::getInstance();
-        ce->getApplication()->quit();
+//        CommonElements *ce = CommonElements::getInstance();
+//        ce->getApplication()->quit();
     }
 }
 
@@ -19,8 +17,6 @@ bool Database::createFriendTable(QString friendName)
 {
     QString sql = QString("create table ") + friendName + "(messagetime datetime not null, send integer not null, message text not null)";
     QSqlQuery query;
-//    query.prepare(sql);
-//    query.addBindValue(friendName);
     if(query.exec(sql))
     {
         return true;
@@ -30,6 +26,36 @@ bool Database::createFriendTable(QString friendName)
 //        CommonElements *ce = CommonElements::getInstance();
 //        ce->getApplication()->quit();
         return false;
+    }
+}
+
+void Database::loadMessage(ChatWindow *chatWindow, QString friendName)
+{
+    QString sql = QString("select send, messagetime, message from ") + friendName + " order by messagetime asc";
+    QSqlQuery query;
+    if(query.exec(sql))
+    {
+        while(query.next())
+        {
+            QString str;
+            int send = query.value(0).toInt();
+            if(send == 0)
+            {
+                str = QString("<span style=\"color: green;\">") + friendName + "</span>";
+            }
+            else
+            {
+                QString username = CommonElements::getInstance()->getUsername();
+                str = QString("<span style=\"color: blue;\">") + username + "</span>";
+            }
+
+            QString time = query.value(1).toString();
+            str += " <span style=\"color:cyan\">" + time + "</span>";
+            chatWindow->getMessageEdit()->append(str);
+            QString content = query.value(2).toString();
+            chatWindow->readContent(content);
+
+        }
     }
 }
 
@@ -50,12 +76,10 @@ bool Database::addMessage(QString friendName, bool send, QString time, QString m
     query.bindValue(":message", message);
     if(query.exec())
     {
-        qDebug()<<"存储记录成功";
         return true;
     }
     else
     {
-        qDebug()<<"存储记录失败";
         return false;
     }
 }

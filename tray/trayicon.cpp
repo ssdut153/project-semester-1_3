@@ -22,10 +22,8 @@ TrayIcon::~TrayIcon()
 
 void TrayIcon::on_trayIcon_clicked(QSystemTrayIcon::ActivationReason reason)
 {
-    switch(reason)
+    if(reason == QSystemTrayIcon::ActivationReason::Trigger || reason == QSystemTrayIcon::ActivationReason::Trigger)
     {
-    case QSystemTrayIcon::Trigger:
-    case QSystemTrayIcon::DoubleClick:
         CommonElements *ce = CommonElements::getInstance();
         if(ce->isLogin())
         {
@@ -35,6 +33,5 @@ void TrayIcon::on_trayIcon_clicked(QSystemTrayIcon::ActivationReason reason)
         {
             ce->getLoginWindow()->show();
         }
-        break;
     }
 }

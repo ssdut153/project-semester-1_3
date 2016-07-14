@@ -95,7 +95,8 @@ void MainWindow::loadFriendList(QMap<QString, int> &users)
     {
         friendlist.insert(it.key(), it.value());
     }
-//    Database *db = Database::getInstance("");
+    Database *db = Database::getInstance("");
+    db->createFriendTables(users);
     for(QMap<QString, int>::iterator it = friendlist.begin();it != friendlist.end(); it++)
     {
         QListWidgetItem *item = new QListWidgetItem;
@@ -177,6 +178,10 @@ void MainWindow::addFriendItem(QString friendName, int status)
             return;
         }
     }
+
+    Database *db = Database::getInstance("");
+    db->createFriendTable(friendName);
+
     QListWidgetItem *item = new QListWidgetItem;
     if(status == 0)
     {

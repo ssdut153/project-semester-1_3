@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
+#include "window/chatwindow.h"
 
 class Database : public QObject
 {
@@ -13,6 +14,7 @@ public:
     bool createFriendTable(QString friendName);
     bool createFriendTables(QMap<QString, int> &friendNames);
     bool addMessage(QString friendName, bool send, QString time, QString message);
+    void loadMessage(ChatWindow *chatWindow, QString friendName);
 
 private:
     static Database *instance;

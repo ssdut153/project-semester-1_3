@@ -12,7 +12,14 @@ class ExpressionWindow: public QMainWindow
 public:
     explicit ExpressionWindow(ChatWindow *parent);
 
+protected:
+    void closeEvent(QCloseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+
 private:
+    void addExpression(QString exp);
     QPushButton *huajiButton;
     QPushButton *dahanButton;
     QPushButton *fennuButton;
@@ -26,12 +33,6 @@ private:
     ChatWindow *chatwindow;
     bool pressed;
     QPoint place;
-
-protected:
-    void closeEvent(QCloseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
 
 private slots:
     void on_cancelButton_clicked();

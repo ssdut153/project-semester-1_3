@@ -1,7 +1,6 @@
 #include "expressionwindow.h"
 
 ExpressionWindow::ExpressionWindow(ChatWindow *parent):
-    //QMainWindow(parent),
     huajiButton(new QPushButton(this)),
     dahanButton(new QPushButton(this)),
     fennuButton(new QPushButton(this)),
@@ -28,7 +27,6 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     palette.setBrush(QPalette::Background, QBrush(linearGradient));
     this->setPalette(palette);
 
-
     this->dahanButton->setGeometry(30, 130, 50, 50);
     this->fennuButton->setGeometry(30, 80, 50, 50);
     this->guaiqiaoButton->setGeometry(30, 30, 50, 50);
@@ -49,6 +47,7 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     this->penshuiButton->setIcon(QIcon(":/expressions/penshui"));
     this->weixiaoButton->setIcon(QIcon(":/expressions/weixiao"));
     this->yinxianButton->setIcon(QIcon(":/expressions/yinxian"));
+
     this->huajiButton->setIconSize(QSize(50,50));
     this->dahanButton->setIconSize(QSize(50,50));
     this->fennuButton->setIconSize(QSize(50,50));
@@ -58,8 +57,8 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     this->penshuiButton->setIconSize(QSize(50,50));
     this->weixiaoButton->setIconSize(QSize(50,50));
     this->yinxianButton->setIconSize(QSize(50,50));
-    this->cancelButton->setText("取消");
 
+    this->cancelButton->setText("取消");
 
     connect(huajiButton, SIGNAL(clicked()), this, SLOT(on_huajiButton_clicked()));
     connect(dahanButton, SIGNAL(clicked()), this, SLOT(on_dahanButton_clicked()));
@@ -82,17 +81,16 @@ void ExpressionWindow::closeEvent(QCloseEvent *event)
     delete this;
 }
 
-
-
 void ExpressionWindow::on_cancelButton_clicked()
 {
     chatwindow->setExpressionWindow(0);
     delete this;
 }
 
-void ExpressionWindow::on_huajiButton_clicked(){
+void ExpressionWindow::addExpression(QString exp)
+{
     chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#滑稽)");
+    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + exp);
     QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
 
     if(!cursor.atEnd())
@@ -105,124 +103,50 @@ void ExpressionWindow::on_huajiButton_clicked(){
     delete this;
 }
 
-void ExpressionWindow::on_dahanButton_clicked(){
-    chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#大汗)");
-    QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
-
-    if(!cursor.atEnd())
-    {
-        cursor.movePosition(QTextCursor::End);
-        chatwindow->getSendEdit()->setTextCursor(cursor);
-    }
-
-    chatwindow->setExpressionWindow(0);
-    delete this;
+void ExpressionWindow::on_huajiButton_clicked()
+{
+    this->addExpression("(#滑稽)");
 }
 
-void ExpressionWindow::on_fennuButton_clicked(){
-    chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#愤怒)");
-    QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
+void ExpressionWindow::on_dahanButton_clicked()
+{
+    this->addExpression("(#大汗)");
 
-    if(!cursor.atEnd())
-    {
-        cursor.movePosition(QTextCursor::End);
-        chatwindow->getSendEdit()->setTextCursor(cursor);
-    }
-
-    chatwindow->setExpressionWindow(0);
-    delete this;
 }
 
-void ExpressionWindow::on_guaiqiaoButton_clicked(){
-    chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#乖巧)");
-    QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
-
-    if(!cursor.atEnd())
-    {
-        cursor.movePosition(QTextCursor::End);
-        chatwindow->getSendEdit()->setTextCursor(cursor);
-    }
-
-    chatwindow->setExpressionWindow(0);
-    delete this;
+void ExpressionWindow::on_fennuButton_clicked()
+{
+    this->addExpression("(#愤怒)");
 }
 
-void ExpressionWindow::on_hechaButton_clicked(){
-    chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#喝茶)");
-    QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
-
-    if(!cursor.atEnd())
-    {
-        cursor.movePosition(QTextCursor::End);
-        chatwindow->getSendEdit()->setTextCursor(cursor);
-    }
-
-    chatwindow->setExpressionWindow(0);
-    delete this;
+void ExpressionWindow::on_guaiqiaoButton_clicked()
+{
+    this->addExpression("(#乖巧)");
 }
 
-void ExpressionWindow::on_kaixinButton_clicked(){
-    chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#开心)");
-    QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
-
-    if(!cursor.atEnd())
-    {
-        cursor.movePosition(QTextCursor::End);
-        chatwindow->getSendEdit()->setTextCursor(cursor);
-    }
-
-    chatwindow->setExpressionWindow(0);
-    delete this;
+void ExpressionWindow::on_hechaButton_clicked()
+{
+    this->addExpression("(#喝茶)");
 }
 
-void ExpressionWindow::on_penshuiButton_clicked(){
-    chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#喷水)");
-    QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
-
-    if(!cursor.atEnd())
-    {
-        cursor.movePosition(QTextCursor::End);
-        chatwindow->getSendEdit()->setTextCursor(cursor);
-    }
-
-    chatwindow->setExpressionWindow(0);
-    delete this;
+void ExpressionWindow::on_kaixinButton_clicked()
+{
+    this->addExpression("(#开心)");
 }
 
-void ExpressionWindow::on_weixiaoButton_clicked(){
-    chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#微笑)");
-    QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
-
-    if(!cursor.atEnd())
-    {
-        cursor.movePosition(QTextCursor::End);
-        chatwindow->getSendEdit()->setTextCursor(cursor);
-    }
-
-    chatwindow->setExpressionWindow(0);
-    delete this;
+void ExpressionWindow::on_penshuiButton_clicked()
+{
+    this->addExpression("(#喷水)");
 }
 
-void ExpressionWindow::on_yinxianButton_clicked(){
-    chatwindow->getSendEdit()->setFocus();
-    chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + "(#阴险)");
-    QTextCursor cursor = chatwindow->getSendEdit()->textCursor();
+void ExpressionWindow::on_weixiaoButton_clicked()
+{
+    this->addExpression("(#微笑)");
+}
 
-    if(!cursor.atEnd())
-    {
-        cursor.movePosition(QTextCursor::End);
-        chatwindow->getSendEdit()->setTextCursor(cursor);
-    }
-
-    chatwindow->setExpressionWindow(0);
-    delete this;
+void ExpressionWindow::on_yinxianButton_clicked()
+{
+    this->addExpression("(#阴险)");
 }
 
 void ExpressionWindow::mousePressEvent(QMouseEvent *event)
