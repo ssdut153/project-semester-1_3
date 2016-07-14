@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
-#include "common/message/base/message.h"
+#include "messages.h"
 
 class Helper:public QObject
 {
@@ -12,18 +12,18 @@ class Helper:public QObject
 private:
     explicit Helper();
     static Helper *helper;
-    QString status;
 
 private slots:
     void readClient();
-
 public:
+    ~Helper();
     static Helper *getInstance();
-    QString getfromJson(QString textJson, QString name);
+    QString getfromJson(QByteArray textJson, QString name);
     void writeClient(Message &message);
     QTcpSocket *client;
     void connectServer();
     void disconnectServer();
+    void quit();
 
 };
 

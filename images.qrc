@@ -1,5 +1,33 @@
 <RCC>
     <qresource prefix="/images">
-        <file alias="icon">images/icon.ico</file>
+        <file alias="close_2">images/close_4.png</file>
+        <file alias="close_3">images/close_6.png</file>
+        <file alias="close_0">images/close_0.png</file>
+        <file alias="file">images/file.png</file>
+        <file alias="photo">images/headSculp.jpg</file>
+        <file alias="exitBox">images/exitBox.png</file>
+        <file alias="minButton_0">images/MINIMUM.png</file>
+        <file alias="minButton_1">images/min_hover.png</file>
+        <file alias="minButton_2">images/min_pressed.png</file>
+        <file alias="ico_64">images/logo_64.ico</file>
+        <file alias="expression_1">images/expression_hover.png</file>
+        <file alias="expression_2">images/expression_press.png</file>
+        <file alias="file_1">images/file_hover.png</file>
+        <file alias="file_2">images/file_press.png</file>
+        <file alias="pic_0">images/pic.png</file>
+        <file alias="pic_1">images/pic_hover.png</file>
+        <file alias="pic_2">images/pic_press.png</file>
+        <file alias="expression">images/expression.png</file>
+    </qresource>
+    <qresource prefix="/expressions">
+        <file alias="dahan">expressions/dahan.png</file>
+        <file alias="fennu">expressions/fennu.png</file>
+        <file alias="guaiqiao">expressions/guaiqiao.png</file>
+        <file alias="hecha">expressions/hecha.png</file>
+        <file alias="huaji">expressions/huaji.png</file>
+        <file alias="kaixin">expressions/kaixin.png</file>
+        <file alias="penshui">expressions/penshui.png</file>
+        <file alias="weixiao">expressions/weixiao.png</file>
+        <file alias="yinxian">expressions/yinxian.png</file>
     </qresource>
 </RCC>

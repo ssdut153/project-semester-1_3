@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
+#include "messages.h"
 
 class TrayMenu : public QMenu
 {
@@ -14,10 +15,12 @@ private:
 public:
     explicit TrayMenu(QWidget *parent = 0);
     ~TrayMenu();
+
+protected:
+
 private slots:
     void on_exitAction_triggered();
-protected:
-//    void paintEvent(QPaintEvent *event);
+
 };
 
 #endif // TRAYMENU_H

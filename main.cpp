@@ -5,20 +5,25 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication *a = new QApplication(argc, argv);
+    QApplication a(argc, argv);
 
     CommonElements *ce = CommonElements::getInstance();
 
-//    Helper::getInstance();
+    ce->setApplication(&a);
 
-    ce->application = a;
+    ce->getTrayIcon()->show();
 
     LoginWindow *lw = new LoginWindow;
-    ce->loginWindow = lw;
+    ce->setLoginWindow(lw);
     lw->show();
+//    lw->getLoginGroupBox()->getUsernameEdit()->setFocus();
 
-    ce->trayIcon->show();
+    int r = a.exec();
 
-    return a->exec();
+    delete CommonElements::getInstance();
+
+    delete Helper::getInstance();
+
+    return r;
 
 }

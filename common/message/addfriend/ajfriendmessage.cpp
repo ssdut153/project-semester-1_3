@@ -1,18 +1,3 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: ajfriendmessage.cpp
- *  简要描述:
- *
- *  创建日期:
- *  作者:
- *  说明:
- *
- *  修改日期:
- *  作者:
- *  说明:
- ****************************************************************************************/
 #include "stdafx.h"
 #include "ajfriendmessage.h"
 
@@ -23,18 +8,13 @@ ajFriendMessage::ajFriendMessage(QString fromUserName, QString toUserName, QStri
     acpt = accept;
     head = "ajFriend";
 }
-/**
- * @brief ajFriendMessage::ajFriendMessage
- */
+
 ajFriendMessage::ajFriendMessage()
 {
     head = "ajFriend";
 }
-/**
- * @brief ajFriendMessage::getJsonString
- * @return  对应的单行Json字符串
- */
-QString ajFriendMessage::getJsonString()
+
+QByteArray ajFriendMessage::getJsonString()
 {
     QJsonObject jsonObject;
     jsonObject.insert("head", head);
@@ -43,18 +23,13 @@ QString ajFriendMessage::getJsonString()
     jsonObject.insert("accept", acpt);
     QJsonDocument jsonDocument;
     jsonDocument.setObject(jsonObject);
-    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
-    return QString(byteArray);
+    return jsonDocument.toJson(QJsonDocument::Compact);
 }
-/**
- * @brief ajFriendMessage::loadfromJson
- * @param textJson Json字符串
- * @return  bool 是否载入成功
- */
-bool ajFriendMessage::loadfromJson(QString textJson)
+
+bool ajFriendMessage::loadfromJson(QByteArray textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
         if(jsonDocument.isObject())

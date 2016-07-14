@@ -1,117 +1,89 @@
-/*****************************************************************************************
- *  Copyright(c) 2016 Yang Zhizhuang (Software School of Dalian University of Technology)
- *  All rights reserved.
- *
- *  文件名称: friendlistmessage.cpp
- *  简要描述:
- *
- *  创建日期: 2016-6-24
- *  作者: Yang Zhizhuang
- *  说明:
- *
- *  修改日期:
- *  作者:
- *  说明:
- ****************************************************************************************/
 #include "friendlistmessage.h"
-/**
- * @brief friendListMessage::friendListMessage
- * @param username 用户名
- */
+
 void friendListMessage::adduser(QString username, int status)
 {
-    user.push_back(username);
-    stat.push_back(status);
+    users.insert(username, status);
     size++;
 }
-/**
- * @brief friendListMessage::friendListMessage
- */
+
 friendListMessage::friendListMessage()
 {
     head = "friendList";
     size = 0;
 }
-/**
- * @brief friendListMessage::getJsonString
- * @return
- */
-QString friendListMessage::getJsonString()
+
+QByteArray friendListMessage::getJsonString()
 {
+    QJsonObject jsonObject;
+    jsonObject.insert("head", head);
     QJsonArray jsonArray;
-    for(int i = 0;i < size;i++)
+    for(QMap<QString, int>::iterator it = users.begin();it != users.end();it++)
     {
         QJsonObject jsonObject;
-        jsonObject.insert("username", user[i]);
-        jsonObject.insert("status", stat[i]);
+        jsonObject.insert("username", it.key());
+        jsonObject.insert("status", it.value());
         jsonArray.push_back(jsonObject);
-        QJsonDocument tempJsonDocument;
-        tempJsonDocument.setObject(jsonObject);
-        jsonArray.push_back(QString(tempJsonDocument.toJson(QJsonDocument::Compact)));
     }
+    jsonObject.insert("friendlist", jsonArray);
     QJsonDocument jsonDocument;
-    jsonDocument.setArray(jsonArray);
-    QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Compact);
-    return QString(byteArray);
+    jsonDocument.setObject(jsonObject);
+    return jsonDocument.toJson(QJsonDocument::Compact);
 }
-/**
- * @brief friendListMessage::loadfromJson
- * @param textJson
- * @return
- */
-bool friendListMessage::loadfromJson(QString textJson)
+
+bool friendListMessage::loadfromJson(QByteArray textJson)
 {
     QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson.toStdString().c_str(), &jsonParseError);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(textJson, &jsonParseError);
     if(jsonParseError.error == QJsonParseError::NoError)
     {
-        if(jsonDocument.isArray())
+        if(jsonDocument.isObject())
         {
-            QJsonArray jsonArray = jsonDocument.array();
-            size = jsonArray.size();
-            for(int i = 0;i < size;i++)
+            QJsonObject jsonObject = jsonDocument.object();
+            if(jsonObject.contains("friendlist"))
             {
-                QJsonValue jsonValue = jsonArray.at(i);
-                if(jsonValue.isObject())
+                QJsonValue friendListValue = jsonObject.take("friendlist");
+                if(friendListValue.isArray())
                 {
-                    QJsonObject tempJsonObject =jsonValue.toObject();
-                    if(tempJsonObject.contains("username"))
+                    QJsonArray jsonArray = friendListValue.toArray();
+                    size = jsonArray.size();
+                    for(int i = 0;i < size;i++)
                     {
-                        QJsonValue jsonValue = tempJsonObject.take("username");
-                        if(jsonValue.isString())
+                        QJsonValue jsonValue = jsonArray.at(i);
+                        if(jsonValue.isObject())
                         {
-                            user.push_back(jsonValue.toString());
+                            QJsonObject tempJsonObject =jsonValue.toObject();
+                            if(tempJsonObject.contains("username") && tempJsonObject.contains("status"))
+                            {
+                                QJsonValue usernameValue = tempJsonObject.take("username");
+                                QJsonValue statusValue = tempJsonObject.take("status");
+                                if(usernameValue.isString() && statusValue.isDouble())
+                                {
+                                    users.insert(usernameValue.toString(), statusValue.toInt());
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
                         else
                         {
                             return false;
                         }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                    if(tempJsonObject.contains("status"))
-                    {
-                        QJsonValue jsonValue = tempJsonObject.take("status");
-                        if(jsonValue.isDouble())
-                        {
-                            stat.push_back(jsonValue.toInt());
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return false;
                     }
                 }
                 else
                 {
                     return false;
                 }
+            }
+            else
+            {
+                return false;
             }
         }
         else

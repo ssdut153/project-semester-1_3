@@ -1,5 +1,6 @@
 #include "commonelements.h"
 #include "helper.h"
+#include "messages.h"
 
 CommonElements::CommonElements(QObject *parent):
     QObject(parent),
@@ -16,9 +17,15 @@ CommonElements::CommonElements(QObject *parent):
 
 CommonElements::~CommonElements()
 {
-    trayIcon->hide();
     delete trayIcon;
-    delete client;
+    if(login)
+    {
+        delete this->mainWindow;
+    }
+    else
+    {
+        delete this->loginWindow;
+    }
 }
 
 void CommonElements::connectServer()
@@ -48,4 +55,49 @@ CommonElements *CommonElements::getInstance()
         instance = new CommonElements;
     }
     return instance;
+}
+
+QString CommonElements::getUsername()
+{
+    return this->username;
+}
+
+LoginWindow *CommonElements::getLoginWindow()
+{
+    return this->loginWindow;
+}
+
+MainWindow *CommonElements::getMainWindow()
+{
+    return this->mainWindow;
+}
+
+QApplication *CommonElements::getApplication()
+{
+    return this->application;
+}
+
+bool CommonElements::isLogin()
+{
+    return this->login;
+}
+
+TrayIcon *CommonElements::getTrayIcon()
+{
+    return this->trayIcon;
+}
+
+void CommonElements::setUsername(QString username)
+{
+    this->username = username;
+}
+
+void CommonElements::setLoginWindow(LoginWindow *loginWindow)
+{
+    this->loginWindow = loginWindow;
+}
+
+void CommonElements::setApplication(QApplication *application)
+{
+    this->application = application;
 }

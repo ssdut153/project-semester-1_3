@@ -16,19 +16,31 @@ private:
     static CommonElements *instance;
     explicit CommonElements(QObject *parent = 0);
     friend class Helper;
-
-public:
-    ~CommonElements();
     TrayIcon *trayIcon;
     QTcpSocket *client;
-    static CommonElements *getInstance();
     QString username;
     LoginWindow *loginWindow;
     MainWindow *mainWindow;
     bool login;
     QApplication *application;
+
+public:
+    ~CommonElements();
+    static CommonElements *getInstance();
     void connectServer();
     void disconnectServer();
+
+    TrayIcon *getTrayIcon();
+    QString getUsername();
+    LoginWindow *getLoginWindow();
+    MainWindow *getMainWindow();
+    QApplication *getApplication();
+    bool isLogin();
+
+    void setUsername(QString username);
+
+    void setLoginWindow(LoginWindow *loginWindow);
+    void setApplication(QApplication *application);
 
 };
 
