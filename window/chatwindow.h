@@ -3,9 +3,10 @@
 
 #include "stdafx.h"
 #include "classes.h"
-#include "mainwindow.h"
 #include "messages.h"
-#include "expressionwindow.h"
+#include "commonelements.h"
+#include "mainwindow.h"
+#include "dialog/expressiondialog.h"
 
 class ChatWindow : public QMainWindow
 {
@@ -14,7 +15,7 @@ class ChatWindow : public QMainWindow
 public:
     explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = 0);
     QTextEdit *getMessageEdit();
-    void setExpressionWindow(ExpressionWindow *exp);
+    void setExpressionDialog(ExpressionDialog *exp);
     void receivePic(imageMessage im);
     void receiveFile(fileMessage fm);
     QTextEdit* getSendEdit();
@@ -56,7 +57,7 @@ private:
     QNetworkAccessManager *dmanager;
     bool pressed;
     QPoint place;
-    ExpressionWindow *expWindow;
+    ExpressionDialog *expDialog;
     QMap<QString,QString> expMap;
     QString dPath;
 

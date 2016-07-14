@@ -1,23 +1,24 @@
-#ifndef EXPREESSIONWINDOW_H
-#define EXPREESSIONWINDOW_H
+#ifndef EXPRESSIONDIALOG_H
+#define EXPRESSIONDIALOG_H
 
 #include "stdafx.h"
 #include "classes.h"
 #include "messages.h"
-#include "chatwindow.h"
+#include "window/chatwindow.h"
 
-class ExpressionWindow: public QMainWindow
+class ExpressionDialog: public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ExpressionWindow(ChatWindow *parent);
+    explicit ExpressionDialog(ChatWindow *parent);
 
 protected:
     void closeEvent(QCloseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     void addExpression(QString exp);
@@ -49,4 +50,4 @@ private slots:
 
 };
 
-#endif // EXPREESSIONWINDOW_H
+#endif // EXPRESSIONDIALOG_H

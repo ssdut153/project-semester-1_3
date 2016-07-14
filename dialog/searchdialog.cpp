@@ -1,13 +1,14 @@
-#include "searchwindow.h"
+#include "dialog/searchdialog.h"
 #include "commonelements.h"
 
-SearchWindow::SearchWindow(QWidget *parent) :
-    QMainWindow(parent),
+SearchDialog::SearchDialog(QWidget *parent) :
+    QDialog(parent),
     searchEdit(new QLineEdit(this)),
     searchButton(new QPushButton(this)),
     resultLabel(new QLabel(this)),
     addButton(new QPushButton(this)),
-    closeButton(new CloseButton(this))
+    closeButton(new CloseButton(this)),
+    messageLabel(new QLabel(this))
 {
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
@@ -24,17 +25,20 @@ SearchWindow::SearchWindow(QWidget *parent) :
 
     this->searchButton->setText("查询");
     this->addButton->setText("添加");
+    this->messageLabel->setText("<span style=\"color: red;\">该用户不存在</span>");
 
     this->searchEdit->setGeometry(35, 60, 200, 30);
     this->searchButton->setGeometry(278, 60, 60, 30);
     this->resultLabel->setGeometry(36, 110, 150, 30);
     this->addButton->setGeometry(278, 110, 60, 30);
     this->closeButton->setGeometry(370, 0, 30, 30);
+    this->messageLabel->setGeometry(36, 110, 150, 30);
 
     this->searchEdit->setStyleSheet("border:none;");
 
     this->resultLabel->hide();
     this->addButton->hide();
+    this->messageLabel->hide();
 
     connect(this->searchButton, SIGNAL(clicked()), this, SLOT(on_searchButton_clicked()));
     connect(this->addButton, SIGNAL(clicked()), this, SLOT(on_addButton_clicked()));
@@ -42,7 +46,7 @@ SearchWindow::SearchWindow(QWidget *parent) :
 
 }
 
-void SearchWindow::on_searchButton_clicked()
+void SearchDialog::on_searchButton_clicked()
 {
     this->resultLabel->clear();
     this->resultLabel->hide();
@@ -56,7 +60,7 @@ void SearchWindow::on_searchButton_clicked()
     }
 }
 
-void SearchWindow::on_addButton_clicked()
+void SearchDialog::on_addButton_clicked()
 {
     QString addName = this->resultLabel->text();
     if(addName != "")
@@ -68,14 +72,21 @@ void SearchWindow::on_addButton_clicked()
     }
 }
 
-void SearchWindow::showSearchUser(QString searchName)
+void SearchDialog::showSearchUser(QString searchName)
 {
-    this->resultLabel->setText(searchName);
-    this->resultLabel->show();
-    this->addButton->show();
+    if(searchName == "")
+    {
+        this->messageLabel->show();
+    }
+    else
+    {
+        this->resultLabel->setText(searchName);
+        this->resultLabel->show();
+        this->addButton->show();
+    }
 }
 
-void SearchWindow::closeEvent(QCloseEvent *event)
+void SearchDialog::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     this->hide();
@@ -85,18 +96,32 @@ void SearchWindow::closeEvent(QCloseEvent *event)
     this->addButton->hide();
 }
 
-void SearchWindow::mousePressEvent(QMouseEvent *event)
+void SearchDialog::keyPressEvent(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+        this->on_searchButton_clicked();
+        break;
+    case Qt::Key_Escape:
+        this->on_closeButton_clicked();
+        break;
+    }
+}
+
+void SearchDialog::mousePressEvent(QMouseEvent *event)
 {
     place = event->pos();
     pressed = true;
 }
 
-void SearchWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+void SearchDialog::mouseReleaseEvent(QMouseEvent */*event*/)
 {
     pressed = false;
 }
 
-void SearchWindow::mouseMoveEvent(QMouseEvent *event)
+void SearchDialog::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint temp = event->pos();
     if(pressed)
@@ -105,11 +130,12 @@ void SearchWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void SearchWindow::on_closeButton_clicked()
+void SearchDialog::on_closeButton_clicked()
 {
     this->hide();
     this->searchEdit->clear();
     this->resultLabel->clear();
     this->resultLabel->hide();
     this->addButton->hide();
+    this->messageLabel->hide();
 }

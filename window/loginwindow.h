@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "classes.h"
 #include "messages.h"
-#include "regwindow.h"
+#include "dialog/regdialog.h"
 #include "groupbox/logingroupbox.h"
 #include "groupbox/waitinggroupbox.h"
 #include "button/closebutton.h"

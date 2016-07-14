@@ -78,20 +78,20 @@ void Helper::readClient()
     else if(head == "regFeedBack")
     {
         QString status = this->getfromJson(str, "status");
-        RegWindow *regWindow = ce->loginWindow->getLoginGroupBox()->getRegWindow();
-        if(regWindow != 0)
+        RegDialog *regDialog = ce->loginWindow->getLoginGroupBox()->getRegDialog();
+        if(regDialog != 0)
         {
             if(status == "true")
             {
-                loginMessage lm(regWindow->getUsername(), regWindow->getPassword());
+                loginMessage lm(regDialog->getUsername(), regDialog->getPassword());
                 this->writeClient(lm);
             }
             else
             {
                 this->disconnectServer();
                 ce->client->disconnect();
-                regWindow->getMessageLabel()->setText("注册失败");
-                regWindow->getRegButton()->setEnabled(true);
+                regDialog->getMessageLabel()->setText("注册失败");
+                regDialog->getRegButton()->setEnabled(true);
             }
         }
     }
@@ -144,13 +144,17 @@ void Helper::readClient()
     else if(head == "userInfo")
     {
         QString status = this->getfromJson(str, "status");
-        if(status == "true")
+        SearchDialog *sd = ce->mainWindow->getSearchDialog();
+        if(sd != 0)
         {
-            QString searchName = this->getfromJson(str, "username");
-            SearchWindow *sw = ce->mainWindow->getSearchWindow();
-            if(sw != 0)
+            if(status == "true")
             {
-                sw->showSearchUser(searchName);
+                QString searchName = this->getfromJson(str, "username");
+                sd->showSearchUser(searchName);
+            }
+            else
+            {
+                sd->showSearchUser("");
             }
         }
     }
@@ -261,7 +265,7 @@ void Helper::writeClient(Message &message)
 {
     QTcpSocket *client = CommonElements::getInstance()->client;
     client->write(message.getJsonString());
-//    client->waitForBytesWritten();
+    //    client->waitForBytesWritten();
 }
 
 void Helper::quit()

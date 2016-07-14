@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     closeButton(new CloseButton(this)),
     minButton(new MiniumButton(this)),
     headSculp(new QLabel(this)),
-    searchWindow(new SearchWindow),
+    searchDialog(new SearchDialog),
     umanager(0),
     dmanager(0)
 {
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete this->searchWindow;
+    delete this->searchDialog;
     if(dmanager!=0)
     {
         delete dmanager;
@@ -163,9 +163,9 @@ ChatWindow *MainWindow::getChatWindow(QString friendName)
     return 0;
 }
 
-SearchWindow *MainWindow::getSearchWindow()
+SearchDialog *MainWindow::getSearchDialog()
 {
-    return this->searchWindow;
+    return this->searchDialog;
 }
 
 void MainWindow::addFriendItem(QString friendName, int status)
@@ -196,7 +196,7 @@ void MainWindow::addFriendItem(QString friendName, int status)
 
 void MainWindow::on_searchButton_clicked()
 {
-    searchWindow->show();
+    searchDialog->show();
 }
 
 void MainWindow::on_friendListWidget_doubleClicked(QListWidgetItem *item)

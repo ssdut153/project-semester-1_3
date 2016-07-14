@@ -5,11 +5,12 @@ class TrayIcon;
 class TrayMenu;
 
 class LoginWindow;
-class RegWindow;
+class RegDialog;
 class MainWindow;
 class ChatWindow;
-class SearchWindow;
-class ExpressionWindow;
+
+class SearchDialog;
+class ExpressionDialog;
 
 class CommonElements;
 class Helper;

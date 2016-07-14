@@ -1,6 +1,6 @@
-#include "expressionwindow.h"
+#include "expressiondialog.h"
 
-ExpressionWindow::ExpressionWindow(ChatWindow *parent):
+ExpressionDialog::ExpressionDialog(ChatWindow *parent):
     huajiButton(new QPushButton(this)),
     dahanButton(new QPushButton(this)),
     fennuButton(new QPushButton(this)),
@@ -13,11 +13,13 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     cancelButton(new QPushButton(this)),
     chatwindow(parent)
 {
+
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
+
     this->setMinimumSize(210, 250);
     this->setMaximumSize(210, 250);
-    this->cancelButton->setGeometry(30, 200, 150, 30);
 
-    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->cancelButton->setGeometry(30, 200, 150, 30);
 
     QLinearGradient linearGradient(QPoint(0, 0), QPoint(0, 210));
     linearGradient.setColorAt(0, QColor(133, 218, 223));
@@ -37,7 +39,6 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     this->yinxianButton->setGeometry(130, 80, 50, 50);
     this->huajiButton->setGeometry(130, 30, 50, 50);
 
-
     this->huajiButton->setIcon(QIcon(":/expressions/huaji"));
     this->dahanButton->setIcon(QIcon(":/expressions/dahan"));
     this->fennuButton->setIcon(QIcon(":/expressions/fennu"));
@@ -48,17 +49,18 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent):
     this->weixiaoButton->setIcon(QIcon(":/expressions/weixiao"));
     this->yinxianButton->setIcon(QIcon(":/expressions/yinxian"));
 
-    this->huajiButton->setIconSize(QSize(50,50));
-    this->dahanButton->setIconSize(QSize(50,50));
-    this->fennuButton->setIconSize(QSize(50,50));
-    this->guaiqiaoButton->setIconSize(QSize(50,50));
-    this->hechaButton->setIconSize(QSize(50,50));
-    this->kaixinButton->setIconSize(QSize(50,50));
-    this->penshuiButton->setIconSize(QSize(50,50));
-    this->weixiaoButton->setIconSize(QSize(50,50));
-    this->yinxianButton->setIconSize(QSize(50,50));
+    this->huajiButton->setIconSize(QSize(50, 50));
+    this->dahanButton->setIconSize(QSize(50, 50));
+    this->fennuButton->setIconSize(QSize(50, 50));
+    this->guaiqiaoButton->setIconSize(QSize(50, 50));
+    this->hechaButton->setIconSize(QSize(50, 50));
+    this->kaixinButton->setIconSize(QSize(50, 50));
+    this->penshuiButton->setIconSize(QSize(50, 50));
+    this->weixiaoButton->setIconSize(QSize(50, 50));
+    this->yinxianButton->setIconSize(QSize(50, 50));
 
     this->cancelButton->setText("取消");
+    this->cancelButton->setFocus();
 
     connect(huajiButton, SIGNAL(clicked()), this, SLOT(on_huajiButton_clicked()));
     connect(dahanButton, SIGNAL(clicked()), this, SLOT(on_dahanButton_clicked()));
@@ -74,20 +76,20 @@ ExpressionWindow::ExpressionWindow(ChatWindow *parent):
 
 }
 
-void ExpressionWindow::closeEvent(QCloseEvent *event)
+void ExpressionDialog::closeEvent(QCloseEvent *event)
 {
     event->ignore();
-    chatwindow->setExpressionWindow(0);
+    chatwindow->setExpressionDialog(0);
     delete this;
 }
 
-void ExpressionWindow::on_cancelButton_clicked()
+void ExpressionDialog::on_cancelButton_clicked()
 {
-    chatwindow->setExpressionWindow(0);
+    chatwindow->setExpressionDialog(0);
     delete this;
 }
 
-void ExpressionWindow::addExpression(QString exp)
+void ExpressionDialog::addExpression(QString exp)
 {
     chatwindow->getSendEdit()->setFocus();
     chatwindow->getSendEdit()->setText(chatwindow->getSendEdit()->toPlainText() + exp);
@@ -99,68 +101,77 @@ void ExpressionWindow::addExpression(QString exp)
         chatwindow->getSendEdit()->setTextCursor(cursor);
     }
 
-    chatwindow->setExpressionWindow(0);
+    chatwindow->setExpressionDialog(0);
     delete this;
 }
 
-void ExpressionWindow::on_huajiButton_clicked()
+void ExpressionDialog::on_huajiButton_clicked()
 {
     this->addExpression("(#滑稽)");
 }
 
-void ExpressionWindow::on_dahanButton_clicked()
+void ExpressionDialog::on_dahanButton_clicked()
 {
     this->addExpression("(#大汗)");
-
 }
 
-void ExpressionWindow::on_fennuButton_clicked()
+void ExpressionDialog::on_fennuButton_clicked()
 {
     this->addExpression("(#愤怒)");
 }
 
-void ExpressionWindow::on_guaiqiaoButton_clicked()
+void ExpressionDialog::on_guaiqiaoButton_clicked()
 {
     this->addExpression("(#乖巧)");
 }
 
-void ExpressionWindow::on_hechaButton_clicked()
+void ExpressionDialog::on_hechaButton_clicked()
 {
     this->addExpression("(#喝茶)");
 }
 
-void ExpressionWindow::on_kaixinButton_clicked()
+void ExpressionDialog::on_kaixinButton_clicked()
 {
     this->addExpression("(#开心)");
 }
 
-void ExpressionWindow::on_penshuiButton_clicked()
+void ExpressionDialog::on_penshuiButton_clicked()
 {
     this->addExpression("(#喷水)");
 }
 
-void ExpressionWindow::on_weixiaoButton_clicked()
+void ExpressionDialog::on_weixiaoButton_clicked()
 {
     this->addExpression("(#微笑)");
 }
 
-void ExpressionWindow::on_yinxianButton_clicked()
+void ExpressionDialog::on_yinxianButton_clicked()
 {
     this->addExpression("(#阴险)");
 }
 
-void ExpressionWindow::mousePressEvent(QMouseEvent *event)
+void ExpressionDialog::keyPressEvent(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+    case Qt::Key_Escape:
+        this->on_cancelButton_clicked();
+        break;
+    }
+}
+
+void ExpressionDialog::mousePressEvent(QMouseEvent *event)
 {
     place = event->pos();
     pressed = true;
 }
 
-void ExpressionWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+void ExpressionDialog::mouseReleaseEvent(QMouseEvent */*event*/)
 {
     pressed = false;
 }
 
-void ExpressionWindow::mouseMoveEvent(QMouseEvent *event)
+void ExpressionDialog::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint temp = event->pos();
     if(pressed)

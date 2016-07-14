@@ -24,7 +24,7 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     filemanager(0),
     dmanager(0),
     pressed(false),
-    expWindow(0)
+    expDialog(0)
 {
 
     this->setWindowFlags(Qt::FramelessWindowHint/* | Qt::Tool*/ | Qt::X11BypassWindowManagerHint);
@@ -103,13 +103,6 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
 
     dPath = QDir::currentPath() + "/headImages/head_" + this->friendName + ".png";
     updateFriendHead();
-    if(QFile(dPath).exists())
-    {
-        QImage imgScaled(dPath);
-        imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
-        this->friendHead->setScaledContents(true);
-        this->friendHead->setPixmap(QPixmap::fromImage(imgScaled));
-    }
 
     Database *db = Database::getInstance("");
 
@@ -257,6 +250,7 @@ void ChatWindow::onFinished(QNetworkReply *reply)
         this->messageEdit->append("发送失败");
     }
 }
+
 void ChatWindow::onReceiveFinished(QNetworkReply *reply)
 {
     if(reply->error() == QNetworkReply::NoError)
@@ -359,16 +353,16 @@ void ChatWindow::on_closeButton_clicked()
 
 void ChatWindow::on_expressButton_clicked()
 {
-    if(this->expWindow == 0)
+    if(this->expDialog == 0)
     {
-        this->expWindow = new ExpressionWindow(this);
-        expWindow->show();
+        this->expDialog = new ExpressionDialog(this);
+        expDialog->show();
     }
 }
 
-void ChatWindow::setExpressionWindow(ExpressionWindow *exp)
+void ChatWindow::setExpressionDialog(ExpressionDialog *exp)
 {
-    this->expWindow = exp;
+    this->expDialog = exp;
 }
 
 QTextEdit* ChatWindow::getSendEdit()
@@ -578,15 +572,7 @@ void ChatWindow::updateFriendHead(){
     QDir temp;
     QString path=QDir::currentPath()+"/headImages";
     bool exist = temp.exists(path);
-    if(exist)
-    {
-        QFile tempFile(path + "/head_" + this->friendName + ".png");
-        if(tempFile.exists())
-        {
-            return;
-        }
-    }
-    else
+    if(!exist)
     {
         bool ok = temp.mkdir(path);
         if(!ok)
@@ -594,6 +580,14 @@ void ChatWindow::updateFriendHead(){
             return;
         }
     }
+    if(QFile(dPath).exists())
+    {
+        QImage imgScaled(dPath);
+        imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
+        this->friendHead->setScaledContents(true);
+        this->friendHead->setPixmap(QPixmap::fromImage(imgScaled));
+    }
+
     dmanager = new QNetworkAccessManager(this);
     connect(dmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onDownloadFinished(QNetworkReply*)));
     QString url = "http://upload.ssdut153.cn/touxiang/head_" + this->friendName + ".png";

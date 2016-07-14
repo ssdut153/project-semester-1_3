@@ -1,17 +1,17 @@
-#ifndef SEARCHWINDOW_H
-#define SEARCHWINDOW_H
+#ifndef SEARCHDIALOG_H
+#define SEARCHDIALOG_H
 
 #include "stdafx.h"
 #include "classes.h"
 #include "messages.h"
 #include "button/closebutton.h"
 
-class SearchWindow : public QMainWindow
+class SearchDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SearchWindow(QWidget *parent = 0);
+    explicit SearchDialog(QWidget *parent = 0);
     void showSearchUser(QString searchName);
 
 protected:
@@ -19,6 +19,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     QLineEdit *searchEdit;
@@ -28,6 +29,7 @@ private:
     CloseButton *closeButton;
     bool pressed;
     QPoint place;
+    QLabel *messageLabel;
 
 private slots:
     void on_searchButton_clicked();
@@ -36,4 +38,4 @@ private slots:
 
 };
 
-#endif // SEARCHWINDOW_H
+#endif // SEARCHDIALOG_H

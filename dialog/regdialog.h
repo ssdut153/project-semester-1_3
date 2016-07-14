@@ -1,17 +1,17 @@
-#ifndef REGWINDOW_H
-#define REGWINDOW_H
+#ifndef REGDIALOG_H
+#define REGDIALOG_H
 
 #include "stdafx.h"
 #include "classes.h"
 #include "messages.h"
 #include "button/closebutton.h"
 
-class RegWindow : public QMainWindow
+class RegDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit RegWindow(QWidget *parent = 0);
+    explicit RegDialog(QWidget *parent = 0);
     QLabel *getMessageLabel();
     QPushButton *getRegButton();
     QString getUsername();
@@ -42,4 +42,4 @@ private slots:
 
 };
 
-#endif // REGWINDOW_H
+#endif // REGDIALOG_H
