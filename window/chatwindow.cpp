@@ -104,13 +104,6 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
 
     dPath = QDir::currentPath() + "/headImages/head_" + this->friendName + ".png";
     updateFriendHead();
-    if(QFile(dPath).exists())
-    {
-        QImage imgScaled(dPath);
-        imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
-        this->friendHead->setScaledContents(true);
-        this->friendHead->setPixmap(QPixmap::fromImage(imgScaled));
-    }
 
     Database *db = Database::getInstance("");
 
@@ -579,15 +572,7 @@ void ChatWindow::updateFriendHead(){
     QDir temp;
     QString path=QDir::currentPath()+"/headImages";
     bool exist = temp.exists(path);
-    if(exist)
-    {
-        QFile tempFile(path + "/head_" + this->friendName + ".png");
-        if(tempFile.exists())
-        {
-            return;
-        }
-    }
-    else
+    if(!exist)
     {
         bool ok = temp.mkdir(path);
         if(!ok)
@@ -595,6 +580,14 @@ void ChatWindow::updateFriendHead(){
             return;
         }
     }
+    if(QFile(dPath).exists())
+    {
+        QImage imgScaled(dPath);
+        imgScaled.scaled(48, 48, Qt::KeepAspectRatio);
+        this->friendHead->setScaledContents(true);
+        this->friendHead->setPixmap(QPixmap::fromImage(imgScaled));
+    }
+
     dmanager = new QNetworkAccessManager(this);
     connect(dmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onDownloadFinished(QNetworkReply*)));
     QString url = "http://upload.ssdut153.cn/touxiang/head_" + this->friendName + ".png";
