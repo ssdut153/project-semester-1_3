@@ -178,7 +178,7 @@ void Helper::readClient()
     {
         newFriendMessage nfm;
         nfm.loadfromJson(str);
-        ce->mainWindow->addFriendItem(nfm.user, 1);
+        ce->mainWindow->addFriendItem(nfm.user, nfm.status);
     }
     else if(head == "forceLogout")
     {
