@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
+#include "messages.h"
 #include "button/closebutton.h"
 
 class RegWindow : public QMainWindow

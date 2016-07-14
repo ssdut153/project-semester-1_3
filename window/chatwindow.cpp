@@ -1,7 +1,6 @@
 #include "chatwindow.h"
 #include "commonelements.h"
 #include "helper.h"
-#include "common/message/function/p2pmessage.h"
 #include "database.h"
 
 ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):

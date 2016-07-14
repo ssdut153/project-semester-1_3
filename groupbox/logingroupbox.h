@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
+#include "messages.h"
 #include "window/regwindow.h"
 
 class LoginGroupBox:public QGroupBox

@@ -4,9 +4,7 @@
 #include "stdafx.h"
 #include "classes.h"
 #include "mainwindow.h"
-#include "commonelements.h"
-#include "common/message/function/imagemessage.h"
-#include "common/message/function/filemessage.h"
+#include "messages.h"
 #include "expressionwindow.h"
 
 class ChatWindow : public QMainWindow

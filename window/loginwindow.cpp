@@ -1,7 +1,6 @@
 #include "loginwindow.h"
 #include "helper.h"
 #include "commonelements.h"
-#include "common/message/loginout/loginmessage.h"
 #include "messagebox/exitmessagebox.h"
 
 LoginWindow::LoginWindow(QWidget *parent) :

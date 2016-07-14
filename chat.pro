@@ -94,7 +94,8 @@ HEADERS  += stdafx.h \
     commonelements.h \
     helper.h \
     classes.h \
-    database.h
+    database.h \
+    messages.h
 
 RESOURCES += \
     images.qrc

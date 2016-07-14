@@ -1,7 +1,6 @@
 #include "logingroupbox.h"
 #include "commonelements.h"
 #include "helper.h"
-#include "common/message/loginout/loginmessage.h"
 #include "window/loginwindow.h"
 
 LoginGroupBox::LoginGroupBox(QWidget *parent):

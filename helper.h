@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
-#include "common/message/base/message.h"
+#include "messages.h"
 
 class Helper:public QObject
 {

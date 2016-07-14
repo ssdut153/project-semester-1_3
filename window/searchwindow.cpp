@@ -1,7 +1,5 @@
 #include "searchwindow.h"
 #include "commonelements.h"
-#include "common/message/addfriend/addfriendmessage.h"
-#include "common/message/searchuser/searchusermessage.h"
 
 SearchWindow::SearchWindow(QWidget *parent) :
     QMainWindow(parent),

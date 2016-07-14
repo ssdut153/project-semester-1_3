@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
+#include "messages.h"
 #include "regwindow.h"
 #include "groupbox/logingroupbox.h"
 #include "groupbox/waitinggroupbox.h"

@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
+#include "messages.h"
 
 class AddFriendMessageBox:public QMessageBox
 {

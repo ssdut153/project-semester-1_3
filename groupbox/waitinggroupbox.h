@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
+#include "messages.h"
 #include "commonelements.h"
 #include "helper.h"
 

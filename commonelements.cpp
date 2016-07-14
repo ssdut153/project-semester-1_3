@@ -1,5 +1,6 @@
 #include "commonelements.h"
 #include "helper.h"
+#include "messages.h"
 
 CommonElements::CommonElements(QObject *parent):
     QObject(parent),

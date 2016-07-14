@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "classes.h"
+#include "messages.h"
 #include "searchwindow.h"
 #include "chatwindow.h"
 #include "button/closebutton.h"

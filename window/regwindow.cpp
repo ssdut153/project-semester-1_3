@@ -1,6 +1,5 @@
 #include "regwindow.h"
 #include "commonelements.h"
-#include "common/message/reg/regusermessage.h"
 
 RegWindow::RegWindow(QWidget *parent) :
     QMainWindow(parent),

@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "commonelements.h"
 #include "helper.h"
-#include "common/message/friendlist/getfriendlistmessage.h"
 #include "database.h"
 
 MainWindow::MainWindow(QWidget *parent) :

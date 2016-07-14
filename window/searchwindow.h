@@ -2,6 +2,8 @@
 #define SEARCHWINDOW_H
 
 #include "stdafx.h"
+#include "classes.h"
+#include "messages.h"
 #include "button/closebutton.h"
 
 class SearchWindow : public QMainWindow
