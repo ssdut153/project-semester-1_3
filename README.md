@@ -9,14 +9,13 @@ We decide to develop an online chatting software named ChatMai and these are the
     Japanaese name: Simura Yousuke
     Occupation: Student(Bachelor) @ Software School of Dalian University of Technology
     E-mail: yzz@mail.dlut.edu.cn
-### Codes
-## Server
+### Server Codes
     English name: Jason Yang
     Chinese name: 杨志庄
     Japanaese name: Simura Yousuke
     Occupation: Student(Bachelor) @ Software School of Dalian University of Technology
     E-mail: yzz@mail.dlut.edu.cn
-## Client
+### Client Codes
     Chinese name: 胡文强
     Occupation: Student(Bachelor) @ Software School of Dalian University of Technology
 
