@@ -30,3 +30,5 @@ We decide to develop an online chatting software named ChatMai and these are the
 ### Debug & Test
     Chinese name: 曹迈
     Occupation: Student(Bachelor) @ Software School of Dalian University of Technology
+### Server codes on github
+[https://github.com/ssdut153/testServerGUI](https://github.com/ssdut153/testServerGUI)
