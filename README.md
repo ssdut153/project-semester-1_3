@@ -27,7 +27,7 @@ We decide to develop an online chatting software named ChatMai and these are the
     
     Chinese name: 胡雨澄
     Occupation: Student(Bachelor) @ Software School of Dalian University of Technology
-### Debug & Test
+### <del>Debug & Test</del> Documents
     Chinese name: 曹迈
     Occupation: Student(Bachelor) @ Software School of Dalian University of Technology
 ### Server codes on github
