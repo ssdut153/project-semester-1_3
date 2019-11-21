@@ -11,7 +11,7 @@ class RegDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RegDialog(QWidget *parent = 0);
+    explicit RegDialog(QWidget *parent = nullptr);
     QLabel *getMessageLabel();
     QPushButton *getRegButton();
     QString getUsername();

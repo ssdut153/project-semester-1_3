@@ -19,7 +19,7 @@ public:
 
 private:
     static Database *instance;
-    explicit Database(QString username, QObject *parent = 0);
+    explicit Database(QString username, QObject *parent = nullptr);
     QSqlDatabase database;
 
 private slots:

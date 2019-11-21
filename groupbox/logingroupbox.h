@@ -11,7 +11,7 @@ class LoginGroupBox:public QGroupBox
     Q_OBJECT
 
 public:
-    explicit LoginGroupBox(QWidget *parent = 0);
+    explicit LoginGroupBox(QWidget *parent = nullptr);
     ~LoginGroupBox();
     RegDialog *getRegDialog();
     void setRegDialog(RegDialog *regDialog);

@@ -7,7 +7,7 @@
 #include "messagebox/addfriendmessagebox.h"
 
 Helper::Helper():
-    client(0)
+    client(nullptr)
 {
 
 }
@@ -26,7 +26,7 @@ void Helper::connectServer()
 void Helper::disconnectServer()
 {
     disconnect(client, SIGNAL(readyRead()), this, SLOT(readClient()));
-    client = 0;
+    client = nullptr;
 }
 
 QString Helper::getfromJson(QByteArray textJson, QString key)
@@ -65,7 +65,7 @@ void Helper::readClient()
             ce->login = true;
             ce->loginWindow->hide();
             delete ce->loginWindow;
-            ce->loginWindow = 0;
+            ce->loginWindow = nullptr;
             MainWindow *mw = new MainWindow;
             ce->mainWindow = mw;
             mw->show();
@@ -79,7 +79,7 @@ void Helper::readClient()
     {
         QString status = this->getfromJson(str, "status");
         RegDialog *regDialog = ce->loginWindow->getLoginGroupBox()->getRegDialog();
-        if(regDialog != 0)
+        if(regDialog != nullptr)
         {
             if(status == "true")
             {
@@ -88,8 +88,8 @@ void Helper::readClient()
             }
             else
             {
-                this->disconnectServer();
-                ce->client->disconnect();
+                CommonElements *ce = CommonElements::getInstance();
+//                ce->disconnectServer();
                 regDialog->getMessageLabel()->setText("注册失败");
                 regDialog->getRegButton()->setEnabled(true);
             }
@@ -111,7 +111,7 @@ void Helper::readClient()
         if(fbm.stat == "sendfail")
         {
             ChatWindow *chatWindow = ce->mainWindow->getChatWindow(fbm.user);
-            if(chatWindow != 0)
+            if(chatWindow != nullptr)
             {
                 chatWindow->getMessageEdit()->append("发送失败");
             }
@@ -122,7 +122,7 @@ void Helper::readClient()
         p2pMessage pm;
         pm.loadfromJson(str);
         ChatWindow *chatWindow = ce->mainWindow->getChatWindow(pm.FromUserName);
-        if(chatWindow != 0)
+        if(chatWindow != nullptr)
         {
             Database *db = Database::getInstance(pm.ToUserName);
             db->addMessage(pm.FromUserName, 0, pm.CreateTime,pm.Content);
@@ -145,7 +145,7 @@ void Helper::readClient()
     {
         QString status = this->getfromJson(str, "status");
         SearchDialog *sd = ce->mainWindow->getSearchDialog();
-        if(sd != 0)
+        if(sd != nullptr)
         {
             if(status == "true")
             {
@@ -186,10 +186,10 @@ void Helper::readClient()
         flm.loadfromJson(str);
         if(flm.user == ce->username)
         {
-            ce->disconnectServer();
+//            ce->disconnectServer();
             ce->loginWindow = new LoginWindow;
             delete ce->mainWindow;
-            ce->mainWindow = 0;
+            ce->mainWindow = nullptr;
             ce->username = "";
             ce->login = false;
             ce->loginWindow->show();
@@ -202,7 +202,7 @@ void Helper::readClient()
         imageMessage pm;
         pm.loadfromJson(str);
         ChatWindow *chatWindow = ce->mainWindow->getChatWindow(pm.FromUserName);
-        if(chatWindow != 0)
+        if(chatWindow != nullptr)
         {/*
             Database *db = Database::getInstance(pm.ToUserName);
             db->addMessage(pm.FromUserName, 0, pm.CreateTime,pm.Content);*/
@@ -218,7 +218,7 @@ void Helper::readClient()
             for(int i = 0; i < size; i++)
             {
                 ChatWindow *chatWindow = ce->mainWindow->getChatWindow(lm.messageFromUsers[i]);
-                if(chatWindow != 0)
+                if(chatWindow != nullptr)
                 {
                     Database *db = Database::getInstance(lm.user);
                     db->addMessage(lm.messageFromUsers[i], 0, lm.createTime[i], lm.createTime[i]);
@@ -250,7 +250,7 @@ void Helper::readClient()
         fileMessage fm;
         fm.loadfromJson(str);
         ChatWindow *chatWindow = ce->mainWindow->getChatWindow(fm.FromUserName);
-        if(chatWindow != 0)
+        if(chatWindow != nullptr)
         {
             chatWindow->receiveFile(fm);
         }
@@ -281,20 +281,17 @@ void Helper::quit()
             helper->writeClient(lm);
             this->client->waitForBytesWritten();
         }
-        if(this->client != 0)
-        {
-            ce->disconnectServer();
-        }
+        ce->disconnectServer();
         ce->trayIcon->hide();
         ce->application->quit();
     }
 }
 
-Helper *Helper::helper = 0;
+Helper *Helper::helper = nullptr;
 
 Helper *Helper::getInstance()
 {
-    if(helper == 0)
+    if(helper == nullptr)
     {
         helper = new Helper;
     }

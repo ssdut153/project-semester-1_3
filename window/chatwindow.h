@@ -13,7 +13,7 @@ class ChatWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = 0);
+    explicit ChatWindow(QListWidgetItem *item, MainWindow *parent = nullptr);
     QTextEdit *getMessageEdit();
     void setExpressionDialog(ExpressionDialog *exp);
     void receivePic(imageMessage im);

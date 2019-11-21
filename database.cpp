@@ -97,11 +97,11 @@ bool Database::createFriendTables(QMap<QString, int> &friendNames)
     return b;
 }
 
-Database *Database::instance = 0;
+Database *Database::instance = nullptr;
 
 Database *Database::getInstance(QString username)
 {
-    if(instance == 0)
+    if(instance == nullptr)
     {
         instance = new Database(username);
     }

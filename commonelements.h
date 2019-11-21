@@ -14,7 +14,7 @@ class CommonElements:public QObject
 
 private:
     static CommonElements *instance;
-    explicit CommonElements(QObject *parent = 0);
+    explicit CommonElements(QObject *parent = nullptr);
     friend class Helper;
     TrayIcon *trayIcon;
     QTcpSocket *client;

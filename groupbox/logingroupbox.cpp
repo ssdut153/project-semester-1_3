@@ -12,7 +12,7 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
     regButton(new QPushButton(this)),
     headSculp(new QLabel(this)),
     aboutUs(new QLabel(this)),
-    regDialog(0),
+    regDialog(nullptr),
     pressed(false)
 {
     this->setGeometry(0, 0, 400, 280);
@@ -79,9 +79,10 @@ LoginGroupBox::LoginGroupBox(QWidget *parent):
 
 LoginGroupBox::~LoginGroupBox()
 {
-    if(this->regDialog != 0)
+    if(this->regDialog != nullptr)
     {
         delete this->regDialog;
+        this->regDialog = nullptr;
     }
 }
 
@@ -104,7 +105,7 @@ void LoginGroupBox::on_loginButton_clicked()
         ce->getLoginWindow()->getWaitingGroupBox()->show();
         ce->getLoginWindow()->getWaitingGroupBox()->getCancelButton()->setFocus();
         this->messageLabel->clear();
-        ce->connectServer();
+//        ce->connectServer();
         loginMessage lm(username, password);
         Helper::getInstance()->writeClient(lm);
     }

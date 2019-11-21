@@ -38,13 +38,13 @@ LoginGroupBox *LoginWindow::getLoginGroupBox()
 
 void LoginWindow::loginFail()
 {
-    CommonElements *ce = CommonElements::getInstance();
-    ce->disconnectServer();
     this->loginGroupBox->getPasswordEdit()->clear();
     this->loginGroupBox->getMessageLabel()->setText("用户名或密码错误");
     this->loginGroupBox->show();
     this->waitingGroupBox->hide();
     this->loginGroupBox->getUsernameEdit()->setFocus();
+//    CommonElements *ce = CommonElements::getInstance();
+//    ce->disconnectServer();
 }
 
 WaitingGroupBox *LoginWindow::getWaitingGroupBox()

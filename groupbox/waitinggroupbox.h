@@ -12,7 +12,7 @@ class WaitingGroupBox:public QGroupBox
     Q_OBJECT
 
 public:
-    explicit WaitingGroupBox(QWidget *parent = 0);
+    explicit WaitingGroupBox(QWidget *parent = nullptr);
     QPushButton *getCancelButton();
 
 protected:

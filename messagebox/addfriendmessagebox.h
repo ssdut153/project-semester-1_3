@@ -10,7 +10,7 @@ class AddFriendMessageBox:public QMessageBox
     Q_OBJECT
 
 public:
-    explicit AddFriendMessageBox(QString friendName, QWidget *parent = 0);
+    explicit AddFriendMessageBox(QString friendName, QWidget *parent = nullptr);
     ~AddFriendMessageBox();
 
 protected:

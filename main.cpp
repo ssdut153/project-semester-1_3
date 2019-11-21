@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
 
     ce->getTrayIcon()->show();
 
+    ce->connectServer();
+
     LoginWindow *lw = new LoginWindow;
     ce->setLoginWindow(lw);
     lw->show();

@@ -9,7 +9,7 @@ class MiniumButton : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit MiniumButton(QWidget *parent = 0);
+    explicit MiniumButton(QWidget *parent = nullptr);
 
 };
 

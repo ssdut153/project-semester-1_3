@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     minButton(new MiniumButton(this)),
     headSculp(new QLabel(this)),
     searchDialog(new SearchDialog),
-    umanager(0),
-    dmanager(0)
+    umanager(nullptr),
+    dmanager(nullptr)
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
@@ -72,13 +72,15 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete this->searchDialog;
-    if(dmanager!=0)
+    if(dmanager!=nullptr)
     {
         delete dmanager;
+        dmanager = nullptr;
     }
-    if(umanager!=0)
+    if(umanager!=nullptr)
     {
         delete umanager;
+        umanager = nullptr;
     }
     for(QMap<QListWidgetItem*, ChatWindow*>::iterator it = chatWindows.begin(); it != chatWindows.end(); it++)
     {
@@ -160,7 +162,7 @@ ChatWindow *MainWindow::getChatWindow(QString friendName)
             }
         }
     }
-    return 0;
+    return nullptr;
 }
 
 SearchDialog *MainWindow::getSearchDialog()
@@ -201,7 +203,7 @@ void MainWindow::on_searchButton_clicked()
 
 void MainWindow::on_friendListWidget_doubleClicked(QListWidgetItem *item)
 {
-    ChatWindow *cw = 0;
+    ChatWindow *cw = nullptr;
     if(chatWindows.contains(item))
     {
         cw = chatWindows.find(item).value();

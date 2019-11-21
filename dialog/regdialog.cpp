@@ -69,7 +69,7 @@ void RegDialog::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Escape:
         CommonElements *ce = CommonElements::getInstance();
-        ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(0);
+        ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(nullptr);
         delete this;
     }
 }
@@ -78,14 +78,14 @@ void RegDialog::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     CommonElements *ce = CommonElements::getInstance();
-    ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(0);
+    ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(nullptr);
     delete this;
 }
 
 void RegDialog::on_closeButton_clicked()
 {
     CommonElements *ce = CommonElements::getInstance();
-    ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(0);
+    ce->getLoginWindow()->getLoginGroupBox()->setRegDialog(nullptr);
     delete this;
 }
 
@@ -121,7 +121,7 @@ void RegDialog::on_regButton_clicked()
         CommonElements *ce = CommonElements::getInstance();
         this->username = username;
         this->password = password_1;
-        ce->connectServer();
+//        ce->connectServer();
         Helper::getInstance()->writeClient(rum);
     }
 }

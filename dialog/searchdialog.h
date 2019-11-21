@@ -11,7 +11,7 @@ class SearchDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SearchDialog(QWidget *parent = 0);
+    explicit SearchDialog(QWidget *parent = nullptr);
     void showSearchUser(QString searchName);
 
 protected:

@@ -13,7 +13,7 @@ private:
     QAction *exitAction;
 
 public:
-    explicit TrayMenu(QWidget *parent = 0);
+    explicit TrayMenu(QWidget *parent = nullptr);
     ~TrayMenu();
 
 protected:

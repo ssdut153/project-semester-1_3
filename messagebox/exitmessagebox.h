@@ -10,7 +10,7 @@ class ExitMessageBox:public QMessageBox
     Q_OBJECT
 
 public:
-    explicit ExitMessageBox(QWidget *parent = 0);
+    explicit ExitMessageBox(QWidget *parent = nullptr);
     ~ExitMessageBox();
 
 protected:

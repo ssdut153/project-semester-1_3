@@ -32,7 +32,7 @@ QPushButton *WaitingGroupBox::getCancelButton()
 void WaitingGroupBox::on_cancelButton_clicked()
 {
     CommonElements *ce = CommonElements::getInstance();
-    ce->disconnectServer();
+//    ce->disconnectServer();
     this->hide();
     ce->getLoginWindow()->getLoginGroupBox()->show();
     ce->getLoginWindow()->getLoginGroupBox()->getUsernameEdit()->setFocus();

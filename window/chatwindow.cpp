@@ -19,12 +19,12 @@ ChatWindow::ChatWindow(QListWidgetItem *item, MainWindow *parent):
     closeButton(new CloseButton(this)),
     minButton(new MiniumButton(this)),
     trueImage(new QCheckBox(this)),
-    manager(0),
-    recmanager(0),
-    filemanager(0),
-    dmanager(0),
+    manager(nullptr),
+    recmanager(nullptr),
+    filemanager(nullptr),
+    dmanager(nullptr),
     pressed(false),
-    expDialog(0)
+    expDialog(nullptr)
 {
 
     this->setWindowFlags(Qt::FramelessWindowHint/* | Qt::Tool*/ | Qt::X11BypassWindowManagerHint);
@@ -329,17 +329,20 @@ void ChatWindow::mouseMoveEvent(QMouseEvent *event)
 
 ChatWindow::~ChatWindow()
 {
-    if(manager != 0)
+    if(manager != nullptr)
     {
         delete manager;
+        manager = nullptr;
     }
-    if(recmanager != 0)
+    if(recmanager != nullptr)
     {
         delete recmanager;
+        recmanager = nullptr;
     }
-    if(filemanager!=0)
+    if(filemanager!=nullptr)
     {
         delete filemanager;
+        filemanager = nullptr;
     }
 }
 
@@ -353,7 +356,7 @@ void ChatWindow::on_closeButton_clicked()
 
 void ChatWindow::on_expressButton_clicked()
 {
-    if(this->expDialog == 0)
+    if(this->expDialog == nullptr)
     {
         this->expDialog = new ExpressionDialog(this);
         expDialog->show();
@@ -376,7 +379,7 @@ void ChatWindow::readContent(QString content)
 
     int expst, forexpst = -5;
     QString exp;
-    bool isExp = 0;
+    bool isExp = false;
 
     QTextCursor cursor = messageEdit->textCursor();
     expst = content.indexOf("(", 0);

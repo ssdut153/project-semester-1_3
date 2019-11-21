@@ -10,7 +10,7 @@ class CloseButton:public QPushButton
     Q_OBJECT
 
 public:
-    explicit CloseButton(QWidget *parent = 0);
+    explicit CloseButton(QWidget *parent = nullptr);
 
 };
 

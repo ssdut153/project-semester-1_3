@@ -5,12 +5,12 @@
 CommonElements::CommonElements(QObject *parent):
     QObject(parent),
     trayIcon(new TrayIcon),
-    client(0),
+    client(nullptr),
     username(""),
-    loginWindow(0),
-    mainWindow(0),
+    loginWindow(nullptr),
+    mainWindow(nullptr),
     login(false),
-    application(0)
+    application(nullptr)
 {
 
 }
@@ -41,16 +41,18 @@ void CommonElements::connectServer()
 void CommonElements::disconnectServer()
 {
     Helper::getInstance()->disconnectServer();
-    delete client;
-    client = 0;
+    if (client != nullptr) {
+        delete client;
+        client = nullptr;
+    }
 }
 
-CommonElements *CommonElements::instance = 0;
+CommonElements *CommonElements::instance = nullptr;
 
 
 CommonElements *CommonElements::getInstance()
 {
-    if(instance == 0)
+    if(instance == nullptr)
     {
         instance = new CommonElements;
     }

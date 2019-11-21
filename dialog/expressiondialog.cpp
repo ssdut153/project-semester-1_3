@@ -79,13 +79,13 @@ ExpressionDialog::ExpressionDialog(ChatWindow *parent):
 void ExpressionDialog::closeEvent(QCloseEvent *event)
 {
     event->ignore();
-    chatwindow->setExpressionDialog(0);
+    chatwindow->setExpressionDialog(nullptr);
     delete this;
 }
 
 void ExpressionDialog::on_cancelButton_clicked()
 {
-    chatwindow->setExpressionDialog(0);
+    chatwindow->setExpressionDialog(nullptr);
     delete this;
 }
 
@@ -101,7 +101,7 @@ void ExpressionDialog::addExpression(QString exp)
         chatwindow->getSendEdit()->setTextCursor(cursor);
     }
 
-    chatwindow->setExpressionDialog(0);
+    chatwindow->setExpressionDialog(nullptr);
     delete this;
 }
 
